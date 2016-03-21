@@ -1,0 +1,7 @@
+public
+node_modules
+bower_components
+coverage
+test
+Gruntfile.js
+karma.conf.js

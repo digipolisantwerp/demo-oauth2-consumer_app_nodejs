@@ -1,0 +1,7 @@
+default:
+  environment: %%environment%%
+  port: %%environment%%
+
+test:
+  environment: "TEST"
+  port: 3001

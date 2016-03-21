@@ -1,0 +1,15 @@
+default:
+  consent:
+    url_authorize: %%service.consent.authorize%%
+  aprofiel:
+    oauth:
+      response_type: code
+      service: 'AStad-AProfiel-v1'
+      client_id: %%service.demo.client_id%%
+      client_secret: %%service.demo.client_secret%%
+      scope: %%service.demo.scope%%
+      redirect_uri: %%service.demo.redirect_uri%%
+    api:
+      scheme: %%service.api.scheme%%
+      domain: %%service.api.domain%%
+      path: %%service.api.path%%
