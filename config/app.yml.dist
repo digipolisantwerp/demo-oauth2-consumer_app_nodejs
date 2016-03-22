@@ -1,6 +1,6 @@
 default:
   environment: %%environment%%
-  port: %%port%%
+  port: "%%app.port%%"
 
 test:
   environment: "TEST"
