@@ -1,9 +1,12 @@
 'use strict';
 
+process.env.NODE_ENV = 'test';
+
 // Dependencies
 var should = require('chai').should();
 var expect = require('chai').expect;
 var supertest = require('supertest');
+var yamlConfig = require('node-yaml-config');
 
 // var async = require('async');
 // var nock = require('nock');
@@ -14,8 +17,11 @@ require('../../app.js');
 // Silence jshint warning
 should.equal(true, true);
 
+var config = yamlConfig.load(global.__base + '/config/app.yml',process.env.NODE_ENV);
+
+
 // Config
-var api = supertest('http://localhost:' + "3001");
+var api = supertest('http://localhost:' + config.port);
 
 // Endpoint to test
 var endpoint = '/api/v1/examples';

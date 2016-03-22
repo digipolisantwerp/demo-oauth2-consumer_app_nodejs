@@ -11,21 +11,21 @@ var helmet = require('helmet');
 var errorHandler = require('errorhandler');
 var chalk = require('chalk');
 var glob = require('glob');
+var yamlConfig = require('node-yaml-config');
 
 // Base dir
-global.__base = __dirname + '/';
+global.__base = __dirname ;
 
 // Create Express app
 var app = express();
 
 // Config
-// var config = require('astad-config');
-
-// process.env.NODE_ENV = config.environment;
+var config = yamlConfig.load(global.__base + '/config/app.yml',process.env.NODE_ENV);
+process.env.NODE_ENV = config.environment.toLowerCase();
 
 
 // All environments Express middleware
-app.set('port', 3000);
+app.set('port', config.port);
 app.set('views', path.join(__dirname + '/app/', 'views'));
 app.set('view engine', 'ejs');
 
@@ -33,7 +33,7 @@ app.use(helmet());
 
 // use compression to save bandwidth
 var compression = require('compression');
-if (process.env.NODE_ENV && process.env.NODE_ENV.toLowerCase() !== 'test') {
+if (process.env.NODE_ENV && process.env.NODE_ENV!== 'test') {
   app.use(compression());
 }
 

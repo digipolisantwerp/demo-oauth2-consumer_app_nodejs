@@ -1,17 +1,17 @@
 'use strict';
 
 var express = require('express');
-var crtlMain = require('../controllers/authorization_code');
+var crtlAProfiel = require('../controllers/authorization_code-aprofiel');
 
 module.exports = function addRoutes(app) {
 
   var router = express.Router();
 
   router.route('/')
-      .all(crtlMain.index);
+      .all(crtlAProfiel.index);
 
   router.route('/callback/aprofiel')
-      .all(crtlMain.callbackAprofiel);
+      .all(crtlAProfiel.callbackAprofiel);
 
   // Register our routes
   app.use('/', router);
