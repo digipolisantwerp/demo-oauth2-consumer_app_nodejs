@@ -14,13 +14,11 @@ function getConfig() {
 
 function createAuthorizeUrl(type) {
   var envConfig = getConfig();
-  var configOauth = envConfig[type].oauth;
+  var configOauth = envConfig.aprofiel.auth;
 
-  var url = envConfig.consent.url_authorize;
+  var url = envConfig.consent.uri.scheme + '://' + envConfig.consent.uri.domain + envConfig.consent.uri.path;
 
   configOauth.lng = 'nl';
-
-  console.log(configOauth);
 
   url += querystring.stringify(configOauth);
 
@@ -37,9 +35,8 @@ function index(req, res) {
 
 function callbackAprofiel(req, res) {
   var envConfig = getConfig();
-  var configOauth = envConfig.aprofiel.oauth;
-  var configApi = envConfig.aprofiel.api;
-
+  var configOauth = envConfig.aprofiel.auth;
+  var configApi = envConfig.aprofiel.uri;
 
   var oauth2 = new OAuth2(configOauth.client_id,
       configOauth.client_secret,

@@ -1,6 +1,6 @@
 default:
   environment: %%environment%%
-  port: %%environment%%
+  port: %%port%%
 
 test:
   environment: "TEST"
