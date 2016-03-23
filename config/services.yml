@@ -1,0 +1,18 @@
+default:
+  consent:
+    uri:
+        scheme: 'https'
+        domain: 'api-oauth2.antwerpen.be'
+        path: '/v1/authorize?'
+  aprofiel:
+    uri:
+      scheme: 'https'
+      domain: 'api-gw-p.antwerpen.be'
+      path: '/astad/aprofiel/v1'
+    auth:
+      response_type: 'code'
+      service: 'AStad-AProfiel-v1'
+      client_id: 'YOUR_CLIENT_ID'
+      client_secret: 'YOUR_CLIENT_SECRET'
+      scope: 'username name avatar email phone'
+      redirect_uri: 'YOUR_REDIRECT_URI'
