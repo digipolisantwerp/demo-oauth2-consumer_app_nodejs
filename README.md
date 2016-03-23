@@ -46,14 +46,12 @@ curl -v -H "Authorization: bearer OAUTH-TOKEN" 'https://api-gw-p.antwerpen.be/as
 	"success": true,
 	"data": {
 		"id": "1a2b3c4d5e6f7g63998b4576",
-		"nickName": null,
 		"userName": "ConsentAcc",
 		"firstName": "John",
 		"lastName": "Doe",
 		"avatarUrl": "https://assets.antwerpen.be/img.png",
 		"emailPrimary": "you@domain.com",
 		"phonePrimary": "+32 499 12 34 56"
-
 	}
 }
 ```
