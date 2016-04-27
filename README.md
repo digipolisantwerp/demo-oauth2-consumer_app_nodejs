@@ -5,7 +5,8 @@ Some minimalistic NodeJS sample code how to use the following Antwerp services:
 * AProfiel
 
 ## Getting OAuth access
-You will need an OAuth2 client ID and client secret - which can be obtained by filling in this form http://opendata.antwerpen.be/aanvraag-token
+You will need an OAuth2 client ID and client secret - which can be obtained here:
+https://developer.antwerpen.be/
 
 You will need :
 
