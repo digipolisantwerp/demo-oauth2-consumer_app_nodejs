@@ -37,9 +37,9 @@ redirect_uri=YOUR_REDIRECT_URI
 &lng=nl
 ```
 
-#Exchange authorisation code for access token
+#Exchange authorization_code for access_token
 After successful authentication you will be redirected to the redirect_uri of your registered application.
-A "code" querystring parameter will be added to this redirect_uri.
+A querystring parameter"code" will be added to this redirect_uri. You can use this code to obtain an access_token.
 ```
 curl -X POST -d "client_id=YOUR_CLIENT_ID&client_secret=YOUR_CLIENT_SECRET&code=CODE_FROM_URI&grant_type=authorization_code" https://api-gw-p.antwerpen.be/astad/aprofiel/v1/oauth2/token
 ```
