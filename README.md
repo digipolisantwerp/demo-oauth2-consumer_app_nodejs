@@ -37,7 +37,7 @@ redirect_uri=YOUR_REDIRECT_URI
 &lng=nl
 ```
 
-#Exchange authorization_code for access_token
+### Exchange authorization_code for access_token
 After successful authentication you will be redirected to the redirect_uri of your registered application.
 A querystring parameter"code" will be added to this redirect_uri. You can use this code to obtain an access_token.
 ```
@@ -50,7 +50,7 @@ Your response should look something like this:
 {"refresh_token":"66f0c43c27a94ad4aa2d7574cf7b4465","token_type":"bearer","access_token":"a2824fb10b2a44b2b6f1a4aba382630a","expires_in":7200}
 ```
 
-# Call the Aprofile API
+### Call the Aprofile API
 
 
 ```
