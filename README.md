@@ -4,7 +4,7 @@ Some minimalistic NodeJS sample code how to use the following Antwerp services:
 
 * AProfiel
 
-## Getting OAuth access
+## Getting OAuth tokens
 You will need an OAuth2 client ID and client secret - which can be obtained here:
 https://developer.antwerpen.be/
 
@@ -16,27 +16,45 @@ You will need :
 * A copy of your EID data (PDF)
 
 
-## Usage
+## How to consume the Aprofile API
+
+### Install application
+* update config/services.yml with your client_id, client_secret and redirect_uri
+* npm install && node index.js
+
+### Authenticate
+Then browse to http://localhost:3000/ to start the authentication flow. 
+The will generate a 302 redirect to the authorize application.
 
 ```
-npm install
-node index.js
+https://api-oauth2.antwerpen.be/v1/authorize?
+response_type=code&
+service=AStad-AProfiel-v1&
+client_id=YOUR_CLIENT_ID
+client_secret=YOUR_CLIENT_SECRET
+scope=username%20name%20avatar%20email%20phone&
+redirect_uri=YOUR_REDIRECT_URI
+&lng=nl
 ```
 
-Then browse to 
+#Exchange authorization_code for access_token
+After successful authentication you will be redirected to the redirect_uri of your registered application.
+A querystring parameter"code" will be added to this redirect_uri. You can use this code to obtain an access_token.
 ```
-http://localhost:3000/
+curl -X POST -d "client_id=YOUR_CLIENT_ID&client_secret=YOUR_CLIENT_SECRET&code=CODE_FROM_URI&grant_type=authorization_code" https://api-gw-p.antwerpen.be/astad/aprofiel/v1/oauth2/token
 ```
-to start the authentication flow.
+Make sure your framework/library adds header "Content-Type application/x-www-form-urlencoded".
 
-## Using the OAuth token
-After authenticating the app will consume the /me service, sending the OAuth token in the HTTP header.
+Your response should look something like this:
+```
+{"refresh_token":"66f0c43c27a94ad4aa2d7574cf7b4465","token_type":"bearer","access_token":"a2824fb10b2a44b2b6f1a4aba382630a","expires_in":7200}
+```
 
+# Call the Aprofile API
 
-### CURL example
 
 ```
-curl -v -H "Authorization: bearer OAUTH-TOKEN" 'https://api-gw-p.antwerpen.be/astad/aprofiel/v1/v1/me'
+curl -v -H "Authorization: Bearer ACCESS_TOKEN_FROM_PREVIOUS_STEP" 'https://api-gw-p.antwerpen.be/astad/aprofiel/v1/v1/me'
 ```
 
 
