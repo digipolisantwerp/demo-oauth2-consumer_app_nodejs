@@ -14,7 +14,7 @@ function getConfig() {
 
 function createAuthorizeUrl(type) {
   var envConfig = getConfig();
-  var configOauth = envConfig.aprofiel.auth;
+  var configOauth = envConfig[type].auth;
 
   var url = envConfig.consent.uri.scheme + '://' + envConfig.consent.uri.domain + envConfig.consent.uri.path;
 
