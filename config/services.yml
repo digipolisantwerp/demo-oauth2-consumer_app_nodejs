@@ -2,7 +2,7 @@ default:
   consent:
     uri:
         scheme: 'https'
-        domain: 'api-oauth2.antwerpen.be'
+        domain: 'api-oauth2-o.antwerpen.be'
         path: '/v1/authorize?'
   aprofiel:
     uri:
