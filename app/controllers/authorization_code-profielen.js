@@ -19,6 +19,7 @@ function createAuthorizeUrl(type) {
   var url = envConfig.consent.uri.scheme + '://' + envConfig.consent.uri.domain + envConfig.consent.uri.path;
 
   configOauth.lng = 'nl';
+  configOauth.state = '32042809';
 
   url += querystring.stringify(configOauth);
 
