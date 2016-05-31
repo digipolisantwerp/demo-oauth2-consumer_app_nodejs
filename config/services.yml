@@ -2,7 +2,7 @@ default:
   consent:
     uri:
         scheme: 'https'
-        domain: 'api-oauth2.antwerpen.be'
+        domain: 'api-oauth2-o.antwerpen.be'
         path: '/v1/authorize?'
   aprofiel:
     uri:
@@ -15,4 +15,16 @@ default:
       client_id: 'YOUR_CLIENT_ID'
       client_secret: 'YOUR_CLIENT_SECRET'
       scope: 'username name avatar email phone'
+      redirect_uri: 'YOUR_REDIRECT_URI'
+  mprofiel:
+    uri:
+      scheme: 'https'
+      domain: 'api-gw-p.antwerpen.be'
+      path: '/astad/mprofiel/v1'
+    auth:
+      response_type: 'code'
+      service: 'AStad-MProfiel-v1'
+      client_id: 'YOUR_CLIENT_ID'
+      client_secret: 'YOUR_CLIENT_SECRET'
+      scope: 'all'
       redirect_uri: 'YOUR_REDIRECT_URI'
