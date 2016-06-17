@@ -30,8 +30,7 @@ The will generate a 302 redirect to the authorize application.
 https://api-oauth2.antwerpen.be/v1/authorize?
 response_type=code&
 service=AStad-AProfiel-v1&
-client_id=YOUR_CLIENT_ID
-client_secret=YOUR_CLIENT_SECRET
+client_id=YOUR_CLIENT_ID&
 scope=username%20name%20avatar%20email%20phone&
 redirect_uri=YOUR_REDIRECT_URI
 &lng=nl
