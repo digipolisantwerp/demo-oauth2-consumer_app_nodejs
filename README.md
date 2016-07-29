@@ -28,13 +28,19 @@ The will generate a 302 redirect to the authorize application.
 
 ```
 https://api-oauth2.antwerpen.be/v1/authorize?
-response_type=code&
-service=AStad-AProfiel-v1&
-client_id=YOUR_CLIENT_ID&
-scope=username%20name%20avatar%20email%20phone&
-redirect_uri=YOUR_REDIRECT_URI
+response_type=code
+&service=AStad-AProfiel-v1
+&client_id=YOUR_CLIENT_ID
+&scope=username%20name%20avatar%20email%20phone
+&redirect_uri=YOUR_REDIRECT_URI
+&state=thisParameterWillBeAddedToTheRedirectUri
 &lng=nl
 ```
+The following values are valid for parameter lng:
+* nl
+* fr
+* en
+* de
 
 ### Exchange authorization_code for access_token
 After successful authentication you will be redirected to the redirect_uri of your registered application.
