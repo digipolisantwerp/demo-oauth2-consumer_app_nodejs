@@ -14,7 +14,7 @@ default:
       service: 'AStad-AProfiel-v1'
       client_id:  '%%service.aprofiel.auth.client_id%%'
       client_secret:  '%%service.aprofiel.auth.client_secret%%'
-      scope: 'username name avatar email phone'
+      scope: 'astad.aprofiel.v1.username astad.aprofiel.v1.name astad.aprofiel.v1.avatar astad.aprofiel.v1.email astad.aprofiel.v1.phone'
       redirect_uri: '%%service.aprofiel.auth.redirect_uri%%'
   mprofiel:
     uri:

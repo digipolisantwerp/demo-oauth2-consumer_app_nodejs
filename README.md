@@ -29,9 +29,9 @@ The will generate a 302 redirect to the authorize application.
 ```
 https://api-oauth2.antwerpen.be/v1/authorize?
 response_type=code
-&service=AStad-AProfiel-v1
+&service=AStad.AProfiel.v1
 &client_id=YOUR_CLIENT_ID
-&scope=username%20name%20avatar%20email%20phone
+&scope=astad.aprofiel.v1.username%20astad.aprofiel.v1.name%20astad.aprofiel.v1.avatar%20astad.aprofiel.v1.email%20astad.aprofiel.v1.phone
 &redirect_uri=YOUR_REDIRECT_URI
 &state=thisParameterWillBeAddedToTheRedirectUri
 &lng=nl
