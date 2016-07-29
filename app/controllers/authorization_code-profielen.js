@@ -20,7 +20,7 @@ function createAuthorizeUrl(type) {
 
   configOauth.lng = 'nl';
   configOauth.state = '32042809';
-
+  delete configOauth['client_secret'];
   url += querystring.stringify(configOauth);
 
   return url;
