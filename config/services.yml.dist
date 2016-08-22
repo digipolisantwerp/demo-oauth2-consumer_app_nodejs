@@ -11,7 +11,7 @@ default:
       path: '/astad/aprofiel/v1'
     auth:
       response_type: 'code'
-      service: 'AStad.AProfiel.v1'
+      service: '%%service.aprofiel.auth.service%%'
       client_id:  '%%service.aprofiel.auth.client_id%%'
       client_secret:  '%%service.aprofiel.auth.client_secret%%'
       scope: 'astad.aprofiel.v1.username astad.aprofiel.v1.name astad.aprofiel.v1.avatar astad.aprofiel.v1.email astad.aprofiel.v1.phone'
@@ -23,7 +23,7 @@ default:
       path: '/astad/mprofiel/v1'
     auth:
       response_type: 'code'
-      service: 'AStad.MProfiel.v1'
+      service: '%%service.mprofiel.auth.service%%'
       client_id:  '%%service.mprofiel.auth.client_id%%'
       client_secret:  '%%service.mprofiel.auth.client_secret%%'
       scope: 'all'
