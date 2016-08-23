@@ -23,7 +23,7 @@ default:
       path: '/astad/mprofiel/v1'
     auth:
       response_type: 'code'
-      service: 'AStad-MProfiel-v1'
+      service: 'astad.mprofiel.v1'
       client_id: 'YOUR_CLIENT_ID'
       client_secret: 'YOUR_CLIENT_SECRET'
       scope: 'all'
