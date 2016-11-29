@@ -35,6 +35,7 @@ response_type=code
 &redirect_uri=YOUR_REDIRECT_URI
 &state=thisParameterWillBeAddedToTheRedirectUri
 &lng=nl
+&force_auth=true
 ```
 The following values are valid for parameter lng:
 * nl
