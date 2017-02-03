@@ -33,6 +33,7 @@ response_type=code
 &client_id=YOUR_CLIENT_ID
 &scope=astad.aprofiel.v1.username%20astad.aprofiel.v1.name%20astad.aprofiel.v1.avatar%20astad.aprofiel.v1.email%20astad.aprofiel.v1.phone
 &redirect_uri=YOUR_REDIRECT_URI
+&redirect_uri_lng=true
 &state=thisParameterWillBeAddedToTheRedirectUri
 &lng=nl
 &force_auth=true
