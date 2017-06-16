@@ -3,6 +3,7 @@
 Some minimalistic NodeJS sample code how to use the following Antwerp services:
 
 * AProfiel
+* MProfiel
 
 ## Getting OAuth tokens
 You will need an OAuth2 client ID and client secret - which can be obtained here:
@@ -29,7 +30,7 @@ The will generate a 302 redirect to the authorize application.
 ```
 https://api-oauth2.antwerpen.be/v1/authorize?
 response_type=code
-&service=AStad.AProfiel.v1
+&service=astad.aprofiel.v1
 &client_id=YOUR_CLIENT_ID
 &scope=astad.aprofiel.v1.username%20astad.aprofiel.v1.name%20astad.aprofiel.v1.avatar%20astad.aprofiel.v1.email%20astad.aprofiel.v1.phone
 &redirect_uri=YOUR_REDIRECT_URI
@@ -38,11 +39,19 @@ response_type=code
 &lng=nl
 &force_auth=true
 ```
-The following values are valid for parameter lng:
-* nl
-* fr
-* en
-* de
+
+
+| Parameter | Required | Description |
+| :---         |     :---:      |  :---   |
+| response_type   | true     | Response type should be 'code'.    |
+| client_id     | true       | client_id for your registered application.      |
+| scope     | true       | List of space separated scopes the user should approve.      |
+| redirect_uri     | true       | redirect_uri for your registered application.       |
+| redirect_uri_lng     | false       | if set to 'true' the redirect_uri will have an extra parameter 'lng' in the redirect_uri when the user leaves the logon application.      |
+| service     | true       | The service you want to use to authenticate a user.  Can be 'astad.aprofiel.v1' or 'astad.mprofiel.v1'.    |
+| state     | false      | We recommend using this parameter to add an identifier for the user's session. Since the state parameter is added to the redirect_uri, your application can validate the OAuth2 flow started from your application.      |
+| lng     | false       | The language the logon application should use. Defaults to 'nl'. Available languages are nl, fr, en, de.     |
+| force_auth     | false       | By default the IDP behind the logon application initiates an SSO session. If you want to force a user to authenticate again you should set this parameter to 'true'.     |
 
 ### Exchange authorization_code for access_token
 After successful authentication you will be redirected to the redirect_uri of your registered application.
