@@ -47,7 +47,7 @@ response_type=code
 | client_id     | true       | client_id for your registered application.      |
 | scope     | true       | List of space separated scopes the user should approve.      |
 | redirect_uri     | true       | redirect_uri for your registered application.       |
-| redirect_uri_lng     | false       | if set to 'true' the redirect_uri will have an extra parameter 'lng' in the redirect_uri when the user leaves the logon application.      |
+| redirect_uri_lng     | false       | if set to 'true' the redirect_uri will have an extra parameter 'lng' in the redirect_uri when the user leaves the logon application. The value for the 'lng' querystring parameter will be the language that was used on the logon application.      |
 | service     | true       | The service you want to use to authenticate a user.  Can be 'astad.aprofiel.v1' or 'astad.mprofiel.v1'.    |
 | state     | false      | We recommend using this parameter to add an identifier for the user's session. Since the state parameter is added to the redirect_uri, your application can validate the OAuth2 flow started from your application.      |
 | lng     | false       | The language the logon application should use. Defaults to 'nl'. Available languages are nl, fr, en, de.     |
