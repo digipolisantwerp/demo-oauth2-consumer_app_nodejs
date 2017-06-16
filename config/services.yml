@@ -11,7 +11,7 @@ default:
       path: '/astad/aprofiel/v1'
     auth:
       response_type: 'code'
-      service: 'AStad-AProfiel-v1'
+      service: 'astad.aprofiel.v1'
       client_id: 'YOUR_CLIENT_ID'
       client_secret: 'YOUR_CLIENT_SECRET'
       scope: 'username name avatar email phone'
