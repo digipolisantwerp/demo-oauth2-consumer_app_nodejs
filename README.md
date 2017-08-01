@@ -65,6 +65,7 @@ Your response should look something like this:
 ```
 {"refresh_token":"66f0c43c27a94ad4aa2d7574cf7b4465","token_type":"bearer","access_token":"a2824fb10b2a44b2b6f1a4aba382630a","expires_in":7200}
 ```
+Access tokens expire after 7200 seconds (2 hours).
 
 ### Call the Aprofile API
 
@@ -72,10 +73,7 @@ Your response should look something like this:
 ```
 curl -v -H "Authorization: Bearer ACCESS_TOKEN_FROM_PREVIOUS_STEP" 'https://api-gw-p.antwerpen.be/astad/aprofiel/v1/v1/me'
 ```
-
-
-### Response
-
+response
 ```
 {
 	"success": true,
@@ -89,4 +87,16 @@ curl -v -H "Authorization: Bearer ACCESS_TOKEN_FROM_PREVIOUS_STEP" 'https://api-
 		"phonePrimary": "+32 499 12 34 56"
 	}
 }
+```
+
+### Refresh an access_token
+Access tokens expire after 7200 seconds (2 hours) and can be refreshed for 2 weeks.
+
+Request
+```
+curl -X POST -d "grant_type=refresh_token&client_id=YOUR_CLIENT_ID&client_secret=YOUR_CLIENT_SECRET&refresh_token=REFRESH_TOKEN_FROM_TOKEN_RESPONSE" https://api-gw-p.antwerpen.be/astad/aprofiel/v1/oauth2/token
+```
+Response
+```
+{"refresh_token":"66f0c43c27a94ad4aa2d7574cf7b4463","token_type":"bearer","access_token":"b2824fb10b2a44b2b6f1a4aba382630a","expires_in":7200}
 ```
