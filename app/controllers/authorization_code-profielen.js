@@ -7,7 +7,7 @@ var OAuth2 = require('oauth').OAuth2;
 
 
 function getConfig() {
-  var config = yamlConfig.load(global.__base + '/config/services.yml');
+  var config = yamlConfig.load(global.__base + '/config/services.conf.js');
   return config;
 }
 

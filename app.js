@@ -11,7 +11,7 @@ var helmet = require('helmet');
 var errorHandler = require('errorhandler');
 var chalk = require('chalk');
 var glob = require('glob');
-var yamlConfig = require('node-yaml-config');
+// var yamlConfig = require('node-yaml-config');
 
 // Base dir
 global.__base = __dirname ;
@@ -20,7 +20,9 @@ global.__base = __dirname ;
 var app = express();
 
 // Config
-var config = yamlConfig.load(global.__base + '/config/app.yml',process.env.NODE_ENV);
+// var config = yamlConfig.load(global.__base + '/config/app.yml',process.env.NODE_ENV);
+var config = require(global.__base + '/config/app.conf.js');
+
 process.env.NODE_ENV = config.environment.toLowerCase();
 
 

@@ -17,8 +17,8 @@ require('../../app.js');
 // Silence jshint warning
 should.equal(true, true);
 
-var config = yamlConfig.load(global.__base + '/config/app.yml',process.env.NODE_ENV);
-
+// var config = yamlConfig.load(global.__base + '/config/app.yml',process.env.NODE_ENV);
+var config = require(global.__base + '/config/app.conf.js');
 
 // Config
 var api = supertest('http://localhost:' + config.port);
