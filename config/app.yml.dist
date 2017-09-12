@@ -1,7 +1,0 @@
-default:
-  environment: %%environment%%
-  port: "%%app.port%%"
-
-test:
-  environment: "TEST"
-  port: 3001
