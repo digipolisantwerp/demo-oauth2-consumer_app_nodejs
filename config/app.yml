@@ -1,7 +1,0 @@
-default:
-  environment: "DEVELOPMENT"
-  port: 3000
-
-test:
-  environment: "TEST"
-  port: 3001
