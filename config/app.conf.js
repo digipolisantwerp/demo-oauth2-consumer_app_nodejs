@@ -1,6 +1,6 @@
 'use strict';
 
 module.exports = {
-  environment: process.env.NVIRONMENT || 'development',
+  environment: process.env.ENVIRONMENT || 'development',
   port: process.env.PORT || 3000
 };
