@@ -8,7 +8,7 @@ var OAuth2 = require('oauth').OAuth2;
 
 function getConfig() {
   var config = require(global.__base + '/config/services.conf.js');
-  return config;
+  return JSON.parse(JSON.stringify(config));
 }
 
 
@@ -45,7 +45,7 @@ function callbackAprofiel(req, res) {
       null,
       configApi.path + '/oauth2/token',
       null);
-
+    
   oauth2.getOAuthAccessToken(req.query.code, {'grant_type': 'authorization_code'}
       , function handleTokenResponse(err, token) {
         console.log(token);

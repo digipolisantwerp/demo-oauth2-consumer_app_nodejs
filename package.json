@@ -19,16 +19,16 @@
     "express": "^4.11.2",
     "helmet": "^0.10.0",
     "glob": "^5.0.14",
-    "request" : "2.65.0",
+    "request": "2.65.0",
     "method-override": "^2.3.1",
     "morgan": "^1.5.1",
-    "ejs" : "2.3.4",
-    "oauth" : "0.9.14",
-    "node-yaml-config":"0.0.4"
+    "ejs": "2.3.4",
+    "oauth": "0.9.14",
+    "node-yaml-config": "0.0.4"
   },
   "devDependencies": {
     "chai": "^3.3.0",
-    "eslint"  : "2.2.0",
+    "eslint": "2.2.0",
     "istanbul": "^0.3.20",
     "mocha": "^2.2.5",
     "supertest": "^1.1.0"
