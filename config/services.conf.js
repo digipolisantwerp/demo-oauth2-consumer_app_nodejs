@@ -26,7 +26,7 @@ module.exports = {
   mprofiel: {
     uri: {
       scheme: process.env.SERVICE_MPROFIEL_URI_SCHEME || 'https',
-      domain: process.env.SERVICE_MPROFIEL_URI_SCHEME || 'api-gw-o.antwerpen.be',
+      domain: process.env.SERVICE_MPROFIEL_URI_DOMAIN || 'api-gw-o.antwerpen.be',
       path: '/astad/mprofiel/v1'
     },
     auth: {
