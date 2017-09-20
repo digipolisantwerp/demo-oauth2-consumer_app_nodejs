@@ -86,7 +86,7 @@ function callbackMprofiel(req, res) {
 
   oauth2.getOAuthAccessToken(req.query.code, {'grant_type': 'authorization_code'}
       , function handleTokenResponse(err, token) {
-        // console.log(token);
+        console.log(token);
         if (err) {
           res.json({
             error: err
