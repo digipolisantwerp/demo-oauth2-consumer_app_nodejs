@@ -56,7 +56,7 @@ response_type=code
 | state     | false      | We recommend using this parameter to add an identifier for the user's session. Since the state parameter is added to the redirect_uri, your application can validate the OAuth2 flow started from your application.      |
 | lng     | false       | The language the logon application should use. Defaults to 'nl'. Available languages are nl, fr, en, de.     |
 | force_auth     | false       | By default the IDP behind the logon application initiates an SSO session. If you want to force a user to authenticate again you should set this parameter to 'true'.     |
-| save_consent | false | If set to 'true', the consent page will only be shown on the first logon.
+| save_consent | false | If set to 'true', the consent page will only be shown on the first logon. |
 
 ### Exchange authorization_code for access_token
 After successful authentication you will be redirected to the redirect_uri of your registered application.
