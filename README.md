@@ -21,7 +21,7 @@ You will need :
 
 ### Run application using docker-compose
 * Update .env file with your client ID and client secret for AProfiel and MProfiel
-* Run `docker-compose -f docker-compose.dev.yml up`
+* Run `docker-compose -f docker-compose.dev.yml up --build`
 
 ### Run application using node
 * Update config/services.config.js with your client ID and client secret for AProfiel and MProfiel
