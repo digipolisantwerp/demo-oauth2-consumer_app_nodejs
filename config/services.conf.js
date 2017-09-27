@@ -20,7 +20,7 @@ module.exports = {
       client_id: process.env.SERVICE_APROFIEL_AUTH_CLIENT_ID  || 'YOUR_CLIENT_ID',
       client_secret: process.env.SERVICE_APROFIEL_AUTH_CLIENT_SECRET  || 'YOUR_CLIENT_SECRET',
       scope: 'astad.aprofiel.v1.username astad.aprofiel.v1.name astad.aprofiel.v1.avatar astad.aprofiel.v1.email astad.aprofiel.v1.phone',
-      redirect_uri: process.env.SERVICE_APROFIEL_AUTH_REDIRECT_URI  ||'YOUR_REDIRECT_URI'
+      redirect_uri: process.env.SERVICE_APROFIEL_AUTH_REDIRECT_URI  ||'http://localhost:3000/callback/aprofiel'
     }
   },
   mprofiel: {
@@ -35,7 +35,7 @@ module.exports = {
       client_id: process.env.SERVICE_MPROFIEL_AUTH_CLIENT_ID || 'YOUR_CLIENT_ID',
       client_secret: process.env.SERVICE_MPROFIEL_AUTH_CLIENT_SECRET || 'YOUR_CLIENT_SECRET',
       scope: 'all',
-      redirect_uri: process.env.SERVICE_MPROFIEL_AUTH_REDIRECT_URI || 'YOUR_REDIRECT_URI'
+      redirect_uri: process.env.SERVICE_MPROFIEL_AUTH_REDIRECT_URI || 'http://localhost:3000/callback/mprofiel'
     }
   }
 };

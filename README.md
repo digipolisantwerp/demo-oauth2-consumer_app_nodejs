@@ -19,9 +19,13 @@ You will need :
 
 ## How to consume the Aprofile API
 
-### Install application
-* update config/services.yml with your client_id, client_secret and redirect_uri
-* npm install && node index.js
+### Run application using docker-compose
+* Update .env file with your client ID and client secret for AProfiel and MProfiel
+* Run `docker-compose -f docker-compose.dev.yml up`
+
+### Run application using node
+* Update config/services.config.js with your client ID and client secret for AProfiel and MProfiel
+* npm install && node app.js
 
 ### Authenticate
 Then browse to http://localhost:3000/ to start the authentication flow. 
