@@ -24,8 +24,8 @@ You will need :
 * Run `docker-compose -f docker-compose.dev.yml up --build`
 
 ### Run application using node
-* Update config/services.config.js with your client ID and client secret for AProfiel and MProfiel
-* npm install && node app.js
+* Update config/services.config.js with your client ID, client secret and redirect URI for AProfiel and MProfiel
+* Run `npm install && node app.js`
 
 ### Authenticate
 Then browse to http://localhost:3000/ to start the authentication flow. 
@@ -44,7 +44,6 @@ response_type=code
 &force_auth=true
 &save_consent=false
 ```
-
 
 | Parameter | Required | Description |
 | :---         |     :---:      |  :---   |
