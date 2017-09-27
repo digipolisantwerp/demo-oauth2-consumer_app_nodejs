@@ -1,19 +1,32 @@
 <html>
+
 <head>
     <script src="/js/jquery-2.2.1.min.js"></script>
     <script>
-        $( document ).ready(function() {
-            $('a').click(function(){
-                var id = this.id;
-                //var environment = id.split("-")[1];
-                //document.cookie="environment=" + environment;
-            });
+        function setUrl(linkElementId, baseUrl, saveConsent) {
+            var url = baseUrl + (saveConsent ? '&save_consent=true' : '');
+            $('#' + linkElementId).attr('href', url);
+        }
 
+        $(document).ready(function () {
+            $('#saveConsent').change(function () {
+                var checked = $(this).is(':checked');
+
+                setUrl('linkAProfiel', '<%- urlAProfiel %>', checked);
+                setUrl('linkMProfiel', '<%- urlMProfiel %>', checked);
+            });
         });
     </script>
 </head>
+
 <body>
-<a href="<%- urlAProfiel %>">AProfiel</a> <br/>
-<a href="<%- urlMProfiel %>">MProfiel</a> <br/>
+    <p>
+        <a href="<%- urlAProfiel %>" id="linkAProfiel">AProfiel</a><br/>
+        <a href="<%- urlMProfiel %>" id="linkMProfiel">MProfiel</a>
+    </p>
+    <p>
+        <span title="Adds &quot;save_consent=true&quot; to the authorize URL"><input type="checkbox" id="saveConsent" name="consent" value="save" /><label for="saveConsent">Save consent</label></span>
+    </p>
 </body>
+
 </html>
