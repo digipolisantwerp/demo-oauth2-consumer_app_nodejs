@@ -10,11 +10,8 @@ module.exports = function addRoutes(app) {
   router.route('/')
       .all(crtlProfiel.index);
 
-  router.route('/callback/aprofiel')
-      .all(crtlProfiel.callbackAprofiel);
-      
-  router.route('/callback/mprofiel')
-      .all(crtlProfiel.callbackMprofiel);
+  router.route('/callback/:profileType')
+      .all(crtlProfiel.callback);
 
   // Register our routes
   app.use('/', router);

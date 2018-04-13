@@ -1,32 +1,31 @@
-<html>
+<%- include _header.ejs -%>
 
-<head>
-    <script src="/js/jquery-2.2.1.min.js"></script>
-    <script>
-        function setUrl(linkElementId, baseUrl, saveConsent) {
-            var url = baseUrl + (saveConsent ? '&save_consent=true' : '');
-            $('#' + linkElementId).attr('href', url);
-        }
+<p style="line-height: 1.6em;">
+    <a href="<%- urlAProfiel %>" id="linkAProfiel">AProfiel</a>
+    <br/>
+    <a href="<%- urlMProfiel %>" id="linkMProfiel">MProfiel</a>
+</p>
+<p>
+    <span title="Adds &quot;save_consent=true&quot; to the authorize URL">
+        <input type="checkbox" id="saveConsent" name="consent" value="save" />
+        <label for="saveConsent">Save consent</label>
+    </span>
+</p>
 
-        $(document).ready(function () {
-            $('#saveConsent').change(function () {
-                var checked = $(this).is(':checked');
+<script>
+    function setUrl(linkElementId, baseUrl, saveConsent) {
+        var url = baseUrl + (saveConsent ? '&save_consent=true' : '');
+        $('#' + linkElementId).attr('href', url);
+    }
 
-                setUrl('linkAProfiel', '<%- urlAProfiel %>', checked);
-                setUrl('linkMProfiel', '<%- urlMProfiel %>', checked);
-            });
+    $(document).ready(function () {
+        $('#saveConsent').change(function () {
+            var checked = $(this).is(':checked');
+
+            setUrl('linkAProfiel', '<%- urlAProfiel %>', checked);
+            setUrl('linkMProfiel', '<%- urlMProfiel %>', checked);
         });
-    </script>
-</head>
+    });
+</script>
 
-<body>
-    <p>
-        <a href="<%- urlAProfiel %>" id="linkAProfiel">AProfiel</a><br/>
-        <a href="<%- urlMProfiel %>" id="linkMProfiel">MProfiel</a>
-    </p>
-    <p>
-        <span title="Adds &quot;save_consent=true&quot; to the authorize URL"><input type="checkbox" id="saveConsent" name="consent" value="save" /><label for="saveConsent">Save consent</label></span>
-    </p>
-</body>
-
-</html>
+<%- include _footer.ejs -%>

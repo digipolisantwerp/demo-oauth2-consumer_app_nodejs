@@ -1,0 +1,25 @@
+body {
+    padding: 10px;
+}
+
+pre,
+code {
+    font-family: monospace, monospace;
+    font-size: 0.9em;
+}
+
+pre {
+    overflow: auto;
+}
+
+pre>code {
+    display: inline-block;
+    word-wrap: normal;
+    border: 1px solid grey;
+    padding: 0.5em;
+}
+
+td {
+    vertical-align: top;
+    padding: 5px;
+}

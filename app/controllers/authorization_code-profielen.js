@@ -24,87 +24,72 @@ function createAuthorizeUrl(type) {
 }
 
 function index(req, res) {
-  res.render('index.ejs', { urlAProfiel: createAuthorizeUrl('aprofiel'), urlMProfiel: createAuthorizeUrl('mprofiel') });
+  res.render('index.ejs', {
+    title: 'Log in',
+    urlAProfiel: createAuthorizeUrl('aprofiel'),
+    urlMProfiel: createAuthorizeUrl('mprofiel'),
+  });
 }
 
-function callbackAprofiel(req, res) {
+function callback(req, res) {
   var envConfig = getConfig();
-  var configOauth = envConfig.aprofiel.auth;
-  var configApi = envConfig.aprofiel.uri;
+  var profileConfig = envConfig[req.params.profileType];
 
-  var oauth2 = new OAuth2(configOauth.client_id,
+  if (!profileConfig) {
+    return res.send('Invalid profile type');
+  }
+
+  var configOauth = profileConfig.auth;
+  var configApi = profileConfig.uri;
+
+  var oauth2 = new OAuth2(
+    configOauth.client_id,
     configOauth.client_secret,
     configApi.scheme + '://' + configApi.domain,
     null,
     configApi.path + '/oauth2/token',
-    null);
-
-  oauth2.getOAuthAccessToken(req.query.code, { 'grant_type': 'authorization_code' }
-    , function handleTokenResponse(err, token) {
-      console.log(token);
-      if (err) {
-        res.json({
-          error: err
-        });
-      } else {
-        request({
-          url: configApi.scheme + '://' + configApi.domain + configApi.path + '/v1/me',
-          'auth': {
-            'bearer': token
-          }
-
-        }, function handleApiCall(error, response, body) {
-          if (error) {
-            return res.send(error);
-          }
-          return res.send(body);
-        });
-
-      }
-    });
-}
-
-function callbackMprofiel(req, res) {
-  var envConfig = getConfig();
-  var configOauth = envConfig.mprofiel.auth;
-  var configApi = envConfig.mprofiel.uri;
-
-  var oauth2 = new OAuth2(configOauth.client_id,
-    configOauth.client_secret,
-    configApi.scheme + '://' + configApi.domain,
-    null,
-    configApi.path + '/oauth2/token',
-    null);
+    null
+  );
 
   oauth2.getOAuthAccessToken(
     req.query.code,
-    { 'grant_type': 'authorization_code' },
+    { grant_type: 'authorization_code' },
     function handleTokenResponse(err, token) {
-      console.log(token);
       if (err) {
-        res.json({
-          error: err
-        });
-      } else {
-        request({
-          url: configApi.scheme + '://' + configApi.domain + configApi.path + '/v1/me',
-          'auth': {
-            'bearer': token
-          }
-        }, function handleApiCall(error, response, body) {
-          if (error) {
-            return res.send(error);
-          }
-          return res.send(body);
-        });
-
+        return res.send(err);
       }
+
+      var profileUrl = configApi.scheme + '://' + configApi.domain + configApi.path + '/v1/me';
+
+      request({
+        url: profileUrl,
+        auth: { bearer: token },
+        json: true
+      }, function handleApiCall(error, response, body) {
+        if (error) {
+          return res.send(error);
+        }
+
+        var user = {
+          accessToken: token,
+          service: profileConfig.auth.service,
+          profile: {
+            url: profileUrl,
+            id: body.data.id,
+            response: JSON.stringify(body, null, 4),
+          },
+        };
+
+        res.render('callback.ejs', {
+          title: 'Logged in successfully',
+          user: user,
+        });
+      });
     }
   );
 }
 
 module.exports = {
   index: index,
-  callbackAprofiel: callbackAprofiel,
-  callbackMprofiel: callbackMprofiel
+  callback: callback,
 };
