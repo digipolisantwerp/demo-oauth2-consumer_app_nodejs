@@ -94,7 +94,7 @@ function callback(req, res) {
             id: body.data.id,
             response: JSON.stringify(body, null, 4),
           },
-          logoutUrl: createLogoutUrl(envConfig.consent, profileConfig, envConfig.logoutRedirectUri, body.data.id, token),
+          logoutUrl: createLogoutUrl(envConfig.consent, profileConfig, envConfig.logout_redirect_uri, body.data.id, token),
         };
 
         res.render('callback.ejs', {
