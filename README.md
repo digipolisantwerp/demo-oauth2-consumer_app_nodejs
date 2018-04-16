@@ -1,11 +1,14 @@
 # OAuth2 example application
+
 ## What is this ?
+
 Some minimalistic NodeJS sample code how to use the following Antwerp services:
 
 * AProfiel
 * MProfiel
 
 ## Getting OAuth tokens
+
 You will need an OAuth2 client ID and client secret - which can be obtained here:
 https://developer.antwerpen.be/
 
@@ -17,17 +20,20 @@ You will need :
 * A copy of your EID data (PDF)
 
 
-## How to consume the Aprofile API
+## How to consume the AProfiel (or MProfiel) API
 
 ### Run application using docker-compose
-* Update .env file with your client ID and client secret for AProfiel and MProfiel
+
+* Update .env file with your client ID and client secret for AProfiel (or MProfiel)
 * Run `docker-compose -f docker-compose.dev.yml up --build`
 
 ### Run application using node
-* Update config/services.config.js with your client ID, client secret and redirect URI for AProfiel and MProfiel
+
+* Update config/services.config.js with your client ID, client secret for AProfiel (or MProfiel)
 * Run `npm install && node app.js`
 
 ### Authenticate
+
 Then browse to http://localhost:3000/ to start the authentication flow. 
 The will generate a 302 redirect to the authorize application.
 
@@ -37,7 +43,7 @@ response_type=code
 &service=astad.aprofiel.v1
 &client_id=YOUR_CLIENT_ID
 &scope=astad.aprofiel.v1.username%20astad.aprofiel.v1.name%20astad.aprofiel.v1.avatar%20astad.aprofiel.v1.email%20astad.aprofiel.v1.phone
-&redirect_uri=YOUR_REDIRECT_URI
+&redirect_uri=http://localhost:3000/callback/aprofiel
 &redirect_uri_lng=true
 &state=thisParameterWillBeAddedToTheRedirectUri
 &lng=nl
@@ -59,26 +65,34 @@ response_type=code
 | save_consent | false | If set to 'true', the consent page will only be shown on the first logon. |
 
 ### Exchange authorization_code for access_token
+
 After successful authentication you will be redirected to the redirect_uri of your registered application.
 A querystring parameter"code" will be added to this redirect_uri. You can use this code to obtain an access_token.
+
 ```
 curl -X POST -d "client_id=YOUR_CLIENT_ID&client_secret=YOUR_CLIENT_SECRET&code=CODE_FROM_URI&grant_type=authorization_code" https://api-gw-p.antwerpen.be/astad/aprofiel/v1/oauth2/token
 ```
+
 Make sure your framework/library adds header "Content-Type application/x-www-form-urlencoded".
 
 Your response should look something like this:
+
 ```
 {"refresh_token":"66f0c43c27a94ad4aa2d7574cf7b4465","token_type":"bearer","access_token":"a2824fb10b2a44b2b6f1a4aba382630a","expires_in":7200}
 ```
+
 Access tokens expire after 7200 seconds (2 hours).
 
-### Call the Aprofile API
+### Call the AProfiel API
 
+Request:
 
 ```
 curl -v -H "Authorization: Bearer ACCESS_TOKEN_FROM_PREVIOUS_STEP" 'https://api-gw-p.antwerpen.be/astad/aprofiel/v1/v1/me'
 ```
-response
+
+Response:
+
 ```
 {
 	"success": true,
@@ -95,13 +109,53 @@ response
 ```
 
 ### Refresh an access_token
+
 Access tokens expire after 7200 seconds (2 hours) and can be refreshed for 2 weeks.
 
-Request
+Request:
+
 ```
 curl -X POST -d "grant_type=refresh_token&client_id=YOUR_CLIENT_ID&client_secret=YOUR_CLIENT_SECRET&refresh_token=REFRESH_TOKEN_FROM_TOKEN_RESPONSE" https://api-gw-p.antwerpen.be/astad/aprofiel/v1/oauth2/token
 ```
-Response
+
+Response:
+
 ```
 {"refresh_token":"66f0c43c27a94ad4aa2d7574cf7b4463","token_type":"bearer","access_token":"b2824fb10b2a44b2b6f1a4aba382630a","expires_in":7200}
+```
+
+## Logout flow
+
+In order to log out a call to /logout/redirect/encrypted needs to be made with these query string parameters:
+
+* client_id	(client_id of the API Store contract)
+* service (the service to log out, e.g. "astad.aprofiel.v1")
+* data (additional parameters encrypted, see below)
+
+The structure of the data object is as folows:
+
+* user_id (the id of the user to log out)
+* access_token (the access token of the user to log out)
+* redirect_uri (the uri to redirect to at the end of the logout flow)
+
+The data object must be encrypted. This can be done using the **encrypt** method of the [logout.js](/app/utils/logout.js) file, using the client secret as the password.
+
+After a call to the /logout/redirect/encrypted endpoint a redirect logout flow will initiate and will terminate at the **redirect_uri** if all went well.
+
+### Logout events
+
+When a user is logged out an event is published on the Event Handler.
+You can subscribe to these events in the **OAuth** namespace:
+
+**astad.aprofiel.v1.loggedout** in case the user was logged in with AProfiel.
+**astad.mprofiel.v1.loggedout** in case the user was logged in with MProfiel.
+
+The event payload is:
+
+```
+{
+  user: <user id>,
+  service: <the service the user was logged in>,
+  timestamp: <ISO date and time>
+}
 ```

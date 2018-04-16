@@ -5,8 +5,6 @@ var crypto = require('crypto');
 var algorithm = 'aes-128-ctr';
 
 function encrypt(text, password) {
-  console.log(text, password);
-
   var hash = crypto.createHash('sha1');
   hash.update(password);
   var key = hash.digest().slice(0, 16);
@@ -44,7 +42,6 @@ function encrypt(text, password) {
  * @param {string} options.client_secret
  */
 function createLogoutUri(options) {
-
   var data = JSON.stringify({
     user_id: options.user_id,
     access_token: options.access_token,
