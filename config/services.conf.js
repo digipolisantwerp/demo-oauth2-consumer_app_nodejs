@@ -38,5 +38,5 @@ module.exports = {
       redirect_uri: process.env.SERVICE_MPROFIEL_AUTH_REDIRECT_URI || 'http://localhost:3000/callback/mprofiel',
     },
   },
-  logout_redirect_uri: process.env.LOGOUT_REDIRECT_URI || 'http://localhost:3000/logout',
+  logout_redirect_uri: process.env.LOGOUT_REDIRECT_URI || 'http://localhost:3000/logoutCallback',
 };

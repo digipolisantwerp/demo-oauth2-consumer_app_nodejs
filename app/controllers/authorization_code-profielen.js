@@ -42,6 +42,7 @@ function createLogoutUrl(consentConfig, profileConfig, logoutRedirectUri, id, ac
 function index(req, res) {
   res.render('index.ejs', {
     title: 'Login',
+    index: true,
     urlAProfiel: createAuthorizeUrl('aprofiel'),
     urlMProfiel: createAuthorizeUrl('mprofiel'),
   });
@@ -106,7 +107,12 @@ function callback(req, res) {
   );
 }
 
+function logoutCallback(req, res) {
+  res.render('logout.ejs', { title: 'Logout successful'});
+}
+
 module.exports = {
   index: index,
   callback: callback,
+  logoutCallback: logoutCallback,
 };
