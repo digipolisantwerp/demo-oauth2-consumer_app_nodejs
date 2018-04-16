@@ -10,6 +10,7 @@ code {
 
 pre {
     overflow: auto;
+    margin: 0;
 }
 
 pre>code {
@@ -21,5 +22,5 @@ pre>code {
 
 td {
     vertical-align: top;
-    padding: 5px;
+    padding: 0 10px 10px 0;
 }

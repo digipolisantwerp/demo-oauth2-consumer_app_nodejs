@@ -3,6 +3,7 @@
 var request = require('request');
 var querystring = require('querystring');
 var OAuth2 = require('oauth').OAuth2;
+var logoutUtil = require('../utils/logout');
 
 function getConfig() {
   var config = require(global.__base + '/config/services.conf.js');
@@ -23,9 +24,24 @@ function createAuthorizeUrl(type) {
   return url;
 }
 
+function createLogoutUrl(consentConfig, profileConfig, logoutRedirectUri, id, accessToken) {
+  var options = {
+    host: consentConfig.uri.scheme + '://' + consentConfig.uri.domain,
+    path: '/v1/logout/redirect/encrypted',
+    user_id: id,
+    access_token: accessToken,
+    redirect_uri: logoutRedirectUri,
+    service: profileConfig.auth.service,
+    client_id: profileConfig.auth.client_id,
+    client_secret: profileConfig.auth.client_secret,
+  };
+
+  return logoutUtil.createLogoutUri(options);
+}
+
 function index(req, res) {
   res.render('index.ejs', {
-    title: 'Log in',
+    title: 'Login',
     urlAProfiel: createAuthorizeUrl('aprofiel'),
     urlMProfiel: createAuthorizeUrl('mprofiel'),
   });
@@ -78,10 +94,11 @@ function callback(req, res) {
             id: body.data.id,
             response: JSON.stringify(body, null, 4),
           },
+          logoutUrl: createLogoutUrl(envConfig.consent, profileConfig, envConfig.logoutRedirectUri, body.data.id, token),
         };
 
         res.render('callback.ejs', {
-          title: 'Logged in successfully',
+          title: 'Login successful',
           user: user,
         });
       });
