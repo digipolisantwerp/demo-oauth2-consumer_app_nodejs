@@ -1,16 +1,17 @@
 <%- include _header.ejs -%>
 
-<p style="line-height: 1.6em;">
+<p  class="u-margin-top-xs">
     <a href="<%- urlAProfiel %>" id="linkAProfiel">AProfiel</a>
-    <br/>
+</p>
+<p  class="u-margin-top-xs">
     <a href="<%- urlMProfiel %>" id="linkMProfiel">MProfiel</a>
 </p>
-<p>
-    <span title="Adds &quot;save_consent=true&quot; to the authorize URL">
+<div class="a-input u-margin-top-xs" title="Adds &quot;save_consent=true&quot; to the authorize URL">
+    <div class="a-input__checkbox">
         <input type="checkbox" id="saveConsent" name="consent" value="save" />
         <label for="saveConsent">Save consent</label>
-    </span>
-</p>
+    </div>
+</div>
 
 <script>
     function setUrl(linkElementId, baseUrl, saveConsent) {
