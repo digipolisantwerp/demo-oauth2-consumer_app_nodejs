@@ -8,13 +8,13 @@ module.exports = function addRoutes(app) {
   var router = express.Router();
 
   router.route('/')
-      .all(crtlProfiel.index);
+    .all(crtlProfiel.index);
 
-  router.route('/callback/aprofiel')
-      .all(crtlProfiel.callbackAprofiel);
-      
-  router.route('/callback/mprofiel')
-      .all(crtlProfiel.callbackMprofiel);
+  router.route('/callback/:profileType')
+    .all(crtlProfiel.callback);
+
+  router.route('/logoutCallback')
+    .all(crtlProfiel.logoutCallback);
 
   // Register our routes
   app.use('/', router);

@@ -11,10 +11,9 @@ var helmet = require('helmet');
 var errorHandler = require('errorhandler');
 var chalk = require('chalk');
 var glob = require('glob');
-// var yamlConfig = require('node-yaml-config');
 
 // Base dir
-global.__base = __dirname ;
+global.__base = __dirname;
 
 // Create Express app
 var app = express();
@@ -25,7 +24,6 @@ var config = require(global.__base + '/config/app.conf.js');
 
 process.env.NODE_ENV = config.environment.toLowerCase();
 
-
 // All environments Express middleware
 app.set('port', config.port);
 app.set('views', path.join(__dirname + '/app/', 'views'));
@@ -35,7 +33,7 @@ app.use(helmet());
 
 // use compression to save bandwidth
 var compression = require('compression');
-if (process.env.NODE_ENV && process.env.NODE_ENV!== 'test') {
+if (process.env.NODE_ENV && process.env.NODE_ENV !== 'test') {
   app.use(compression());
 }
 
@@ -46,7 +44,6 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(methodOverride());
 
-
 // Include routes if exists
 glob('./app/routes/*.js', {}, function handleRouteFiles(err, files) {
   if (err) {
@@ -56,7 +53,6 @@ glob('./app/routes/*.js', {}, function handleRouteFiles(err, files) {
   files.forEach(function requireRouteFile(file) {
     require(file)(app);
   });
-
 });
 
 // Public folder
@@ -67,7 +63,6 @@ if (app.get('env') === 'development') {
   app.use(logger('dev'));
   app.use(errorHandler());
 }
-
 
 // Listen
 app.listen(app.get('port'), function serverListening() {

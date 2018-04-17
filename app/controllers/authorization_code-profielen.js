@@ -2,15 +2,13 @@
 
 var request = require('request');
 var querystring = require('querystring');
-var yamlConfig = require('node-yaml-config');
 var OAuth2 = require('oauth').OAuth2;
-
+var logoutUtil = require('../utils/logout');
 
 function getConfig() {
   var config = require(global.__base + '/config/services.conf.js');
   return JSON.parse(JSON.stringify(config));
 }
-
 
 function createAuthorizeUrl(type) {
   var envConfig = getConfig();
@@ -20,98 +18,101 @@ function createAuthorizeUrl(type) {
 
   configOauth.lng = 'nl';
   configOauth.state = '32042809';
-  delete configOauth['client_secret'];
+  delete configOauth.client_secret;
   url += querystring.stringify(configOauth);
 
   return url;
 }
 
+function createLogoutUrl(consentConfig, profileConfig, logoutRedirectUri, id, accessToken) {
+  var options = {
+    host: consentConfig.uri.scheme + '://' + consentConfig.uri.domain,
+    path: '/v1/logout/redirect/encrypted',
+    user_id: id,
+    access_token: accessToken,
+    redirect_uri: logoutRedirectUri,
+    service: profileConfig.auth.service,
+    client_id: profileConfig.auth.client_id,
+    client_secret: profileConfig.auth.client_secret,
+  };
+
+  return logoutUtil.createLogoutUri(options);
+}
 
 function index(req, res) {
-
-  res.render('index.ejs', {urlAProfiel: createAuthorizeUrl('aprofiel'), urlMProfiel: createAuthorizeUrl('mprofiel')});
-
+  res.render('index.ejs', {
+    title: 'Login',
+    index: true,
+    urlAProfiel: createAuthorizeUrl('aprofiel'),
+    urlMProfiel: createAuthorizeUrl('mprofiel'),
+  });
 }
 
-
-function callbackAprofiel(req, res) {
+function callback(req, res) {
   var envConfig = getConfig();
-  var configOauth = envConfig.aprofiel.auth;
-  var configApi = envConfig.aprofiel.uri;
+  var profileConfig = envConfig[req.params.profileType];
 
-  var oauth2 = new OAuth2(configOauth.client_id,
-      configOauth.client_secret,
-      configApi.scheme + '://' + configApi.domain,
-      null,
-      configApi.path + '/oauth2/token',
-      null);
-    
-  oauth2.getOAuthAccessToken(req.query.code, {'grant_type': 'authorization_code'}
-      , function handleTokenResponse(err, token) {
-        console.log(token);
-        if (err) {
-          res.json({
-            error: err
-          });
-        } else {
-          request({
-            url: configApi.scheme + '://' + configApi.domain + configApi.path + '/v1/me',
-            'auth': {
-              'bearer': token
-            }
+  if (!profileConfig) {
+    return res.send('Invalid profile type');
+  }
 
-          }, function handleApiCall(error, response, body) {
-            if (error) {
-              return res.send(error);
-            }
-            return res.send(body);
-          });
+  var configOauth = profileConfig.auth;
+  var configApi = profileConfig.uri;
 
+  var oauth2 = new OAuth2(
+    configOauth.client_id,
+    configOauth.client_secret,
+    configApi.scheme + '://' + configApi.domain,
+    null,
+    configApi.path + '/oauth2/token',
+    null
+  );
+
+  oauth2.getOAuthAccessToken(
+    req.query.code,
+    { grant_type: 'authorization_code' },
+    function handleTokenResponse(err, token) {
+      if (err) {
+        return res.send(err);
+      }
+
+      var profileUrl = configApi.scheme + '://' + configApi.domain + configApi.path + '/v1/me';
+
+      request({
+        url: profileUrl,
+        auth: { bearer: token },
+        json: true
+      }, function handleApiCall(error, response, body) {
+        if (error) {
+          return res.send(error);
         }
-      });
 
+        var user = {
+          accessToken: token,
+          service: profileConfig.auth.service,
+          profile: {
+            url: profileUrl,
+            id: body.data.id,
+            response: JSON.stringify(body, null, 4),
+          },
+          logoutUrl: createLogoutUrl(envConfig.consent, profileConfig, envConfig.logout_redirect_uri, body.data.id, token),
+        };
+
+        res.render('callback.ejs', {
+          title: 'Login successful',
+          user: user,
+        });
+      });
+    }
+  );
 }
 
-function callbackMprofiel(req, res) {
-  var envConfig = getConfig();
-  var configOauth = envConfig.mprofiel.auth;
-  var configApi = envConfig.mprofiel.uri;
-
-  var oauth2 = new OAuth2(configOauth.client_id,
-      configOauth.client_secret,
-      configApi.scheme + '://' + configApi.domain,
-      null,
-      configApi.path + '/oauth2/token',
-      null);
-
-  oauth2.getOAuthAccessToken(req.query.code, {'grant_type': 'authorization_code'}
-      , function handleTokenResponse(err, token) {
-        console.log(token);
-        if (err) {
-          res.json({
-            error: err
-          });
-        } else {
-          request({
-            url: configApi.scheme + '://' + configApi.domain + configApi.path + '/v1/me',
-            'auth': {
-              'bearer': token
-            }
-
-          }, function handleApiCall(error, response, body) {
-            if (error) {
-              return res.send(error);
-            }
-            return res.send(body);
-          });
-
-        }
-      });
-
+function logoutCallback(req, res) {
+  res.render('logout.ejs', { title: 'Logout successful'});
 }
 
 module.exports = {
   index: index,
-  callbackAprofiel: callbackAprofiel,
-  callbackMprofiel: callbackMprofiel
+  callback: callback,
+  logoutCallback: logoutCallback,
 };

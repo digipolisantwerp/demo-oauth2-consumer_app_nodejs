@@ -1,0 +1,39 @@
+<%- include _header.ejs -%>
+
+<table class="u-margin-top-xs">
+    <tr>
+        <td>Service</td>
+        <td>
+            <%- user.service %>
+        </td>
+    </tr>
+    <tr>
+        <td>Access token</td>
+        <td>
+            <%- user.accessToken %>
+        </td>
+    </tr>
+    <tr>
+        <td>Profile URL</td>
+        <td>
+            <%- user.profile.url %>
+        </td>
+    </tr>
+    <tr>
+        <td>Profile ID</td>
+        <td>
+            <%- user.profile.id %>
+        </td>
+    </tr>
+    <tr>
+        <td>Profile response</td>
+        <td>
+            <pre><code contenteditable spellcheck="false"><%- user.profile.response %></code></pre>
+        </td>
+    </tr>
+</table>
+<p class="u-margin-top-xs">
+    <input type="button" value="Log out" onclick="window.location.href = '<%- user.logoutUrl %>'" />
+</p>
+
+<%- include _footer.ejs -%>
