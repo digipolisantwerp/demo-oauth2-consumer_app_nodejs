@@ -6,6 +6,9 @@
 <p  class="u-margin-top-xs">
     <a href="<%- urlMProfiel %>" id="linkMProfiel">MProfiel</a>
 </p>
+<p  class="u-margin-top-xs">
+    <a href="<%- urlEidProfiel %>" id="linkEidProfiel">EidProfiel</a>
+</p>
 <div class="a-input u-margin-top-xs" title="Adds &quot;save_consent=true&quot; to the authorize URL">
     <div class="a-input__checkbox">
         <input type="checkbox" id="saveConsent" name="consent" value="save" />
@@ -22,9 +25,9 @@
     $(document).ready(function () {
         $('#saveConsent').change(function () {
             var checked = $(this).is(':checked');
-
             setUrl('linkAProfiel', '<%- urlAProfiel %>', checked);
             setUrl('linkMProfiel', '<%- urlMProfiel %>', checked);
+            setUrl('urlEidProfiel', '<%- urlEidProfiel %>', checked);
         });
     });
 </script>
