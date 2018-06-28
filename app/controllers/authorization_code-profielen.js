@@ -44,11 +44,13 @@ function index(req, res) {
     title: 'Login',
     index: true,
     urlAProfiel: createAuthorizeUrl('aprofiel'),
+    urlEidProfiel: createAuthorizeUrl('fasdatastore'),
     urlMProfiel: createAuthorizeUrl('mprofiel'),
   });
 }
 
 function callback(req, res) {
+
   var envConfig = getConfig();
   var profileConfig = envConfig[req.params.profileType];
 
@@ -67,43 +69,44 @@ function callback(req, res) {
     configApi.path + '/oauth2/token',
     null
   );
-
   oauth2.getOAuthAccessToken(
     req.query.code,
     { grant_type: 'authorization_code' },
-    function handleTokenResponse(err, token) {
-      if (err) {
-        return res.send(err);
-      }
-
-      var profileUrl = configApi.scheme + '://' + configApi.domain + configApi.path + '/v1/me';
-
-      request({
-        url: profileUrl,
-        auth: { bearer: token },
-        json: true
-      }, function handleApiCall(error, response, body) {
-        if (error) {
-          return res.send(error);
+      function handleTokenResponse(err, token) {
+        if (err) {
+          return res.send(err);
         }
-
-        var user = {
-          accessToken: token,
-          service: profileConfig.auth.service,
-          profile: {
-            url: profileUrl,
-            id: body.data.id,
-            response: JSON.stringify(body, null, 4),
+        var profileUrl = configApi.scheme + '://' + configApi.domain + configApi.path + '/me';
+        request({
+          url: profileUrl,
+          auth: { bearer: token },
+          headers: {
+            apikey: configApi.api_key,
           },
-          logoutUrl: createLogoutUrl(envConfig.consent, profileConfig, envConfig.logout_redirect_uri, body.data.id, token),
-        };
-
-        res.render('callback.ejs', {
-          title: 'Login successful',
-          user: user,
+          json: true
+        }, function handleApiCall(error, response, body) {
+          if (error) {
+            return res.send(error);
+          }
+          if (!body.data) {
+            body = Object.assign({}, { data: body });
+          }
+          var user = {
+            accessToken: token,
+            service: profileConfig.auth.service,
+            profile: {
+              url: profileUrl,
+              id: body.data.id,
+              response: JSON.stringify(body, null, 4),
+            },
+            logoutUrl: createLogoutUrl(envConfig.consent, profileConfig, envConfig.logout_redirect_uri, body.data.id, token),
+          };
+          res.render('callback.ejs', {
+            title: 'Login successful',
+            user: user,
+          });
         });
-      });
-    }
+      }
   );
 }
 
