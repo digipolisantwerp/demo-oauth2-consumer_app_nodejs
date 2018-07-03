@@ -10,10 +10,9 @@ module.exports = {
   },
   fasdatastore: {
     uri: {
-      scheme: process.env.SERVICE_fasdatastore_URI_SCHEME || 'https',
-      domain: process.env.SERVICE_fasdatastore_URI_DOMAIN || 'api-gw-o.antwerpen.be',
+      scheme: process.env.SERVICE_FASDATASTORE_URI_SCHEME || 'https',
+      domain: process.env.SERVICE_FASDATASTORE_URI_DOMAIN || 'api-gw-o.antwerpen.be',
       path: '/acpaas/fasdatastore/v1',
-      api_key: process.env.SERVICE_fasdatastore_API_KEY || 'YOUR_API_KEY',
     },
     auth: {
       response_type: 'code',
