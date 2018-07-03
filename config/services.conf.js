@@ -17,18 +17,18 @@ module.exports = {
     },
     auth: {
       response_type: 'code',
-      service: process.env.SERVICE_fasdatastore_AUTH_SERVICE || 'acpaas.fasdatastore.v1',
-      client_id: process.env.SERVICE_fasdatastore_AUTH_CLIENT_ID || 'YOUR_CLIENT_ID',
-      client_secret: process.env.SERVICE_fasdatastore_AUTH_CLIENT_SECRET || 'YOUR_CLIENT_SECRET',
+      service: process.env.SERVICE_FASDATASTORE_AUTH_SERVICE || 'acpaas.fasdatastore.v1',
+      client_id: process.env.SERVICE_FASDATASTORE_AUTH_CLIENT_ID || 'YOUR_CLIENT_ID',
+      client_secret: process.env.SERVICE_FASDATASTORE_AUTH_CLIENT_SECRET || 'YOUR_CLIENT_SECRET',
       scope: 'name',
-      redirect_uri: process.env.SERVICE_fasdatastore_AUTH_REDIRECT_URI || 'YOUR_REDIRECT_URI',
+      redirect_uri: process.env.SERVICE_FASDATASTORE_AUTH_REDIRECT_URI || 'YOUR_REDIRECT_URI',
     },
   },
   aprofiel: {
     uri: {
       scheme: process.env.SERVICE_APROFIEL_URI_SCHEME || 'https',
       domain: process.env.SERVICE_APROFIEL_URI_DOMAIN || 'api-gw-o.antwerpen.be',
-        path: '/astad/aprofiel/v1/v1'
+      path: '/astad/aprofiel/v1/v1'
     },
     auth: {
       response_type: 'code',
@@ -43,7 +43,7 @@ module.exports = {
     uri: {
       scheme: process.env.SERVICE_MPROFIEL_URI_SCHEME || 'https',
       domain: process.env.SERVICE_MPROFIEL_URI_DOMAIN || 'api-gw-o.antwerpen.be',
-        path: '/astad/mprofiel/v1/v1'
+      path: '/astad/mprofiel/v1/v1'
     },
     auth: {
       response_type: 'code',
