@@ -80,9 +80,6 @@ function callback(req, res) {
         request({
           url: profileUrl,
           auth: { bearer: token },
-          headers: {
-            apikey: configApi.api_key,
-          },
           json: true
         }, function handleApiCall(error, response, body) {
           if (error) {
