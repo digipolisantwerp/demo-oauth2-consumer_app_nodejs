@@ -85,18 +85,16 @@ function callback(req, res) {
           if (error) {
             return res.send(error);
           }
-          if (!body.data) {
-            body = Object.assign({}, { data: body });
-          }
+          var userResponse = body.data ? body.data : body;
           var user = {
             accessToken: token,
             service: profileConfig.auth.service,
             profile: {
               url: profileUrl,
-              id: body.data.id,
+              id: userResponse.id,
               response: JSON.stringify(body, null, 4),
             },
-            logoutUrl: createLogoutUrl(envConfig.consent, profileConfig, envConfig.logout_redirect_uri, body.data.id, token),
+            logoutUrl: createLogoutUrl(envConfig.consent, profileConfig, envConfig.logout_redirect_uri, userResponse.id, token),
           };
           res.render('callback.ejs', {
             title: 'Login successful',
