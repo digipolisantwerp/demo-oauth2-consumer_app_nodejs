@@ -23,6 +23,21 @@ module.exports = {
       redirect_uri: process.env.SERVICE_FASDATASTORE_AUTH_REDIRECT_URI || 'YOUR_REDIRECT_URI',
     },
   },
+  gentdatastore: {
+    uri: {
+      scheme: process.env.SERVICE_GENTDATASTORE_URI_SCHEME || 'https',
+      domain: process.env.SERVICE_GENTDATASTORE_URI_DOMAIN || 'api-gw-o.antwerpen.be',
+      path: '/digipolis/gentdatastore/v1'
+    },
+    auth: {
+      response_type: 'code',
+      service: process.env.SERVICE_GENTDATASTORE_AUTH_SERVICE || 'digipolis.gentdatastore.v1',
+      client_id: process.env.SERVICE_GENTDATASTORE_AUTH_CLIENT_ID || 'YOUR_CLIENT_ID',
+      client_secret: process.env.SERVICE_GENTDATASTORE_AUTH_CLIENT_SECRET || 'YOUR_CLIENT_SECRET',
+      scope: 'name nationalregistrationnumber',
+      redirect_uri: process.env.SERVICE_GENTDATASTORE_AUTH_REDIRECT_URI || 'YOUR_REDIRECT_URI',
+    },
+  },
   aprofiel: {
     uri: {
       scheme: process.env.SERVICE_APROFIEL_URI_SCHEME || 'https',
