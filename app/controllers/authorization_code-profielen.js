@@ -41,20 +41,13 @@ function createLogoutUrl(consentConfig, profileConfig, logoutRedirectUri, id, ac
 
 function getLoginTypes() {
   var loginTypeKeys = ['aprofiel', 'mprofiel', 'fasdatastore', 'digipolisgentdatastore'];
-  var result = [];
   var config = getConfig();
 
-  Object.keys(config)
-      .filter(key => loginTypeKeys.includes(key))
-      .forEach(key => {
-      result.push({
-          key: key,
-          title: config[key].title,
-          url: createAuthorizeUrl(key),
-      });
-      });
-
-  return result;
+  return loginTypeKeys.map(key => ({
+    key: key,
+    title: config[key].title,
+    url: createAuthorizeUrl(key),
+  }));
 }
 
 function index(req, res) {
