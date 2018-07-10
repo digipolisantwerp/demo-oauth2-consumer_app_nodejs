@@ -9,6 +9,7 @@ module.exports = {
     }
   },
   fasdatastore: {
+    title: 'eID',
     uri: {
       scheme: process.env.SERVICE_FASDATASTORE_URI_SCHEME || 'https',
       domain: process.env.SERVICE_FASDATASTORE_URI_DOMAIN || 'api-gw-o.antwerpen.be',
@@ -24,6 +25,7 @@ module.exports = {
     },
   },
   gentdatastore: {
+    title: 'Digipolis Gent',
     uri: {
       scheme: process.env.SERVICE_GENTDATASTORE_URI_SCHEME || 'https',
       domain: process.env.SERVICE_GENTDATASTORE_URI_DOMAIN || 'api-gw-o.antwerpen.be',
@@ -39,6 +41,7 @@ module.exports = {
     },
   },
   aprofiel: {
+    title: 'A-Profiel',
     uri: {
       scheme: process.env.SERVICE_APROFIEL_URI_SCHEME || 'https',
       domain: process.env.SERVICE_APROFIEL_URI_DOMAIN || 'api-gw-o.antwerpen.be',
@@ -54,6 +57,7 @@ module.exports = {
     },
   },
   mprofiel: {
+    title: 'M-Profiel',
     uri: {
       scheme: process.env.SERVICE_MPROFIEL_URI_SCHEME || 'https',
       domain: process.env.SERVICE_MPROFIEL_URI_DOMAIN || 'api-gw-o.antwerpen.be',
