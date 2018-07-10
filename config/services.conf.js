@@ -24,7 +24,7 @@ module.exports = {
       redirect_uri: process.env.SERVICE_FASDATASTORE_AUTH_REDIRECT_URI || 'YOUR_REDIRECT_URI',
     },
   },
-  gentdatastore: {
+  digipolisgentdatastore: {
     title: 'Digipolis Gent',
     uri: {
       scheme: process.env.SERVICE_GENTDATASTORE_URI_SCHEME || 'https',
