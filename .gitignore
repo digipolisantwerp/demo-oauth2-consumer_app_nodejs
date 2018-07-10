@@ -30,3 +30,6 @@ node_modules
 # Users Environment Variables
 .lock-wscript
 config/services.yml
+
+#OS files
+.DS_Store

@@ -40,7 +40,7 @@ function createLogoutUrl(consentConfig, profileConfig, logoutRedirectUri, id, ac
 }
 
 function getLoginTypes() {
-  var loginTypeKeys = ['aprofiel', 'mprofiel', 'fasdatastore', 'gentdatastore'];
+  var loginTypeKeys = ['aprofiel', 'mprofiel', 'fasdatastore', 'digipolisgentdatastore'];
   var result = [];
   var config = getConfig();
 
