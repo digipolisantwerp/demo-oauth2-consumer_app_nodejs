@@ -39,13 +39,22 @@ function createLogoutUrl(consentConfig, profileConfig, logoutRedirectUri, id, ac
   return logoutUtil.createLogoutUri(options);
 }
 
+function getLoginTypes() {
+  var loginTypeKeys = ['aprofiel', 'mprofiel', 'digipolisgentdatastore', 'fasdatastore'];
+  var config = getConfig();
+
+  return loginTypeKeys.map(key => ({
+    key: key,
+    title: config[key].title,
+    url: createAuthorizeUrl(key),
+  }));
+}
+
 function index(req, res) {
   res.render('index.ejs', {
     title: 'Login',
     index: true,
-    urlAProfiel: createAuthorizeUrl('aprofiel'),
-    urlEidProfiel: createAuthorizeUrl('fasdatastore'),
-    urlMProfiel: createAuthorizeUrl('mprofiel'),
+    loginTypes: getLoginTypes(),
   });
 }
 

@@ -1,15 +1,12 @@
 <%- include _header.ejs -%>
 
-<p  class="u-margin-top-xs">
-    <a href="<%- urlAProfiel %>" id="linkAProfiel">AProfiel</a>
-</p>
-<p  class="u-margin-top-xs">
-    <a href="<%- urlMProfiel %>" id="linkMProfiel">MProfiel</a>
-</p>
-<p  class="u-margin-top-xs">
-    <a href="<%- urlEidProfiel %>" id="linkEidProfiel">EidProfiel</a>
-</p>
-<div class="a-input u-margin-top-xs" title="Adds &quot;save_consent=true&quot; to the authorize URL">
+<% loginTypes.forEach(function(loginType) { %>
+    <p  class="u-margin-top-xs">
+        <a href="<%- loginType.url %>" id="link<%- loginType.key %>"><%- loginType.title %></a>
+    </p>
+<% }); %>
+
+<div class="a-input u-margin-top" title="Adds &quot;save_consent=true&quot; to the authorize URL">
     <div class="a-input__checkbox">
         <input type="checkbox" id="saveConsent" name="consent" value="save" />
         <label for="saveConsent">Save consent</label>
@@ -25,9 +22,10 @@
     $(document).ready(function () {
         $('#saveConsent').change(function () {
             var checked = $(this).is(':checked');
-            setUrl('linkAProfiel', '<%- urlAProfiel %>', checked);
-            setUrl('linkMProfiel', '<%- urlMProfiel %>', checked);
-            setUrl('urlEidProfiel', '<%- urlEidProfiel %>', checked);
+
+            <% loginTypes.forEach(function (loginType) { %>
+                setUrl('link<%- loginType.key %>', '<%- loginType.url %>', checked);
+            <% }); %>
         });
     });
 </script>
