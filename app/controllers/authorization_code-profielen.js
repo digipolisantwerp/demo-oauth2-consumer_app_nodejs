@@ -15,7 +15,6 @@ function createAuthorizeUrl(type) {
   var configOauth = envConfig[type].auth;
 
   var url = envConfig.consent.uri.scheme + '://' + envConfig.consent.uri.domain + envConfig.consent.uri.path;
-
   configOauth.lng = 'nl';
   configOauth.state = '32042809';
   delete configOauth.client_secret;
@@ -40,7 +39,13 @@ function createLogoutUrl(consentConfig, profileConfig, logoutRedirectUri, id, ac
 }
 
 function getLoginTypes() {
-  var loginTypeKeys = ['aprofiel', 'mprofiel', 'digipolisgentdatastore', 'fasdatastore'];
+  var loginTypeKeys = [
+    'aprofiel',
+    'digipolisgentdatastore',
+    'fasdatastore',
+    'mprofiel',
+    'soprofiel',
+  ];
   var config = getConfig();
 
   return loginTypeKeys.map(key => ({
@@ -62,7 +67,6 @@ function callback(req, res) {
 
   var envConfig = getConfig();
   var profileConfig = envConfig[req.params.profileType];
-
   if (!profileConfig) {
     return res.send('Invalid profile type');
   }
