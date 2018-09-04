@@ -49,6 +49,7 @@ response_type=code
 &lng=nl
 &force_auth=true
 &save_consent=false
+&auth_type=form
 ```
 
 | Parameter | Required | Description |
@@ -63,7 +64,7 @@ response_type=code
 | lng     | false       | The language the logon application should use. Defaults to 'nl'. Available languages are nl, fr, en, de.     |
 | force_auth     | false       | By default the IDP behind the logon application initiates an SSO session. If you want to force a user to authenticate again you should set this parameter to 'true'.     |
 | save_consent | false | If set to 'true', the consent page will only be shown on the first logon. |
-
+| auth_type | so / form | **login** type for `mProfile` form for "internal" **so** for `stedeijk onderwijs`. Defauts to internal
 ### Exchange authorization_code for access_token
 
 After successful authentication you will be redirected to the redirect_uri of your registered application.
