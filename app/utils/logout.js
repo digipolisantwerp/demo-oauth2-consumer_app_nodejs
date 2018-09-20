@@ -50,6 +50,7 @@ function createLogoutUri(options) {
   var queryObject = {
     client_id: options.client_id,
     service: options.service,
+    auth_type: options.auth_type,
     data: encrypt(data, options.client_secret),
   };
 

@@ -34,7 +34,7 @@ You will need :
 
 ### Authenticate
 
-Then browse to http://localhost:3000/ to start the authentication flow. 
+Then browse to http://localhost:3000/ to start the authentication flow.
 The will generate a 302 redirect to the authorize application.
 
 ```
@@ -128,15 +128,22 @@ Response:
 
 In order to log out a call to /logout/redirect/encrypted needs to be made with these query string parameters:
 
-* client_id	(client_id of the API Store contract)
-* service (the service to log out, e.g. "astad.aprofiel.v1")
-* data (additional parameters encrypted, see below)
+| Param  			| Description                                           |
+| ------------- 	| ------------- 			                                 |
+| auth_type  		| If so is set logout flow will logout Azure  |
+| client_id  		| Client_id of the api-store contract                   |
+| service  		| The service to log out ex. astad.mprofiel.v1          |
+| data  			| Additional parameters encrypted ,see below            |
+
+
 
 The structure of the data object is as folows:
 
-* user_id (the id of the user to log out)
-* access_token (the access token of the user to log out)
-* redirect_uri (the uri to redirect to at the end of the logout flow)
+| Data param  	| Description                                           |
+| ------------- 	| ------------- 			                                 |
+| user_id  		| The id of the user to log out ex. profileId  |
+| access_token  		| The access token of the user to log out                   |
+| redirect_uri  		| The uri to redirect to at the end of the logout flow          |
 
 The data object must be encrypted. This can be done using the **encrypt** method of the [logout.js](/app/utils/logout.js) file, using the client secret as the password.
 
