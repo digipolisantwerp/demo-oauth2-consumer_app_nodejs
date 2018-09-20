@@ -65,11 +65,29 @@ module.exports = {
     },
     auth: {
       response_type: 'code',
+      auth_type: 'form',
       service: process.env.SERVICE_MPROFIEL_AUTH_SERVICE || 'astad.mprofiel.v1',
       client_id: process.env.SERVICE_MPROFIEL_AUTH_CLIENT_ID || 'YOUR_CLIENT_ID',
       client_secret: process.env.SERVICE_MPROFIEL_AUTH_CLIENT_SECRET || 'YOUR_CLIENT_SECRET',
       scope: 'all',
       redirect_uri: process.env.SERVICE_MPROFIEL_AUTH_REDIRECT_URI || 'http://localhost:3000/callback/mprofiel',
+    },
+  },
+  soprofiel: {
+    title: 'SO-Profiel',
+    uri: {
+      scheme: process.env.SERVICE_SOPROFIEL_URI_SCHEME || 'https',
+      domain: process.env.SERVICE_SOPROFIEL_URI_DOMAIN || 'api-gw-o.antwerpen.be',
+      path: '/astad/mprofiel/v1/v1'
+    },
+    auth: {
+      response_type: 'code',
+      auth_type: 'so',
+      service: process.env.SERVICE_SOPROFIEL_AUTH_SERVICE || 'consentscherm.so.v1',
+      client_id: process.env.SERVICE_SOPROFIEL_AUTH_CLIENT_ID || 'YOUR_CLIENT_ID',
+      client_secret: process.env.SERVICE_SOPROFIEL_AUTH_CLIENT_SECRET || 'YOUR_CLIENT_SECRET',
+      scope: 'all',
+      redirect_uri: process.env.SERVICE_SOPROFIEL_AUTH_REDIRECT_URI || 'http://localhost:3000/callback/soprofiel',
     },
   },
   logout_redirect_uri: process.env.LOGOUT_REDIRECT_URI || 'http://localhost:3000/logoutCallback',
