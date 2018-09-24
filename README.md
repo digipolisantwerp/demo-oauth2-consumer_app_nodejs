@@ -129,12 +129,13 @@ Response:
 
 In order to log out a call to /logout/redirect/encrypted needs to be made with these query string parameters:
 
-| Param  			| Description                                           |
-| ------------- 	| ------------- 			                                 |
-| auth_type  		| If so is set logout flow will logout Azure  |
-| client_id  		| Client_id of the api-store contract                   |
-| service  		| The service to log out ex. astad.mprofiel.v1          |
-| data  			| Additional parameters encrypted ,see below            |
+| Param     | Description                                                                                                                       |
+|-----------|-----------------------------------------------------------------------------------------------------------------------------------|
+| client_id | client_id of the api-store contract                                                                                               |
+| service   | the service to log out, e.g. "astad.mprofiel.v1"                                                                                  |
+| data      | additional parameters encrypted, see below                                                                                        |
+| auth_type | optional: use the same `auth_type` which was passed to the login redirect (if set to "so", Azure logout for SO will be triggered) |
+
 
 
 
