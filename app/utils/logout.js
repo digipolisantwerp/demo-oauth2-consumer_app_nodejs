@@ -52,6 +52,9 @@ function createLogoutUri(options) {
     service: options.service,
     data: encrypt(data, options.client_secret),
   };
+  if (options.auth_type) {
+    queryObject.auth_type = options.auth_type;
+  }
 
   return options.host + options.path + '?' + querystring.stringify(queryObject);
 }

@@ -23,7 +23,7 @@ function createAuthorizeUrl(type) {
   return url;
 }
 
-function createLogoutUrl(consentConfig, profileConfig, logoutRedirectUri, id, accessToken) {
+function createLogoutUrl(consentConfig, profileConfig, logoutRedirectUri, id, accessToken, auth_type) {
   var options = {
     host: consentConfig.uri.scheme + '://' + consentConfig.uri.domain,
     path: '/v1/logout/redirect/encrypted',
@@ -34,7 +34,9 @@ function createLogoutUrl(consentConfig, profileConfig, logoutRedirectUri, id, ac
     client_id: profileConfig.auth.client_id,
     client_secret: profileConfig.auth.client_secret,
   };
-
+  if(auth_type && auth_type !== "undefined"){
+    options.auth_type = auth_type;
+  }
   return logoutUtil.createLogoutUri(options);
 }
 
@@ -67,6 +69,7 @@ function callback(req, res) {
 
   var envConfig = getConfig();
   var profileConfig = envConfig[req.params.profileType];
+  var authType = req.query.auth_type;
   if (!profileConfig) {
     return res.send('Invalid profile type');
   }
@@ -107,7 +110,7 @@ function callback(req, res) {
               id: userResponse.id,
               response: JSON.stringify(body, null, 4),
             },
-            logoutUrl: createLogoutUrl(envConfig.consent, profileConfig, envConfig.logout_redirect_uri, userResponse.id, token),
+            logoutUrl: createLogoutUrl(envConfig.consent, profileConfig, envConfig.logout_redirect_uri, userResponse.id, token, authType),
           };
           res.render('callback.ejs', {
             title: 'Login successful',
