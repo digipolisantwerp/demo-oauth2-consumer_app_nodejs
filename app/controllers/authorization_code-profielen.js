@@ -33,9 +33,10 @@ function createLogoutUrl(consentConfig, profileConfig, logoutRedirectUri, id, ac
     service: profileConfig.auth.service,
     client_id: profileConfig.auth.client_id,
     client_secret: profileConfig.auth.client_secret,
-    auth_type: auth_type
   };
-
+  if(auth_type && auth_type !== "undefined"){
+    options.auth_type = auth_type;
+  }
   return logoutUtil.createLogoutUri(options);
 }
 
