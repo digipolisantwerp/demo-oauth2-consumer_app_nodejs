@@ -10,6 +10,22 @@ function getConfig() {
   return JSON.parse(JSON.stringify(config));
 }
 
+function getSessions(ssokey, callback) {
+  var envConfig = getConfig();
+  request({
+    url: envConfig.consent.api.url+'/sessions/'+ssokey,
+    json: true,
+    headers: {
+      'apikey': envConfig.consent.api.key,
+    }
+  }, function handleApiCall(error, response, body) {
+    if (error) {
+      console.log('Something went wrong in getSession', error)
+      return callback(error);
+    }
+    return callback(error, body);
+  });
+}
 function createAuthorizeUrl(type) {
   var envConfig = getConfig();
   var configOauth = envConfig[type].auth;
@@ -66,28 +82,39 @@ function index(req, res) {
 }
 
 function callback(req, res) {
+  getSessions(req.cookies['dgp.auth.ssokey'], (err, response) => {
+    if(err) {
+      console.log('getSessions failed', err);
+    }
+    let existingSessions = '[]';
+    if(response) {
+      if(response.sessions) {
+        existingSessions = JSON.stringify(response.sessions, null, 4);
+      } else {
+        existingSessions = JSON.stringify(response, null, 4);
+      }
+    }
+    var envConfig = getConfig();
+    var profileConfig = envConfig[req.params.profileType];
+    var authType = req.query.auth_type;
+    if (!profileConfig) {
+      return res.send('Invalid profile type');
+    }
 
-  var envConfig = getConfig();
-  var profileConfig = envConfig[req.params.profileType];
-  var authType = req.query.auth_type;
-  if (!profileConfig) {
-    return res.send('Invalid profile type');
-  }
+    var configOauth = profileConfig.auth;
+    var configApi = profileConfig.uri;
 
-  var configOauth = profileConfig.auth;
-  var configApi = profileConfig.uri;
-
-  var oauth2 = new OAuth2(
-    configOauth.client_id,
-    configOauth.client_secret,
-    configApi.scheme + '://' + configApi.domain,
-    null,
-    configApi.path + '/oauth2/token',
-    null
-  );
-  oauth2.getOAuthAccessToken(
-    req.query.code,
-    { grant_type: 'authorization_code' },
+    var oauth2 = new OAuth2(
+      configOauth.client_id,
+      configOauth.client_secret,
+      configApi.scheme + '://' + configApi.domain,
+      null,
+      configApi.path + '/oauth2/token',
+      null
+    );
+    oauth2.getOAuthAccessToken(
+      req.query.code,
+      { grant_type: 'authorization_code' },
       function handleTokenResponse(err, token) {
         if (err) {
           return res.send(err);
@@ -104,6 +131,8 @@ function callback(req, res) {
           var userResponse = body.data ? body.data : body;
           var user = {
             accessToken: token,
+            ssoKey: req.cookies['dgp.auth.ssokey'],
+            sessionsUrl: envConfig.consent.api.url + '/sessions/' + req.cookies['dgp.auth.ssokey'],
             service: profileConfig.auth.service,
             profile: {
               url: profileUrl,
@@ -115,10 +144,12 @@ function callback(req, res) {
           res.render('callback.ejs', {
             title: 'Login successful',
             user: user,
+            sessions: existingSessions,
           });
         });
       }
-  );
+    );
+  });
 }
 
 function logoutCallback(req, res) {

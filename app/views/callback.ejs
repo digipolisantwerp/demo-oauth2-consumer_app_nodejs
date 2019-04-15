@@ -32,6 +32,29 @@
         </td>
     </tr>
 </table>
+<table class="u-margin-top-xs">
+  <h5 class="u-margin-top-xs">Active user sessions</h5>
+  <p class="u-margin-top-xs">Requested via the Consent API's GET /sessions/{ssoKey} endpoint using
+    dgp.auth.ssokey cookie</p>
+    <tr>
+        <td>url</td>
+        <td>
+            <%- user.sessionsUrl %>
+        </td>
+    </tr>
+    <tr>
+        <td>ssoKey</td>
+        <td>
+            <%- user.ssoKey %>
+        </td>
+    </tr>
+    <tr>
+        <td>CurrentUserSessions</td>
+        <td>
+            <pre><code contenteditable spellcheck="false"><%- sessions %></code></pre>
+        </td>
+    </tr>
+</table>
 <p class="u-margin-top-xs">
     <input type="button" value="Log out" onclick="window.location.href = '<%- user.logoutUrl %>'" />
 </p>

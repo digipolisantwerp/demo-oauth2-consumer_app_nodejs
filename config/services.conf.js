@@ -3,9 +3,13 @@
 module.exports = {
   consent: {
     uri: {
-      scheme: process.env.SERVICE_CONSENT_URI_SCHEME || 'https',
+      scheme: process.env.SERVICE_CONSENT_URI_SCHEME || 'http',
       domain: process.env.SERVICE_CONSENT_URI_DOMAIN || 'localhost:4000',
       path: '/v1/authorize?'
+    },
+    api: {
+      url: process.env.SERVICE_CONSENT_API_URL || 'https://api-gw-o.antwerpen.be/acpaas/consent/v1',
+      key: process.env.SERVICE_CONSENT_API_KEY || '<your-api-key>',
     }
   },
   fasdatastore: {
