@@ -11,6 +11,9 @@ function getConfig() {
 }
 
 function getSessions(ssokey, callback) {
+  if(!ssokey){
+    return callback(null, 'no cookie set');
+  }
   var envConfig = getConfig();
   request({
     url: envConfig.consent.api.url+'/sessions/'+ssokey,
