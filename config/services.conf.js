@@ -5,7 +5,7 @@ module.exports = {
     uri: {
       scheme: process.env.SERVICE_CONSENT_URI_SCHEME || 'http',
       domain: process.env.SERVICE_CONSENT_URI_DOMAIN || 'localhost:4000',
-      path: '/v1/authorize?'
+      path: '/authorize?'
     },
     api: {
       url: process.env.SERVICE_CONSENT_API_URL || 'https://api-gw-o.antwerpen.be/acpaas/consent/v1',
@@ -20,6 +20,7 @@ module.exports = {
       path: '/acpaas/fasdatastore/v1',
     },
     auth: {
+      version: 'v1',
       response_type: 'code',
       service: process.env.SERVICE_FASDATASTORE_AUTH_SERVICE || 'acpaas.fasdatastore.v1',
       client_id: process.env.SERVICE_FASDATASTORE_AUTH_CLIENT_ID || 'YOUR_CLIENT_ID',
@@ -36,12 +37,32 @@ module.exports = {
       path: '/digipolis/gentdatastore/v1'
     },
     auth: {
+      version: 'v1',
       response_type: 'code',
       service: process.env.SERVICE_GENTDATASTORE_AUTH_SERVICE || 'digipolis.gentdatastore.v1',
       client_id: process.env.SERVICE_GENTDATASTORE_AUTH_CLIENT_ID || 'YOUR_CLIENT_ID',
       client_secret: process.env.SERVICE_GENTDATASTORE_AUTH_CLIENT_SECRET || 'YOUR_CLIENT_SECRET',
       scope: 'name nationalregistrationnumber',
       redirect_uri: process.env.SERVICE_GENTDATASTORE_AUTH_REDIRECT_URI || 'YOUR_REDIRECT_URI',
+    },
+  },
+  profiel: {
+    title: 'Authentication 2.0',
+    order: 10,
+    uri: {
+      scheme: process.env.SERVICE_PROFIEL_URI_SCHEME || 'https',
+      domain: process.env.SERVICE_PROFIEL_URI_DOMAIN || 'api-gw-o.antwerpen.be',
+      path: '/acpaas/shared-identity-data/v1'
+    },
+    auth: {
+      version: 'v2',
+      response_type: 'code',
+      minimal_assurance_level: 'low',
+      auth_methods: process.env.SERVICE_PROFIEL_AUTH_METHODS || 'fas-citizen-bmid,fas-citizen-eid,fas-citizen-totp,fas-citizen-otp,aprofiel',
+      client_id: process.env.SERVICE_PROFIEL_ACM_AUTH_CLIENT_ID || 'YOUR_CLIENT_ID',
+      client_secret: process.env.SERVICE_PROFIEL_ACM_AUTH_CLIENT_SECRET || 'YOUR_CLIENT_SECRET',
+      scope: 'astad.aprofiel.v1.username astad.aprofiel.v1.name astad.aprofiel.v1.avatar astad.aprofiel.v1.email astad.aprofiel.v1.phone crspersoon.givenName',
+      redirect_uri: process.env.SERVICE_PROFIEL_ACM_AUTH_REDIRECT_URI || 'http://localhost:3000/callback/profiel',
     },
   },
   aprofiel: {
@@ -52,6 +73,7 @@ module.exports = {
       path: '/astad/aprofiel/v1/v1'
     },
     auth: {
+      version: 'v1',
       response_type: 'code',
       service: process.env.SERVICE_APROFIEL_AUTH_SERVICE || 'astad.aprofiel.v1',
       client_id: process.env.SERVICE_APROFIEL_AUTH_CLIENT_ID || 'YOUR_CLIENT_ID',
@@ -68,6 +90,7 @@ module.exports = {
       path: '/astad/mprofiel/v1/v1'
     },
     auth: {
+      version: 'v1',
       response_type: 'code',
       auth_type: 'form',
       service: process.env.SERVICE_MPROFIEL_AUTH_SERVICE || 'astad.mprofiel.v1',
@@ -85,6 +108,7 @@ module.exports = {
       path: '/astad/mprofiel/v1/v1'
     },
     auth: {
+      version: 'v1',
       response_type: 'code',
       auth_type: 'so',
       service: process.env.SERVICE_MPROFIEL_AUTH_SERVICE || 'astad.mprofiel.v1',

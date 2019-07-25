@@ -1,26 +1,30 @@
 body {
-    padding: 10px;
+  padding: 10px;
 }
 
 pre,
 code {
-    font-family: monospace, monospace;
-    font-size: 0.9em;
+  font-family: monospace, monospace;
+  font-size: 0.9em;
 }
 
 pre {
-    overflow: auto;
-    margin: 0;
+  overflow: auto;
+  margin: 0;
 }
 
-pre>code {
-    display: inline-block;
-    word-wrap: normal;
-    border: 1px solid grey;
-    padding: 0.5em;
+pre {
+  border: 1px solid grey;
+  max-width: 600px;
+}
+.a-definition-list dt {
+  font-weight: 700;
+  padding-top: 0;
+  padding-right: 10px;
+  float: left;
 }
 
 td {
-    vertical-align: top;
-    padding: 0 10px 10px 0;
+  vertical-align: top;
+  padding: 0 10px 10px 0;
 }
