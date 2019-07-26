@@ -1,62 +1,52 @@
 <%- include _header.ejs -%>
 
-<table class="u-margin-top-xs">
-    <tr>
-        <td>Service</td>
-        <td>
-            <%- user.service %>
-        </td>
-    </tr>
-    <tr>
-        <td>Access token</td>
-        <td>
-            <%- user.accessToken %>
-        </td>
-    </tr>
-    <tr>
-        <td>Profile URL</td>
-        <td>
-            <%- user.profile.url %>
-        </td>
-    </tr>
-    <tr>
-        <td>Profile ID</td>
-        <td>
-            <%- user.profile.id %>
-        </td>
-    </tr>
-    <tr>
-        <td>Profile response</td>
-        <td>
-            <pre><code contenteditable spellcheck="false"><%- user.profile.response %></code></pre>
-        </td>
-    </tr>
-</table>
-<table class="u-margin-top-xs">
-  <h5 class="u-margin-top-xs">Active user sessions</h5>
-  <p class="u-margin-top-xs">Requested via the Consent API's GET /sessions/{ssoKey} endpoint using
-    dgp.auth.ssokey cookie</p>
-    <tr>
-        <td>url</td>
-        <td>
-            <%- user.sessionsUrl %>
-        </td>
-    </tr>
-    <tr>
-        <td>ssoKey</td>
-        <td>
-            <%- user.ssoKey %>
-        </td>
-    </tr>
-    <tr>
-        <td>CurrentUserSessions</td>
-        <td>
-            <pre><code contenteditable spellcheck="false"><%- sessions %></code></pre>
-        </td>
-    </tr>
-</table>
-<p class="u-margin-top-xs">
-    <input type="button" value="Log out" onclick="window.location.href = '<%- user.logoutUrl %>'" />
+<div class="m-alert m-alert--success u-margin-top-xs u-margin-bottom-xs" style="padding: 1rem;">
+  <%- title %>
+</div>
+<h5 class="u-margin-top-xs u-margin-bottom-xs">User:</h5>
+<div>
+  <dl class="a-definition-list">
+    <dt>Service:</dt>
+    <dd><%- user.service %></dd>
+    <dt>Access token:</dt>
+    <dd><%- user.accessToken %></dd>
+    <dt>Profile URL:</dt>
+    <dd><%- user.profile.url %></dd>
+    <dt>Profile ID:</dt>
+    <dd><%- user.profile.id %></dd>
+  </dl>
+</div>
+<h6 class="u-margin-top-xs u-margin-bottom-xs">Profile response:</h6>
+<pre class="a-pre a-pre--scrollable"><code contenteditable spellcheck="false"><%- user.profile.response %></code></pre>
+
+<h5 class="u-margin-top-lg u-margin-bottom-xs">Active user sessions:</h5>
+<div>
+  <dl class="a-definition-list">
+    <dt>url:</dt>
+    <dd><%- user.sessionsUrl %></dd>
+    <dt>ssoKey:</dt>
+    <dd><%- user.ssoKey %></dd>
+  </dl>
+</div>
+<h6 class="u-margin-top-xs u-margin-bottom-xs">CurrentUserSessions response:</h6>
+<pre class="a-pre a-pre--scrollable"><code contenteditable spellcheck="false"><%- sessions %></code></pre>
+
+<h5 class="u-margin-top-lg u-margin-bottom-xs">Current user session:</h5>
+<div>
+  <dl class="a-definition-list">
+    <dt>url:</dt>
+    <dd><%- user.sessionUrl %></dd>
+    <dt>ssoKey:</dt>
+    <dd><%- user.ssoKey %></dd>
+    <dt>client_id:</dt>
+    <dd><%- user.client_id %></dd>
+  </dl>
+</div>
+<h6 class="u-margin-top-xs u-margin-bottom-xs">CurrentUserSession response:</h6>
+<pre class="a-pre a-pre--scrollable"><code contenteditable spellcheck="false"><%- session %></code></pre>
+
+<p class="u-margin-top-lg">
+    <input class="a-button a-button--secondary" type="button" value="Log out" onclick="window.location.href = '<%- user.logoutUrl %>'" />
 </p>
 
 <%- include _footer.ejs -%>
