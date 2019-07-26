@@ -17,7 +17,7 @@ function getSession(ssokey, clientId) {
       return reject('no cookie set');
     }
     request({
-      url: envConfig.consent.api.url+'/sessions/'+ssokey+'/'+clientId,
+      url: `${envConfig.consent.api.url}/sessions/${ssokey}/${clientId}`,
       json: true,
       headers: {
         'apikey': envConfig.consent.api.key,
@@ -39,14 +39,14 @@ function getSessions(ssokey) {
       return reject('no cookie set');
     }
     request({
-      url: envConfig.consent.api.url+'/sessions/'+ssokey,
+      url: `${envConfig.consent.api.url}/sessions/${ssokey}`,
       json: true,
       headers: {
         'apikey': envConfig.consent.api.key,
       }
     }, function handleApiCall(error, response, body) {
       if (error) {
-        console.log('Something went wrong in getSession', error)
+        console.log('Something went wrong in getSessions', error)
         return reject(error);
       }
       return resolve(body);
@@ -56,7 +56,7 @@ function getSessions(ssokey) {
 function createAuthorizeUrl(type) {
   var envConfig = getConfig();
   var configOauth = envConfig[type].auth;
-  var url = envConfig.consent.uri.scheme + '://' + envConfig.consent.uri.domain + '/' + configOauth.version + envConfig.consent.uri.path;
+  var url = `${envConfig.consent.uri.scheme}://${envConfig.consent.uri.domain}/${configOauth.version}${envConfig.consent.uri.path}`;
   configOauth.lng = 'nl';
   configOauth.state = '32042809';
   delete configOauth.client_secret;
@@ -68,7 +68,7 @@ function createAuthorizeUrl(type) {
 
 function createLogoutUrl(consentConfig, profileConfig, logoutRedirectUri, id, accessToken, auth_type) {
   var options = {
-    host: consentConfig.uri.scheme + '://' + consentConfig.uri.domain,
+    host: `${consentConfig.uri.scheme}://${consentConfig.uri.domain}`,
     path: `/${profileConfig.auth.version}/logout/redirect/encrypted`,
     user_id: id,
     access_token: accessToken,
@@ -120,11 +120,7 @@ async function callback(req, res) {
   const sessionsResponse = await getSessions(req.cookies['dgp.auth.ssokey'])
   let existingSessions = '[]';
   if(sessionsResponse) {
-    if(sessionsResponse.sessions) {
-      existingSessions = JSON.stringify(sessionsResponse.sessions, null, 4);
-    } else {
-      existingSessions = JSON.stringify(sessionsResponse, null, 4);
-    }
+    existingSessions = JSON.stringify(sessionsResponse, null, 4);
   }
   var authType = req.query.auth_type;
   if (!profileConfig) {
@@ -136,9 +132,9 @@ async function callback(req, res) {
   var oauth2 = new OAuth2(
     configOauth.client_id,
     configOauth.client_secret,
-    configApi.scheme + '://' + configApi.domain,
+    `${configApi.scheme}://${configApi.domain}`,
     null,
-    configApi.path + '/oauth2/token',
+    `${configApi.path}/oauth2/token`,
     null
   );
   oauth2.getOAuthAccessToken(
@@ -148,7 +144,7 @@ async function callback(req, res) {
       if (err) {
         return res.send(err);
       }
-  var profileUrl = configApi.scheme + '://' + configApi.domain + configApi.path + '/me';
+  var profileUrl = `${configApi.scheme}://${configApi.domain}${configApi.path}/me`;
       request({
         url: profileUrl,
         auth: { bearer: token },
@@ -163,7 +159,7 @@ async function callback(req, res) {
           accessToken: token,
           ssoKey: req.cookies['dgp.auth.ssokey'],
           client_id: profileConfig.auth.client_id,
-          sessionsUrl: envConfig.consent.api.url + '/sessions/' + req.cookies['dgp.auth.ssokey'],
+          sessionsUrl: `${envConfig.consent.api.url}/sessions/${req.cookies['dgp.auth.ssokey']}`,
           sessionUrl: envConfig.consent.api.url + '/sessions/' + req.cookies['dgp.auth.ssokey'] + '/' + profileConfig.auth.client_id,
           service: profileConfig.auth.service,
           profile: {
