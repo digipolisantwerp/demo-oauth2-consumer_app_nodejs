@@ -10,6 +10,8 @@ module.exports = {
     api: {
       url: process.env.SERVICE_CONSENT_API_URL || 'https://api-gw-o.antwerpen.be/acpaas/consent/v1',
       key: process.env.SERVICE_CONSENT_API_KEY || '<your-api-key>',
+      client_id: process.env.SERVICE_CONSENT_API_CLIENT_ID || '<clientid>',
+      client_secret: process.env.SERVICE_CONSENT_API_CLIENT_SECRET || '<clientid>',
     }
   },
   fasdatastore: {
