@@ -35,75 +35,80 @@ function createLogoutUrl(consentConfig, profileConfig, logoutRedirectUri, id, ac
   return logoutUtil.createLogoutUri(options);
 }
 
-async function callback(req, res) {
-  const envConfig = cloneDeep(servicesConfig);
-  const profileConfig = envConfig[req.params.profileType];
-  // set service provider
-  if (req.query.sp) {
-    profileConfig.auth.service = req.query.sp;
-  }
-  const session = JSON.stringify(await getSession(req.cookies['dgp.auth.ssokey'], profileConfig.auth.client_id), null, 4);
-  const sessionsResponse = await getSessions(req.cookies['dgp.auth.ssokey']);
-  let existingSessions = '[]';
-  if (sessionsResponse) {
-    existingSessions = JSON.stringify(sessionsResponse, null, 4);
-  }
-  const authType = req.query.auth_type;
-  if (!profileConfig) {
-    return res.send('Invalid profile type');
-  }
+async function callback(req, res, next) {
+  try {
+    const envConfig = cloneDeep(servicesConfig);
+    const profileConfig = envConfig[req.params.profileType];
+    // set service provider
+    if (req.query.sp) {
+      profileConfig.auth.service = req.query.sp;
+    }
+    const session = JSON.stringify(await getSession(req.cookies['dgp.auth.ssokey'], profileConfig.auth.client_id), null, 4);
+    const sessionsResponse = await getSessions(req.cookies['dgp.auth.ssokey']);
+    let existingSessions = '[]';
+    if (sessionsResponse) {
+      existingSessions = JSON.stringify(sessionsResponse, null, 4);
+    }
+    const authType = req.query.auth_type;
+    if (!profileConfig) {
+      return res.send('Invalid profile type');
+    }
 
-  const configOauth = profileConfig.auth;
-  const configApi = profileConfig.uri;
-  const oauth2 = new OAuth2(
-    configOauth.client_id,
-    configOauth.client_secret,
-    `${configApi.scheme}://${configApi.domain}`,
-    null,
-    `${configApi.path}/oauth2/token`,
-    null,
-  );
-  oauth2.getOAuthAccessToken(
-    req.query.code,
-    { grant_type: 'authorization_code' },
-    (err, token) => {
-      if (err) {
-        return res.send(err);
-      }
-      const profileUrl = `${configApi.scheme}://${configApi.domain}${configApi.path}/me`;
-      request({
-        url: profileUrl,
-        auth: { bearer: token },
-        json: true,
-      }, (error, response, body) => {
-        if (error) {
-          return res.send(error);
+    const configOauth = profileConfig.auth;
+    const configApi = profileConfig.uri;
+    const oauth2 = new OAuth2(
+      configOauth.client_id,
+      configOauth.client_secret,
+      `${configApi.scheme}://${configApi.domain}`,
+      null,
+      `${configApi.path}/oauth2/token`,
+      null,
+    );
+    return oauth2.getOAuthAccessToken(
+      req.query.code,
+      { grant_type: 'authorization_code' },
+      (err, token) => {
+        if (err) {
+          return res.send(err);
         }
-        const userResponse = body.data ? body.data : body;
-        const userId = userResponse.profile ? userResponse.profile.id : userResponse.id;
-        const user = {
-          accessToken: token,
-          ssoKey: req.cookies['dgp.auth.ssokey'],
-          client_id: profileConfig.auth.client_id,
-          sessionsUrl: `${envConfig.consent.api.url}/sessions/${req.cookies['dgp.auth.ssokey']}`,
-          sessionUrl: `${envConfig.consent.api.url}/sessions/${req.cookies['dgp.auth.ssokey']}/${profileConfig.auth.client_id}`,
-          service: profileConfig.auth.service,
-          profile: {
-            url: profileUrl,
-            id: userId,
-            response: JSON.stringify(body, null, 4),
-          },
-          logoutUrl: createLogoutUrl(envConfig.consent, profileConfig, envConfig.logout_redirect_uri, userId, token, authType),
-        };
-        res.render('callback.ejs', {
-          title: 'Login successful',
-          user,
-          session,
-          sessions: existingSessions,
+        const profileUrl = `${configApi.scheme}://${configApi.domain}${configApi.path}/me`;
+        request({
+          url: profileUrl,
+          auth: { bearer: token },
+          json: true,
+        }, (error, response, body) => {
+          if (error) {
+            return res.send(error);
+          }
+          const userResponse = body.data ? body.data : body;
+          const userId = userResponse.profile ? userResponse.profile.id : userResponse.id;
+          const user = {
+            accessToken: token,
+            ssoKey: req.cookies['dgp.auth.ssokey'],
+            client_id: profileConfig.auth.client_id,
+            sessionsUrl: `${envConfig.consent.api.url}/sessions/${req.cookies['dgp.auth.ssokey']}`,
+            sessionUrl: `${envConfig.consent.api.url}/sessions/${req.cookies['dgp.auth.ssokey']}/${profileConfig.auth.client_id}`,
+            service: profileConfig.auth.service,
+            profile: {
+              url: profileUrl,
+              id: userId,
+              response: JSON.stringify(body, null, 4),
+            },
+            logoutUrl: createLogoutUrl(envConfig.consent, profileConfig, envConfig.logout_redirect_uri, userId, token, authType),
+          };
+          res.render('callback.ejs', {
+            title: 'Login successful',
+            user,
+            session,
+            sessions: existingSessions,
+          });
         });
-      });
-    },
-  );
+      },
+    );
+  } catch (e) {
+    console.log('Something went wrong', e);
+    return next(e);
+  }
 }
 
 function logoutCallback(req, res) {
