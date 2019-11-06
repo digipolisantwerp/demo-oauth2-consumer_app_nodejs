@@ -24,7 +24,7 @@
     "helmet": "^0.10.0",
     "lodash": "^4.17.15",
     "method-override": "^2.3.1",
-    "morgan": "^1.5.1",
+    "morgan": "^1.9.1",
     "node-yaml-config": "0.0.4",
     "oauth": "0.9.14",
     "request": "2.65.0"
