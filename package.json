@@ -27,7 +27,7 @@
     "morgan": "^1.9.1",
     "node-yaml-config": "0.0.4",
     "oauth": "0.9.14",
-    "request": "2.65.0"
+    "request": "2.68.0"
   },
   "devDependencies": {
     "chai": "^3.3.0",
