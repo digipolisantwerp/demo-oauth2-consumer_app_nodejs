@@ -30,7 +30,7 @@ You will need :
 ### Run application using node
 
 * Update config/services.config.js with your client ID, client secret for AProfiel (or MProfiel)
-* Run `npm install && node app.js`
+* Run `npm install && node app.js` or `npm run dev` to run the app in development mode
 
 ### Authenticate
 
