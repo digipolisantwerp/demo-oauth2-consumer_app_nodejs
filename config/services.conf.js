@@ -120,5 +120,22 @@ module.exports = {
       redirect_uri: process.env.SERVICE_SOPROFIEL_AUTH_REDIRECT_URI || 'http://localhost:3000/callback/soprofiel',
     },
   },
+  provantprofiel: {
+    title: 'Provincie Antwerpen Profiel',
+    uri: {
+      scheme: process.env.SERVICE_PROVANTPROFIEL_URI_SCHEME || 'https',
+      domain: process.env.SERVICE_PROVANTPROFIEL_URI_DOMAIN || 'api-gw-o.antwerpen.be',
+      path: '/acpaas/provantprofiel/v1'
+    },
+    auth: {
+      version: 'v1',
+      response_type: 'code',
+      service: process.env.SERVICE_PROVANTPROFIEL_AUTH_SERVICE || 'acpaas.provantprofiel.v1',
+      client_id: process.env.SERVICE_PROVANTPROFIEL_AUTH_CLIENT_ID || 'YOUR_CLIENT_ID',
+      client_secret: process.env.SERVICE_PROVANTPROFIEL_AUTH_CLIENT_SECRET || 'YOUR_CLIENT_SECRET',
+      scope: 'all',
+      redirect_uri: process.env.SERVICE_PROVANTPROFIEL_AUTH_REDIRECT_URI || 'http://localhost:3000/callback/provantprofiel',
+    },
+  },
   logout_redirect_uri: process.env.LOGOUT_REDIRECT_URI || 'http://localhost:3000/logoutCallback',
 };

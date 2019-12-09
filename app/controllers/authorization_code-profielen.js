@@ -118,6 +118,7 @@ function getLoginTypes() {
     'fasdatastore',
     'soprofiel',
     'digipolisgentdatastore',
+    'provantprofiel',
   ];
   return loginTypeKeys.map(key => ({
     key,
