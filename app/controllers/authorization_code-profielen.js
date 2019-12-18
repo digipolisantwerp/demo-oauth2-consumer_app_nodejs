@@ -84,6 +84,11 @@ async function callback(req, res) {
         if (error) {
           return res.send(error);
         }
+
+        if (!body) {
+          return res.send({ error: "no body" });
+        }
+
         const userResponse = body.data ? body.data : body;
         const userId = userResponse.profile ? userResponse.profile.id : userResponse.id;
         const user = {
