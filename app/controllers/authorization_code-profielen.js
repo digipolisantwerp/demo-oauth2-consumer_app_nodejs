@@ -63,11 +63,16 @@ async function callback(req, res) {
     `${configApi.path}/oauth2/token`,
     null,
   );
+
+  console.log('GET ACCESS TOKEN', req.query.code, configOauth, configApi);
+
   oauth2.getOAuthAccessToken(
     req.query.code,
     { grant_type: 'authorization_code' },
     (err, token) => {
       if (err) {
+        console.log('GET ACCESS TOKEN ERR', req.query.code, err);
+
         return res.send(err);
       }
       const profileUrl = `${configApi.scheme}://${configApi.domain}${configApi.path}/me`;
