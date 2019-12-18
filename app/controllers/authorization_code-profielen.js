@@ -70,9 +70,9 @@ async function callback(req, res) {
     req.query.code,
     { grant_type: 'authorization_code' },
     (err, token) => {
-      if (err) {
-        console.log('GET ACCESS TOKEN ERR', req.query.code, err);
+      console.log('GET ACCESS TOKEN RES', req.query.code, token, err);
 
+      if (err) {
         return res.send(err);
       }
       const profileUrl = `${configApi.scheme}://${configApi.domain}${configApi.path}/me`;
