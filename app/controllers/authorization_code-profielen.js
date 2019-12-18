@@ -79,6 +79,11 @@ async function callback(req, res) {
         if (error) {
           return res.send(error);
         }
+
+        if (!body) {
+          return res.json({ error: `Missing profile body (status code ${response.statusCode})` });
+        }
+
         const userResponse = body.data ? body.data : body;
         const userId = userResponse.profile ? userResponse.profile.id : userResponse.id;
         const user = {
