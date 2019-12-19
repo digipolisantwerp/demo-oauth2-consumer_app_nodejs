@@ -23,6 +23,7 @@ function createLogoutUrl(consentConfig, profileConfig, logoutRedirectUri, id, ac
     host: `${consentConfig.uri.scheme}://${consentConfig.uri.domain}`,
     path: `/${profileConfig.auth.version}/logout/redirect/encrypted`,
     user_id: id,
+    method: profileConfig.auth.method,
     access_token: accessToken,
     redirect_uri: logoutRedirectUri,
     service: profileConfig.auth.service,
@@ -42,6 +43,9 @@ async function callback(req, res, next) {
     // set service provider
     if (req.query.sp) {
       profileConfig.auth.service = req.query.sp;
+    }
+    if (req.query.method) {
+      profileConfig.auth.method = req.query.method;
     }
     const session = JSON.stringify(await getSession(req.cookies['dgp.auth.ssokey'], profileConfig.auth.client_id), null, 4);
     const sessionsResponse = await getSessions(req.cookies['dgp.auth.ssokey']);
@@ -72,7 +76,7 @@ async function callback(req, res, next) {
           return res.send(err);
         }
         const profileUrl = `${configApi.scheme}://${configApi.domain}${configApi.path}/me`;
-        request({
+        return request({
           url: profileUrl,
           auth: { bearer: token },
           json: true,
@@ -101,7 +105,7 @@ async function callback(req, res, next) {
             },
             logoutUrl: createLogoutUrl(envConfig.consent, profileConfig, envConfig.logout_redirect_uri, userId, token, authType),
           };
-          res.render('callback.ejs', {
+          return res.render('callback.ejs', {
             title: 'Login successful',
             user,
             session,
