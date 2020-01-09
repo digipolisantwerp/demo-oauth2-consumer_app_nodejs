@@ -61,7 +61,7 @@ function createLogoutUri(options) {
   });
   const queryObject = {
     client_id: options.client_id,
-    auth_type: options.service,
+    service: options.service,
     data: encrypt(data, options.client_secret),
   };
   if (options.method) {
