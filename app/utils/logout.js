@@ -1,8 +1,20 @@
-'use strict';
-
-var querystring = require('querystring');
 var crypto = require('crypto');
 var algorithm = 'aes-128-ctr';
+
+function serialize(obj, prefix) {
+  var str = [],
+    p;
+  for (p in obj) {
+    if (obj.hasOwnProperty(p)) {
+      var k = prefix ? prefix + "[" + p + "]" : p,
+        v = obj[p];
+      str.push((v !== null && typeof v === "object") ?
+        serialize(v, k) :
+        encodeURIComponent(k) + "=" + encodeURIComponent(v));
+    }
+  }
+  return str.join("&");
+}
 
 function encrypt(text, password) {
   var hash = crypto.createHash('sha1');
@@ -42,23 +54,26 @@ function encrypt(text, password) {
  * @param {string} options.client_secret
  */
 function createLogoutUri(options) {
-  var data = JSON.stringify({
+  const data = JSON.stringify({
     user_id: options.user_id,
     access_token: options.access_token,
     redirect_uri: options.redirect_uri,
   });
-  var queryObject = {
+  const queryObject = {
     client_id: options.client_id,
     service: options.service,
     data: encrypt(data, options.client_secret),
   };
+  if (options.method) {
+    delete queryObject.service;
+    queryObject.authenticationMethod = options.method;
+  }
   if (options.auth_type) {
     queryObject.auth_type = options.auth_type;
   }
-
-  return options.host + options.path + '?' + querystring.stringify(queryObject);
+  return `${options.host}${options.path}?${serialize(queryObject)}`;
 }
 
 module.exports = {
-  createLogoutUri: createLogoutUri,
+  createLogoutUri,
 };

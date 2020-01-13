@@ -46,7 +46,7 @@
 <pre class="a-pre a-pre--scrollable"><code contenteditable spellcheck="false"><%- session %></code></pre>
 
 <p class="u-margin-top-lg">
-    <input class="a-button a-button--secondary" type="button" value="Log out" onclick="window.location.href = '<%- user.logoutUrl %>'" />
+  <a class="a-button a-button--secondary" href="<%- user.logoutUrl %>">Logout</a>
 </p>
 
 <%- include _footer.ejs -%>
