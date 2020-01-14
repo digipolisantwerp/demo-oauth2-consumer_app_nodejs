@@ -64,7 +64,7 @@ module.exports = {
       redirect_uri: process.env.SERVICE_PROFIEL_ACM_AUTH_REDIRECT_URI || 'http://localhost:3000/callback/profiel',
     },
   },
-  profiel_enterprize: {
+  profiel_enterprise: {
     title: 'Authentication 2.0 - Enterprise',
     uri: {
       scheme: process.env.SERVICE_PROFIEL_URI_SCHEME || 'https',
