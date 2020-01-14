@@ -1,19 +1,13 @@
 const crypto = require('crypto');
+
 const algorithm = 'aes-128-ctr';
 
-function serialize(obj, prefix) {
+function serialize(obj) {
   const str = [];
-  let p;
-  for (p in obj) {
-    if (obj.hasOwnProperty(p)) {
-      var k = prefix ? prefix + "[" + p + "]" : p,
-        v = obj[p];
-      str.push((v !== null && typeof v === "object") ?
-        serialize(v, k) :
-        encodeURIComponent(k) + "=" + encodeURIComponent(v));
-    }
-  }
-  return str.join("&");
+  Object.keys(obj).forEach((key) => {
+    str.push(`${encodeURIComponent(key)}=${encodeURIComponent(obj[key])}`);
+  });
+  return str.join('&');
 }
 
 function encrypt(text, password) {
