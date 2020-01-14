@@ -1,18 +1,16 @@
-'use strict';
-
 module.exports = {
   consent: {
     uri: {
       scheme: process.env.SERVICE_CONSENT_URI_SCHEME || 'http',
       domain: process.env.SERVICE_CONSENT_URI_DOMAIN || 'localhost:4000',
-      path: '/authorize?'
+      path: '/authorize?',
     },
     api: {
       url: process.env.SERVICE_CONSENT_API_URL || 'https://api-gw-o.antwerpen.be/acpaas/consent/v1',
       key: process.env.SERVICE_CONSENT_API_KEY || '<your-api-key>',
       client_id: process.env.SERVICE_CONSENT_API_CLIENT_ID || '<clientid>',
       client_secret: process.env.SERVICE_CONSENT_API_CLIENT_SECRET || '<clientid>',
-    }
+    },
   },
   fasdatastore: {
     title: 'eID',
@@ -36,7 +34,7 @@ module.exports = {
     uri: {
       scheme: process.env.SERVICE_GENTDATASTORE_URI_SCHEME || 'https',
       domain: process.env.SERVICE_GENTDATASTORE_URI_DOMAIN || 'api-gw-o.antwerpen.be',
-      path: '/digipolis/gentdatastore/v1'
+      path: '/digipolis/gentdatastore/v1',
     },
     auth: {
       version: 'v1',
@@ -50,11 +48,10 @@ module.exports = {
   },
   profiel: {
     title: 'Authentication 2.0',
-    order: 10,
     uri: {
       scheme: process.env.SERVICE_PROFIEL_URI_SCHEME || 'https',
       domain: process.env.SERVICE_PROFIEL_URI_DOMAIN || 'api-gw-o.antwerpen.be',
-      path: '/acpaas/shared-identity-data/v1'
+      path: '/acpaas/shared-identity-data/v1',
     },
     auth: {
       version: 'v2',
@@ -67,12 +64,30 @@ module.exports = {
       redirect_uri: process.env.SERVICE_PROFIEL_ACM_AUTH_REDIRECT_URI || 'http://localhost:3000/callback/profiel',
     },
   },
+  profiel_enterprize: {
+    title: 'Authentication 2.0 - Enterprise',
+    uri: {
+      scheme: process.env.SERVICE_PROFIEL_URI_SCHEME || 'https',
+      domain: process.env.SERVICE_PROFIEL_URI_DOMAIN || 'api-gw-o.antwerpen.be',
+      path: '/acpaas/shared-identity-data/v1',
+    },
+    auth: {
+      version: 'v2',
+      response_type: 'code',
+      minimal_assurance_level: 'low',
+      auth_methods: process.env.SERVICE_PROFIEL_AUTH_METHODS || 'fas-enterprise-bmid,fas-enterprise-eid,fas-enterprise-totp,fas-enterprise-otp',
+      client_id: process.env.SERVICE_PROFIEL_ACM_AUTH_CLIENT_ID || 'YOUR_CLIENT_ID',
+      client_secret: process.env.SERVICE_PROFIEL_ACM_AUTH_CLIENT_SECRET || 'YOUR_CLIENT_SECRET',
+      scope: 'astad.aprofiel.v1.username astad.aprofiel.v1.name astad.aprofiel.v1.avatar astad.aprofiel.v1.email astad.aprofiel.v1.phone',
+      redirect_uri: process.env.SERVICE_PROFIEL_ACM_AUTH_REDIRECT_URI || 'http://localhost:3000/callback/profiel',
+    },
+  },
   aprofiel: {
     title: 'A-Profiel',
     uri: {
       scheme: process.env.SERVICE_APROFIEL_URI_SCHEME || 'https',
       domain: process.env.SERVICE_APROFIEL_URI_DOMAIN || 'api-gw-o.antwerpen.be',
-      path: '/astad/aprofiel/v1/v1'
+      path: '/astad/aprofiel/v1/v1',
     },
     auth: {
       version: 'v1',
@@ -89,7 +104,7 @@ module.exports = {
     uri: {
       scheme: process.env.SERVICE_MPROFIEL_URI_SCHEME || 'https',
       domain: process.env.SERVICE_MPROFIEL_URI_DOMAIN || 'api-gw-o.antwerpen.be',
-      path: '/astad/mprofiel/v1/v1'
+      path: '/astad/mprofiel/v1/v1',
     },
     auth: {
       version: 'v1',
@@ -107,7 +122,7 @@ module.exports = {
     uri: {
       scheme: process.env.SERVICE_SOPROFIEL_URI_SCHEME || 'https',
       domain: process.env.SERVICE_SOPROFIEL_URI_DOMAIN || 'api-gw-o.antwerpen.be',
-      path: '/astad/mprofiel/v1/v1'
+      path: '/astad/mprofiel/v1/v1',
     },
     auth: {
       version: 'v1',
@@ -125,7 +140,7 @@ module.exports = {
     uri: {
       scheme: process.env.SERVICE_PROVANTPROFIEL_URI_SCHEME || 'https',
       domain: process.env.SERVICE_PROVANTPROFIEL_URI_DOMAIN || 'api-gw-o.antwerpen.be',
-      path: '/acpaas/provantprofiel/v1'
+      path: '/acpaas/provantprofiel/v1',
     },
     auth: {
       version: 'v1',

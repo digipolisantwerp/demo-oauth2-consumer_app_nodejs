@@ -1,21 +1,10 @@
-'use strict';
+const { Router } = require('express');
+const crtlProfiel = require('../controllers/authorization_code-profielen');
 
-var express = require('express');
-var crtlProfiel = require('../controllers/authorization_code-profielen');
+const router = Router();
 
-module.exports = function addRoutes(app) {
+router.get('/', crtlProfiel.index);
+router.get('/callback/:profileType', crtlProfiel.callback);
+router.get('/logoutCallback', crtlProfiel.logoutCallback);
 
-  var router = express.Router();
-
-  router.route('/')
-    .all(crtlProfiel.index);
-
-  router.route('/callback/:profileType')
-    .all(crtlProfiel.callback);
-
-  router.route('/logoutCallback')
-    .all(crtlProfiel.logoutCallback);
-
-  // Register our routes
-  app.use('/', router);
-};
+module.exports = router;

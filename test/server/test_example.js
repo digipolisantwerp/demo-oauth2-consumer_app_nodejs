@@ -1,5 +1,3 @@
-'use strict';
-
 process.env.NODE_ENV = 'test';
 
 // Dependencies
@@ -18,7 +16,7 @@ require('../../app.js');
 should.equal(true, true);
 
 // var config = yamlConfig.load(global.__base + '/config/app.yml',process.env.NODE_ENV);
-var config = require(global.__base + '/config/app.conf.js');
+var config = require('../../config/app.conf.js');
 
 // Config
 var api = supertest('http://localhost:' + config.port);
@@ -26,14 +24,9 @@ var api = supertest('http://localhost:' + config.port);
 // Endpoint to test
 var endpoint = '/api/v1/examples';
 
-describe('multiple test in API projects', function () {
-
-
-  it('no tests in this project :(', function (done) {
-
+describe('multiple test in API projects', () =>  {
+  it('no tests in this project :(', (done) => {
     'no tests in this project :('.should.contain('test');
     done();
-
   });
-
 });

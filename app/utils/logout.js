@@ -1,9 +1,9 @@
-var crypto = require('crypto');
-var algorithm = 'aes-128-ctr';
+const crypto = require('crypto');
+const algorithm = 'aes-128-ctr';
 
 function serialize(obj, prefix) {
-  var str = [],
-    p;
+  const str = [];
+  let p;
   for (p in obj) {
     if (obj.hasOwnProperty(p)) {
       var k = prefix ? prefix + "[" + p + "]" : p,
@@ -17,12 +17,12 @@ function serialize(obj, prefix) {
 }
 
 function encrypt(text, password) {
-  var hash = crypto.createHash('sha1');
+  const hash = crypto.createHash('sha1');
   hash.update(password);
-  var key = hash.digest().slice(0, 16);
-  var ivBuffer = Buffer.alloc(16);
-  var cipher = crypto.createCipheriv(algorithm, key, ivBuffer);
-  var crypted = cipher.update(text, 'utf8', 'hex');
+  const key = hash.digest().slice(0, 16);
+  const ivBuffer = Buffer.alloc(16);
+  const cipher = crypto.createCipheriv(algorithm, key, ivBuffer);
+  let crypted = cipher.update(text, 'utf8', 'hex');
   crypted += cipher.final('hex');
   return crypted;
 }

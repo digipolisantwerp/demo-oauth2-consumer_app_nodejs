@@ -133,6 +133,7 @@ function getLoginTypes() {
     'soprofiel',
     'digipolisgentdatastore',
     'provantprofiel',
+    'profiel_enterprize',
   ];
   return loginTypeKeys.map(key => ({
     key,
