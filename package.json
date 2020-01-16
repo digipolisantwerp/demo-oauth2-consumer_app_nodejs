@@ -8,7 +8,7 @@
     "start": "node app.js",
     "dev": "env-cmd -f .env.dev nodemon app.js",
     "lint": "node_modules/eslint/bin/eslint.js  .",
-    "test": "NODE_ENV=test ./node_modules/.bin/istanbul cover --dir ./coverage ./node_modules/.bin/_mocha -- -R spec -t 15000 --recursive --slow 2"
+    "test": "NODE_ENV=test ./node_modules/.bin/istanbul cover --dir ./coverage ./node_modules/.bin/_mocha -- -R spec -t 15000 --recursive --slow 2 --exit"
   },
   "author": "Frank Desmettre",
   "dependencies": {
