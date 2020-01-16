@@ -15,19 +15,15 @@
 
 <script>
     function setUrl(linkElementId, baseUrl, saveConsent) {
-        var url = baseUrl + (saveConsent ? '&save_consent=true' : '');
-        $('#' + linkElementId).attr('href', url);
+      var url = baseUrl + (saveConsent ? '&save_consent=true' : '');
+      document.getElementById(linkElementId).setAttribute('href', url)
     }
-
-    $(document).ready(function () {
-        $('#saveConsent').change(function () {
-            var checked = $(this).is(':checked');
-
-            <% loginTypes.forEach(function (loginType) { %>
-                setUrl('link<%- loginType.key %>', '<%- loginType.url %>', checked);
-            <% }); %>
-        });
-    });
+    document.getElementById('saveConsent').addEventListener('change', function(event) {
+      var checked = document.getElementById('saveConsent').checked;
+      <% loginTypes.forEach(function (loginType) { %>
+         setUrl('link<%- loginType.key %>', '<%- loginType.url %>', checked);
+      <% }); %>
+    })
 </script>
 
 <%- include _footer.ejs -%>

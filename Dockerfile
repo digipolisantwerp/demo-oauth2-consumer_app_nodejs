@@ -1,4 +1,4 @@
-FROM node:carbon
+FROM node:12
 
 RUN mkdir /app
 WORKDIR /app
