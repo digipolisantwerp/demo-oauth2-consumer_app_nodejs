@@ -67,19 +67,19 @@ module.exports = {
   profiel_enterprise: {
     title: 'Authentication 2.0 - Enterprise',
     uri: {
-      scheme: process.env.SERVICE_PROFIEL_URI_SCHEME || 'https',
-      domain: process.env.SERVICE_PROFIEL_URI_DOMAIN || 'api-gw-o.antwerpen.be',
+      scheme: process.env.SERVICE_PROFIEL_ENTERPRISE_URI_SCHEME || 'https',
+      domain: process.env.SERVICE_PROFIEL_ENTERPRISE_URI_DOMAIN || 'api-gw-o.antwerpen.be',
       path: '/acpaas/shared-identity-data/v1',
     },
     auth: {
       version: 'v2',
       response_type: 'code',
       minimal_assurance_level: 'low',
-      auth_methods: process.env.SERVICE_PROFIEL_AUTH_METHODS || 'fas-enterprise-bmid,fas-enterprise-eid,fas-enterprise-totp,fas-enterprise-otp',
-      client_id: process.env.SERVICE_PROFIEL_ACM_AUTH_CLIENT_ID || 'YOUR_CLIENT_ID',
-      client_secret: process.env.SERVICE_PROFIEL_ACM_AUTH_CLIENT_SECRET || 'YOUR_CLIENT_SECRET',
+      auth_methods: process.env.SERVICE_PROFIEL_ENTERPRISE_AUTH_METHODS || 'fas-enterprise-bmid,fas-enterprise-eid,fas-enterprise-totp,fas-enterprise-otp',
+      client_id: process.env.SERVICE_PROFIEL_ENTERPRISE_ACM_AUTH_CLIENT_ID || 'YOUR_CLIENT_ID',
+      client_secret: process.env.SERVICE_PROFIEL_ENTERPRISE_ACM_AUTH_CLIENT_SECRET || 'YOUR_CLIENT_SECRET',
       scope: 'astad.aprofiel.v1.username astad.aprofiel.v1.name astad.aprofiel.v1.avatar astad.aprofiel.v1.email astad.aprofiel.v1.phone',
-      redirect_uri: process.env.SERVICE_PROFIEL_ACM_AUTH_REDIRECT_URI || 'http://localhost:3000/callback/profiel',
+      redirect_uri: process.env.SERVICE_PROFIEL_ENTERPRISE_ACM_AUTH_REDIRECT_URI || 'http://localhost:3000/callback/profiel',
     },
   },
   aprofiel: {
