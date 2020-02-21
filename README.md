@@ -10,7 +10,10 @@ Some minimalistic NodeJS sample code how to use the following Antwerp services:
 ## Getting OAuth tokens
 
 You will need an OAuth2 client ID and client secret - which can be obtained here:
-https://developer.antwerpen.be/
+
+* https://api-store-o.antwerpen.be
+* https://api-store-a.antwerpen.be
+* https://api-store.antwerpen.be
 
 You will need :
 
