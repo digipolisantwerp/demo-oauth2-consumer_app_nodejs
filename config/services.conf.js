@@ -135,6 +135,24 @@ module.exports = {
       redirect_uri: process.env.SERVICE_SOPROFIEL_AUTH_REDIRECT_URI || 'http://localhost:3000/callback/soprofiel',
     },
   },
+  zorgbedrijf: {
+    title: 'Zorgbedrijf',
+    uri: {
+      scheme: process.env.SERVICE_ZORGBEDRIJF_URI_SCHEME || 'https',
+      domain: process.env.SERVICE_ZORGBEDRIJF_URI_DOMAIN || 'api-gw-o.antwerpen.be',
+      path: '/astad/mprofiel/v1/v1',
+    },
+    auth: {
+      version: 'v1',
+      response_type: 'code',
+      auth_type: 'zorgbedrijf',
+      service: process.env.SERVICE_MPROFIEL_AUTH_SERVICE || 'astad.mprofiel.v1',
+      client_id: process.env.SERVICE_ZORGBEDRIJF_AUTH_CLIENT_ID || 'YOUR_CLIENT_ID',
+      client_secret: process.env.SERVICE_ZORGBEDRIJF_AUTH_CLIENT_SECRET || 'YOUR_CLIENT_SECRET',
+      scope: 'all',
+      redirect_uri: process.env.SERVICE_ZORGBEDRIJF_AUTH_REDIRECT_URI || 'http://localhost:3000/callback/zorgbedrijf',
+    },
+  },
   provantprofiel: {
     title: 'Provincie Antwerpen Profiel',
     uri: {

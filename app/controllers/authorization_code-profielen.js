@@ -131,6 +131,7 @@ function getLoginTypes() {
     'mprofiel',
     'fasdatastore',
     'soprofiel',
+    'zorgbedrijf',
     'digipolisgentdatastore',
     'provantprofiel',
     'profiel_enterprise',
