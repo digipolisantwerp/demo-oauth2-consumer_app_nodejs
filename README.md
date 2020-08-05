@@ -22,7 +22,6 @@ You will need :
 * First and Lastname of the person requesting access
 * A copy of your EID data (PDF)
 
-
 ## How to consume the AProfiel (or MProfiel) API
 
 ### Run application using docker-compose
@@ -67,7 +66,8 @@ response_type=code
 | lng     | false       | The language the logon application should use. Defaults to 'nl'. Available languages are nl, fr, en, de.     |
 | force_auth     | false       | By default the IDP behind the logon application initiates an SSO session. If you want to force a user to authenticate again you should set this parameter to 'true'.     |
 | save_consent | false | If set to 'true', the consent page will only be shown on the first logon. |
-| auth_type | so / form | **login** type for `mProfile` form for "internal" **so** for `stedeijk onderwijs`. Defauts to internal
+| auth_type | so / form | **login** type for `mProfile` form for "internal" **so** for `stedeijk onderwijs`. Defaults to internal
+
 ### Exchange authorization_code for access_token
 
 After successful authentication you will be redirected to the redirect_uri of your registered application.
@@ -130,7 +130,7 @@ Response:
 
 ## Logout flow
 
-In order to log out a call to /logout/redirect/encrypted needs to be made with these query string parameters:
+In order to log out a **browser redirect to `https://api-oauth2.antwerpen.be/<v1/v2>/logout/redirect/encrypted`** (or `api-oauth2-<o/a>.antwerpen.be` for DEV/ACC) needs to be made with these query string parameters:
 
 | Param     | Description                                                                                                                       |
 |-----------|-----------------------------------------------------------------------------------------------------------------------------------|
@@ -138,9 +138,6 @@ In order to log out a call to /logout/redirect/encrypted needs to be made with t
 | service   | the service to log out, e.g. "astad.mprofiel.v1"                                                                                  |
 | data      | additional parameters encrypted, see below                                                                                        |
 | auth_type | optional: use the same `auth_type` which was passed to the login redirect (if set to "so", Azure logout for SO will be triggered) |
-
-
-
 
 The structure of the data object is as folows:
 
