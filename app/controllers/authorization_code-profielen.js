@@ -135,6 +135,7 @@ function getLoginTypes() {
     'digipolisgentdatastore',
     'provantprofiel',
     'profiel_enterprise',
+    'profiel_hintedlogin',
   ];
   return loginTypeKeys.map(key => ({
     key,
