@@ -11,17 +11,42 @@
         <input type="checkbox" id="saveConsent" name="consent" value="save" />
         <label for="saveConsent">Save consent</label>
     </div>
+    <div class="a-input__checkbox">
+        <input type="checkbox" id="consent3" name="consent3" value="save" />
+        <label for="consent2">Send to consent3.0</label>
+    </div>
 </div>
 
 <script>
-    function setUrl(linkElementId, baseUrl, saveConsent) {
-      var url = baseUrl + (saveConsent ? '&save_consent=true' : '');
-      document.getElementById(linkElementId).setAttribute('href', url)
+    function setConsent(linkElementId, saveConsent) {
+      const url = document.getElementById(linkElementId).getAttribute('href');
+      if (url.includes('&save_consent=true') && !saveConsent ) {
+        document.getElementById(linkElementId).setAttribute('href', url.replace('&save_consent=true', ''));
+      }
+      if (!url.includes('&save_consent=true') && saveConsent ) {
+          document.getElementById(linkElementId).setAttribute('href', `${url}&save_consent=true`);
+      }
+    }
+    function setDomain(linkElementId, newConsent) {
+      let from = '<%- baseurl_consent3 %>';
+      let to = '<%- baseurl_consent %>';
+      if(newConsent) {
+        from = '<%- baseurl_consent %>';
+        to = '<%- baseurl_consent3 %>';
+      }
+      const url = document.getElementById(linkElementId).getAttribute('href');
+      document.getElementById(linkElementId).setAttribute('href', url.replace(from, to))
     }
     document.getElementById('saveConsent').addEventListener('change', function(event) {
       var checked = document.getElementById('saveConsent').checked;
       <% loginTypes.forEach(function (loginType) { %>
-         setUrl('link<%- loginType.key %>', '<%- loginType.url %>', checked);
+         setConsent('link<%- loginType.key %>', checked);
+      <% }); %>
+    })
+    document.getElementById('consent3').addEventListener('change', function(event) {
+      var checked = document.getElementById('consent3').checked;
+      <% loginTypes.forEach(function (loginType) { %>
+         setDomain('link<%- loginType.key %>', checked);
       <% }); %>
     })
 </script>

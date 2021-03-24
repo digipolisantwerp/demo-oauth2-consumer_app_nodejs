@@ -3,6 +3,7 @@ module.exports = {
     uri: {
       scheme: process.env.SERVICE_CONSENT_URI_SCHEME || 'http',
       domain: process.env.SERVICE_CONSENT_URI_DOMAIN || 'localhost:4000',
+      domain_consent3: process.env.SERVICE_CONSENT3_URI_DOMAIN || 'localhost:4000',
       path: '/authorize?',
     },
     api: {
