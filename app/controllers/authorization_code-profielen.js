@@ -110,6 +110,8 @@ async function callback(req, res, next) {
             user,
             session,
             sessions: existingSessions,
+            baseurl_consent: `${envConfig.consent.uri.scheme}://${envConfig.consent.uri.domain}`,
+            baseurl_consent2: `${envConfig.consent.uri.scheme}://${envConfig.consent.uri.domain_consent2}`,
           });
         });
       },
@@ -150,7 +152,7 @@ function index(req, res) {
     index: true,
     loginTypes: getLoginTypes(),
     baseurl_consent: `${envConfig.consent.uri.scheme}://${envConfig.consent.uri.domain}`,
-    baseurl_consent3: `${envConfig.consent.uri.scheme}://${envConfig.consent.uri.domain_consent3}`,
+    baseurl_consent2: `${envConfig.consent.uri.scheme}://${envConfig.consent.uri.domain_consent2}`,
   });
 }
 
