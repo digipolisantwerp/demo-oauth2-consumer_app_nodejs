@@ -11,17 +11,65 @@
         <input type="checkbox" id="saveConsent" name="consent" value="save" />
         <label for="saveConsent">Save consent</label>
     </div>
+    <div class="a-input__checkbox">
+        <input type="checkbox" id="consent2" name="consent2" value="save" />
+        <label for="consent2">Send to consent2.0</label>
+    </div>
 </div>
 
 <script>
-    function setUrl(linkElementId, baseUrl, saveConsent) {
-      var url = baseUrl + (saveConsent ? '&save_consent=true' : '');
-      document.getElementById(linkElementId).setAttribute('href', url)
+    function setCookie(name, value, expire) {
+        var expireDate = new Date();
+        expireDate.setDate(expireDate.getDate() + expire);
+        document.cookie = name + "=" + escape(value) + "; expires=" + expireDate.toGMTString() + "; path=/";
+    }
+
+    function readCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+        }
+        return null;
+    }
+    function setConsent(linkElementId, saveConsent) {
+      const url = document.getElementById(linkElementId).getAttribute('href');
+      if (url.includes('&save_consent=true') && !saveConsent ) {
+        document.getElementById(linkElementId).setAttribute('href', url.replace('&save_consent=true', ''));
+      }
+      if (!url.includes('&save_consent=true') && saveConsent ) {
+          document.getElementById(linkElementId).setAttribute('href', `${url}&save_consent=true`);
+      }
+    }
+    function setDomain(linkElementId, newConsent) {
+      let from = '<%- baseurl_consent2 %>';
+      let to = '<%- baseurl_consent %>';
+      if(newConsent) {
+        from = '<%- baseurl_consent %>';
+        to = '<%- baseurl_consent2 %>';
+      }
+      const url = document.getElementById(linkElementId).getAttribute('href');
+      document.getElementById(linkElementId).setAttribute('href', url.replace(from, to))
+    }
+    if(readCookie("consent2") === "true"){
+        document.getElementById('consent2').checked = true;
+        <% loginTypes.forEach(function (loginType) { %>
+           setDomain('link<%- loginType.key %>', true);
+        <% }); %>
     }
     document.getElementById('saveConsent').addEventListener('change', function(event) {
       var checked = document.getElementById('saveConsent').checked;
       <% loginTypes.forEach(function (loginType) { %>
-         setUrl('link<%- loginType.key %>', '<%- loginType.url %>', checked);
+         setConsent('link<%- loginType.key %>', checked);
+      <% }); %>
+    })
+    document.getElementById('consent2').addEventListener('change', function(event) {
+      var checked = document.getElementById('consent2').checked;
+      setCookie("consent2", checked, new Date(Date.now() + 8*3600*1000))
+      <% loginTypes.forEach(function (loginType) { %>
+         setDomain('link<%- loginType.key %>', checked);
       <% }); %>
     })
 </script>
