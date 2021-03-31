@@ -5,7 +5,9 @@ const algorithm = 'aes-128-ctr';
 function serialize(obj) {
   const str = [];
   Object.keys(obj).forEach((key) => {
-    str.push(`${encodeURIComponent(key)}=${encodeURIComponent(obj[key])}`);
+    if (obj[key]) {
+      str.push(`${encodeURIComponent(key)}=${encodeURIComponent(obj[key])}`);
+    }
   });
   return str.join('&');
 }
