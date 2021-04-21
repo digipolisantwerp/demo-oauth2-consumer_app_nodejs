@@ -96,7 +96,7 @@ async function callback(req, res, next) {
             ssoKey: req.cookies['dgp.auth.ssokey'],
             client_id: profileConfig.auth.client_id,
             sessionsUrl: `${envConfig.consent.api.url}/sessions/${req.cookies['dgp.auth.ssokey']}`,
-            sessionUrl: `${envConfig.consent.api.url}/sessions/${req.cookies['dgp.auth.ssokey']}/${profileConfig.auth.client_id}`,
+            sessionUrl: `${envConfig.consent.api.url}/sessions/${req.cookies['dgp.auth.ssokey']}/clientid/${profileConfig.auth.client_id}`,
             service: profileConfig.auth.service,
             profile: {
               url: profileUrl,
