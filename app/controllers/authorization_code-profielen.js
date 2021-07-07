@@ -131,6 +131,7 @@ function getLoginTypes() {
     'profiel',
     'aprofiel',
     'mprofiel',
+    'pza',
     'fasdatastore',
     'soprofiel',
     'zorgbedrijf',
