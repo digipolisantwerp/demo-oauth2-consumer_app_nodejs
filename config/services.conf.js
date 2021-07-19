@@ -81,7 +81,7 @@ module.exports = {
       client_id: process.env.SERVICE_PZA_AUTH_CLIENT_ID || 'YOUR_CLIENT_ID',
       client_secret: process.env.SERVICE_PZA_AUTH_CLIENT_SECRET || 'YOUR_CLIENT_SECRET',
       scope: 'all',
-      redirect_uri: process.env.SERVICE_PZA_AUTH_AUTH_REDIRECT_URI || 'http://localhost:3000/callback/pza',
+      redirect_uri: process.env.SERVICE_PZA_AUTH_REDIRECT_URI || 'http://localhost:3000/callback/pza',
     },
   },
   profiel_enterprise: {
