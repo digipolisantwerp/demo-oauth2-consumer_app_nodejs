@@ -54,6 +54,11 @@
 </p>
 
 <script>
+    const consent_base_url = {
+      consent: '<%- baseurl_consent %>',
+      consent1: '<%- baseurl_consent1 %>',
+      consent2: '<%- baseurl_consent2 %>'
+    }
     function setCookie(name, value, expire) {
         var expireDate = new Date();
         expireDate.setDate(expireDate.getDate() + expire);
@@ -70,24 +75,25 @@
         }
         return null;
     }
-    function setDomain(linkElementId, newConsent) {
-      let from = '<%- baseurl_consent2 %>';
-      let to = '<%- baseurl_consent %>';
-      if(newConsent) {
-        from = '<%- baseurl_consent %>';
-        to = '<%- baseurl_consent2 %>';
-      }
+    function setDomain(linkElementId, newConsentUrl) {
       const url = document.getElementById(linkElementId).getAttribute('href');
-      document.getElementById(linkElementId).setAttribute('href', url.replace(from, to))
+     console.log(newConsentUrl);
+      let from = url.match(/^https?:\/\/[^#?\/]+/)[0];
+      document.getElementById(linkElementId).setAttribute('href', url.replace(from, newConsentUrl))
     }
-    document.getElementById('consent2').addEventListener('change', function(event) {
-      var checked = document.getElementById('consent2').checked;
-      setCookie("consent2", checked, new Date(Date.now() + 8*3600*1000))
-      setDomain('logout', checked);
-    })
-    if(readCookie("consent2") === "true"){
-        document.getElementById('consent2').checked = true;
-        setDomain('logout', true);
+
+    if(readCookie("consent_version")){
+      Array.from(document.getElementsByName("consent-version")).find((element) => {
+        console.log('value', element)
+        if(element.value === readCookie("consent_version")) {
+          document.getElementById('consent2').checked = true;
+        }
+      });
+        <% loginTypes.forEach(function (loginType) { %>
+           setDomain('link<%- loginType.key %>', consent_base_url[readCookie("consent_version")]);
+        <% }); %>
+    } else {
+      document.getElementById('consent').checked = true;
     }
 </script>
 <%- include _footer.ejs -%>
