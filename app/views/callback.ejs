@@ -77,21 +77,17 @@
     }
     function setDomain(linkElementId, newConsentUrl) {
       const url = document.getElementById(linkElementId).getAttribute('href');
-     console.log(newConsentUrl);
       let from = url.match(/^https?:\/\/[^#?\/]+/)[0];
       document.getElementById(linkElementId).setAttribute('href', url.replace(from, newConsentUrl))
     }
 
     if(readCookie("consent_version")){
       Array.from(document.getElementsByName("consent-version")).find((element) => {
-        console.log('value', element)
         if(element.value === readCookie("consent_version")) {
           document.getElementById('consent2').checked = true;
         }
       });
-        <% loginTypes.forEach(function (loginType) { %>
-           setDomain('link<%- loginType.key %>', consent_base_url[readCookie("consent_version")]);
-        <% }); %>
+      setDomain('logout', consent_base_url[readCookie("consent_version")]);
     } else {
       document.getElementById('consent').checked = true;
     }
