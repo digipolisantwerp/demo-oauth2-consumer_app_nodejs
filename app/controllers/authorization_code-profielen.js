@@ -147,6 +147,7 @@ function getLoginTypes() {
     url: createAuthorizeUrl(key),
   }));
 }
+
 function index(req, res) {
   const envConfig = cloneDeep(servicesConfig);
   res.render('index.ejs', {
