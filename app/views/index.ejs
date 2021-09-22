@@ -68,6 +68,7 @@
           document.getElementById('consent2').checked = true;
         }
       });
+        document.getElementById(readCookie("consent_version")).checked = true;
         <% loginTypes.forEach(function (loginType) { %>
            setDomain('link<%- loginType.key %>', consent_base_url[readCookie("consent_version")]);
         <% }); %>
