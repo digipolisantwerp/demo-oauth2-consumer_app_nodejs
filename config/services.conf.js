@@ -58,7 +58,7 @@ module.exports = {
     auth: {
       version: 'v2',
       response_type: 'code',
-      consent_required: 'false',
+      // consent_required: 'false',
       minimal_assurance_level: 'low',
       auth_methods: process.env.SERVICE_PROFIEL_AUTH_METHODS || 'fas-citizen-bmid,fas-citizen-eid,fas-citizen-totp,fas-citizen-otp,iam-aprofiel-userpass',
       client_id: process.env.SERVICE_PROFIEL_ACM_AUTH_CLIENT_ID || 'YOUR_CLIENT_ID',
