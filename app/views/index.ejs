@@ -84,6 +84,12 @@
         <% }); %>
       });
     });
+    document.getElementById('saveConsent').addEventListener('change', function(event) {
+      const checked = document.getElementById('saveConsent').checked;
+      <% loginTypes.forEach(function (loginType) { %>
+         setConsent('link<%- loginType.key %>', checked);
+      <% }); %>
+    })
 </script>
 
 <%- include _footer.ejs -%>
