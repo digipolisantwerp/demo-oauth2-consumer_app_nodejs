@@ -2,6 +2,6 @@ version: '2'
 services:
   app:
     build: .
-    env_file: .env
+    env_file: .env.dev
     ports:
       - "3000:3000"
