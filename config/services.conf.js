@@ -1,4 +1,18 @@
 module.exports = {
+  loginTypeKeys: [
+    'profiel',
+    'aprofiel',
+    'mprofiel',
+    'pza',
+    'fasdatastore',
+    'soprofiel',
+    'zorgbedrijf',
+    'digipolisgentdatastore',
+    'provantprofiel',
+    'profiel_enterprise',
+    'profiel_hintedlogin',
+    'profiel_mandate',
+  ],
   consent: {
     uri: {
       scheme: process.env.SERVICE_CONSENT_URI_SCHEME || 'http',
@@ -9,6 +23,8 @@ module.exports = {
     },
     api: {
       url: process.env.SERVICE_CONSENT_API_URL || 'https://api-gw-o.antwerpen.be/acpaas/consent/v1',
+      extra_header: process.env.SERVICE_CONSENT_EXTRA_HEADER || 'Content-Type',
+      extra_header_value: process.env.SERVICE_CONSENT_EXTRA_HEADER_VALUE || 'application/json',
       key: process.env.SERVICE_CONSENT_API_KEY || '<your-api-key>',
       client_id: process.env.SERVICE_CONSENT_API_CLIENT_ID || '<clientid>',
       client_secret: process.env.SERVICE_CONSENT_API_CLIENT_SECRET || '<clientid>',
@@ -119,6 +135,24 @@ module.exports = {
       client_secret: process.env.SERVICE_PROFIEL_HINTED_ACM_AUTH_CLIENT_SECRET || 'YOUR_CLIENT_SECRET',
       scope: 'astad.aprofiel.v1.username astad.aprofiel.v1.name astad.aprofiel.v1.avatar astad.aprofiel.v1.email astad.aprofiel.v1.phone',
       redirect_uri: process.env.SERVICE_PROFIEL_HINTED_ACM_AUTH_REDIRECT_URI || 'http://localhost:3000/callback/profiel',
+    },
+  },
+  profiel_mandate: {
+    title: 'Authentication 2.0 - Mandate',
+    uri: {
+      scheme: process.env.SERVICE_PROFIEL_HINTED_URI_SCHEME || 'https',
+      domain: process.env.SERVICE_PROFIEL_HINTED_URI_DOMAIN || 'api-gw-o.antwerpen.be',
+      path: '/acpaas/shared-identity-data/v1',
+    },
+    auth: {
+      version: 'v2',
+      response_type: 'code',
+      minimal_assurance_level: 'low',
+      auth_methods: process.env.SERVICE_PROFIEL_MANDATE_AUTH_METHODS || 'fas-mandate-bmid,fas-mandate-bmid-eid,fas-mandate-totp,fas-mandate-otp',
+      client_id: process.env.SERVICE_PROFIEL_MANDATE_ACM_AUTH_CLIENT_ID || 'YOUR_CLIENT_ID',
+      client_secret: process.env.SERVICE_PROFIEL_MANDATE_ACM_AUTH_CLIENT_SECRET || 'YOUR_CLIENT_SECRET',
+      scope: 'astad.aprofiel.v1.username astad.aprofiel.v1.name astad.aprofiel.v1.avatar astad.aprofiel.v1.email astad.aprofiel.v1.phone',
+      redirect_uri: process.env.SERVICE_PROFIEL_MANDATE_ACM_AUTH_REDIRECT_URI || 'http://localhost:3000/callback/profiel',
     },
   },
   aprofiel: {
