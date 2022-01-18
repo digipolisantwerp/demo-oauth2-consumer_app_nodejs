@@ -1,6 +1,6 @@
 <%- include('_header') -%>
 
-<div class="m-alert m-alert--success u-margin-top-xs u-margin-bottom-xs" style="padding: 1rem;">
+<div class="m-alert m-alert--<%-status %> u-margin-top-xs u-margin-bottom-xs" style="padding: 1rem;">
   <%- title %>
 </div>
 <h5 class="u-margin-top-xs u-margin-bottom-xs">User:</h5>
@@ -16,6 +16,9 @@
     <dd><%- user.profile.id %></dd>
   </dl>
 </div>
+<br/>
+<h6 class="u-margin-top-xs u-margin-bottom-xs">Token otp data:</h6>
+<pre class="a-pre a-pre--scrollable"><code contenteditable spellcheck="false"><%- decoded %></code></pre>
 <h6 class="u-margin-top-xs u-margin-bottom-xs">Profile response:</h6>
 <pre class="a-pre a-pre--scrollable"><code contenteditable spellcheck="false"><%- user.profile.response %></code></pre>
 
