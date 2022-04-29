@@ -10,6 +10,7 @@ async function getSession(ssokey, clientId) {
         authorization: `Bearer ${token}`,
         [config.consent.api.extra_header]: config.consent.api.extra_header_value,
       },
+      validateStatus: (status) => (status >= 200 && status < 300) || status === 404,
     });
     return data;
   } catch (e) {

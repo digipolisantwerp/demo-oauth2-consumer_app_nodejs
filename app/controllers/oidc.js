@@ -1,28 +1,13 @@
-const jwtDecode = require('jwt-decode');
 const axios = require('axios');
-const crypto = require('crypto');
-
-const pkceChallenge = require('pkce-challenge');
+const { Issuer, generators } = require('openid-client');
 
 const { getSessions, getSession } = require('../services/session.service');
+const { createLogoutUrl } = require('../helpers/authUrl.helper');
 const tokenHelper = require('../helpers/token.helper');
 const { stringifyObject } = require('../helpers/json.helper');
 const servicesConfig = require('../../config/services.conf');
-const { createLogoutUrl, getLoginTypes } = require('../helpers/authUrl.helper');
 
 const envConfig = JSON.parse(JSON.stringify(servicesConfig));
-
-function decode(token) {
-  try {
-    const { any_auth_code_otp, preferred_username } = jwtDecode(token);
-    return stringifyObject({
-      any_auth_code_otp,
-      preferred_username,
-    });
-  } catch (e) {
-    return false;
-  }
-}
 
 async function callback(req, res, next) {
   try {
@@ -41,31 +26,19 @@ async function callback(req, res, next) {
     ])).map((result) => stringifyObject(result));
 
     const configOauth = profileConfig.auth;
-    let token;
-    // starting at v3 we will be using a keycloak token
-    if (configOauth.version === 'v2' || configOauth.version === 'v1') {
-      token = await tokenHelper.getKongAccessToken(
-        req.query.code,
-        configOauth,
-        profileConfig,
-      );
-    } else {
-      token = await tokenHelper.getKeycloakAccessToken(
-        req.query.code,
-        configOauth,
-        req.cookies.code_verifier,
-        req.cookies.nonce,
-      );
-    }
+    const token = await tokenHelper.getKeycloakAccessToken(
+      req.query.code,
+      {
+        ...configOauth,
+        redirect_uri: 'http://localhost:3000/callback_oidc/profiel_keycloak',
+      },
+      req.cookies.code_verifier,
+      req.cookies.nonce,
+    );
 
     const configApi = profileConfig.uri;
     const profileUrl = `${configApi.scheme}://${configApi.domain}${configApi.path}/me`;
-    const response = await axios.get(profileUrl, {
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
-      validateStatus: false,
-    });
+    const response = await axios.get(profileUrl, { headers: { authorization: `Bearer ${token}` }, validateStatus: false });
 
     const body = response.data;
     if (!body) {
@@ -95,13 +68,11 @@ async function callback(req, res, next) {
         authType,
       ),
     };
-    const decoded = decode(token);
     return res.render('callback.ejs', {
       title: (response.status === 200) ? 'Login successful' : 'Login failed',
       status: (response.status === 200) ? 'success' : 'warning',
       user,
       session,
-      decoded,
       sessions,
       baseurl_consent: `${envConfig.consent.uri.scheme}://${envConfig.consent.uri.domain}`,
       baseurl_consent1: `${envConfig.consent.uri.scheme}://${envConfig.consent.uri.domain_consent1}`,
@@ -113,19 +84,41 @@ async function callback(req, res, next) {
   }
 }
 
-function index(req, res) {
-  const { code_verifier, code_challenge } = pkceChallenge(128);
-  const nonce = crypto.randomBytes(128).toString('hex');
+async function index(req, res) {
+  const {
+    client_id,
+    client_secret,
+    auth_methods,
+    redirect_uri,
+    oidc_issuer,
+  } = servicesConfig.profiel_keycloak.auth;
+  const issuer = await Issuer.discover(`${oidc_issuer}/.well-known/openid-configuration`);
+  console.log('Discovered issuer %s %O', issuer.issuer, issuer.metadata);
+
+  const code_verifier = generators.codeVerifier();
+  const code_challenge = generators.codeChallenge(code_verifier);
+  const nonce = generators.nonce();
+
   res.cookie('code_verifier', code_verifier, { maxAge: 900000, httpOnly: true });
   res.cookie('nonce', nonce, { maxAge: 900000, httpOnly: true });
+  const client = new issuer.Client({
+    client_id,
+    client_secret,
+    redirect_uris: [redirect_uri],
+  });
+  const url = client.authorizationUrl({
+    scope: 'astad.aprofiel.v1.username',
+    redirect_uris: [redirect_uri],
+    auth_methods,
+    code_challenge,
+    code_challenge_method: 'S256',
+    nonce,
+  });
 
-  res.setHeader('Content-Security-Policy', "script-src 'nonce-EDNnf03nceIOfn39fn3e9h3sdfa'").render('index.ejs', {
-    title: 'Login',
+  res.render('oidc.ejs', {
+    title: url,
+    url,
     index: true,
-    loginTypes: getLoginTypes(code_challenge, nonce),
-    baseurl_consent: `${envConfig.consent.uri.scheme}://${envConfig.consent.uri.domain}`,
-    baseurl_consent1: `${envConfig.consent.uri.scheme}://${envConfig.consent.uri.domain_consent1}`,
-    baseurl_consent2: `${envConfig.consent.uri.scheme}://${envConfig.consent.uri.domain_consent2}`,
   });
 }
 
