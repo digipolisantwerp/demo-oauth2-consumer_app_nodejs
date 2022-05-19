@@ -1,6 +1,8 @@
 module.exports = {
   loginTypeKeys: [
     'profiel_keycloak',
+    'profiel_keycloak_phone',
+    'profiel_keycloak_email',
     'profiel',
     'aprofiel_keycloak',
     'aprofiel',
@@ -85,6 +87,49 @@ module.exports = {
       client_secret: process.env.SERVICE_PROFIEL_KEYCLOAK_ACM_AUTH_CLIENT_SECRET || 'YOUR_CLIENT_SECRET_from keycloak',
       scope: 'astad.aprofiel.v1.username astad.aprofiel.v1.name astad.aprofiel.v1.avatar astad.aprofiel.v1.email astad.aprofiel.v1.phone',
       redirect_uri: process.env.SERVICE_PROFIEL_KEYCLOAK_ACM_AUTH_REDIRECT_URI || 'http://localhost:3000/callback/profiel_keycloak',
+      tokenurl: process.env.SERVICE_PROFIEL_KEYCLOAK_ACM_AUTH_TOKENURL || 'https://identity-o.digipolis.be/auth/realms/antwerpen',
+    },
+  },
+  profiel_keycloak_phone: {
+    title: 'Authentication 2.0 - keycloak - phone',
+    uri: {
+      scheme: process.env.SERVICE_PROFIEL_URI_SCHEME || 'https',
+      domain: process.env.SERVICE_PROFIEL_URI_DOMAIN || 'api-gw-o.antwerpen.be',
+      path: '/acpaas/shared-identity-data/v1',
+    },
+    auth: {
+      version: 'v3',
+      oidc_issuer: process.env.SERVICE_PROFIEL_KEYCLOAK_AUTH_METHOD_PHONE_ISSUER || "",
+      response_type: 'code',
+      // consent_required: 'false',
+      minimal_assurance_level: 'low',
+      auth_methods: process.env.SERVICE_PROFIEL_KEYCLOAK_AUTH_METHOD_PHONE || 'iam-aprofiel-phone',
+      // @TODO: put in env
+      client_id: process.env.SERVICE_PROFIEL_KEYCLOAK_AUTH_METHOD_PHONE_CLIENT_ID || 'YOUR_CLIENT_ID',
+      client_secret: process.env.SERVICE_PROFIEL_KEYCLOAK_AUTH_METHOD_PHONE_CLIENT_SECRET || 'YOUR_CLIENT_SECRET_from_keycloak',
+      scope: 'astad.aprofiel.v1.username astad.aprofiel.v1.name astad.aprofiel.v1.avatar astad.aprofiel.v1.email astad.aprofiel.v1.phone',
+      redirect_uri: process.env.SERVICE_PROFIEL_KEYCLOAK_AUTH_METHOD_PHONE_REDIRECT_URI || 'http://localhost:3000/callback/profiel_keycloak',
+      tokenurl: process.env.SERVICE_PROFIEL_KEYCLOAK_AUTH_METHOD_PHONE_TOKENURL || 'https://identity-o.digipolis.be/auth/realms/antwerpen',
+    },
+  },
+  profiel_keycloak_email: {
+    title: 'Authentication 2.0 - keycloak - email',
+    uri: {
+      scheme: process.env.SERVICE_PROFIEL_URI_SCHEME || 'https',
+      domain: process.env.SERVICE_PROFIEL_URI_DOMAIN || 'api-gw-o.antwerpen.be',
+      path: '/acpaas/shared-identity-data/v1',
+    },
+    auth: {
+      version: 'v3',
+      oidc_issuer: process.env.SERVICE_PROFIEL_KEYCLOAK_AUTH_METHOD_EMAIL_ISSUER || "",
+      response_type: 'code',
+      // consent_required: 'false',
+      minimal_assurance_level: 'low',
+      auth_methods: process.env.SERVICE_PROFIEL_KEYCLOAK_AUTH_METHOD_EMAIL || 'iam-aprofiel-email',
+      client_id: process.env.SERVICE_PROFIEL_KEYCLOAK_AUTH_METHOD_EMAIL_CLIENT_ID || 'YOUR_CLIENT_ID',
+      client_secret: process.env.SERVICE_PROFIEL_KEYCLOAK_AUTH_METHOD_EMAIL_CLIENT_SECRET || 'YOUR_CLIENT_SECRET_from_keycloak',
+      scope: 'astad.aprofiel.v1.username astad.aprofiel.v1.name astad.aprofiel.v1.avatar astad.aprofiel.v1.email astad.aprofiel.v1.phone',
+      redirect_uri: process.env.SERVICE_PROFIEL_KEYCLOAK_AUTH_METHOD_EMAIL_REDIRECT_URI || 'http://localhost:3000/callback/profiel_keycloak',
       tokenurl: process.env.SERVICE_PROFIEL_KEYCLOAK_ACM_AUTH_TOKENURL || 'https://identity-o.digipolis.be/auth/realms/antwerpen',
     },
   },

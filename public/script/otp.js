@@ -1,7 +1,4 @@
 function updateurl() {
-  console.log('@@@@@@@@@@@@@@@@@@@@@');
-  console.log('update');
-  console.log('@@@@@@@@@@@@@@@@@@@@@');
   const otpfield = document.getElementById("otp")
   const userfield = document.getElementById("user")
   const link = document.getElementById("login")
