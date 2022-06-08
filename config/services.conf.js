@@ -1,6 +1,7 @@
 module.exports = {
   loginTypeKeys: [
     'profiel_keycloak',
+    'profiel_keycloak_mobile_itmse',
     'profiel_keycloak_phone',
     'profiel_keycloak_email',
     'profiel',
@@ -69,8 +70,29 @@ module.exports = {
       redirect_uri: process.env.SERVICE_GENTDATASTORE_AUTH_REDIRECT_URI || 'YOUR_REDIRECT_URI',
     },
   },
+  profiel_keycloak_mobile_itmse: {
+    title: 'Authentication 2.0 - OIDC - keycloak - itsme - for mobile ',
+    uri: {
+      scheme: process.env.SERVICE_PROFIEL_URI_SCHEME || 'https',
+      domain: process.env.SERVICE_PROFIEL_URI_DOMAIN || 'api-gw-o.antwerpen.be',
+      path: '/acpaas/shared-identity-data/v1',
+    },
+    auth: {
+      version: 'v3',
+      oidc_issuer: process.env.SERVICE_PROFIEL_KEYCLOAK_ACM_AUTH_ISSUER || "",
+      response_type: 'code',
+      // consent_required: 'false',
+      minimal_assurance_level: 'low',
+      auth_methods: process.env.SERVICE_PROFIEL_KEYCLOAK_AUTH_METHODS_MOBILE_ITSME || 'acm-bur-itsme-mobile',
+      client_id: process.env.SERVICE_PROFIEL_KEYCLOAK_ACM_AUTH_CLIENT_ID || 'YOUR_CLIENT_ID',
+      client_secret: process.env.SERVICE_PROFIEL_KEYCLOAK_ACM_AUTH_CLIENT_SECRET || 'YOUR_CLIENT_SECRET_from keycloak',
+      scope: 'astad.aprofiel.v1.username astad.aprofiel.v1.name astad.aprofiel.v1.avatar astad.aprofiel.v1.email astad.aprofiel.v1.phone',
+      redirect_uri: process.env.SERVICE_PROFIEL_KEYCLOAK_ACM_AUTH_REDIRECT_URI || 'http://localhost:3000/callback/profiel_keycloak',
+      tokenurl: process.env.SERVICE_PROFIEL_KEYCLOAK_ACM_AUTH_TOKENURL || 'https://identity-o.digipolis.be/auth/realms/antwerpen',
+    },
+  },
   profiel_keycloak: {
-    title: 'Authentication 2.0 - keycloak',
+    title: 'Authentication 2.0 - OIDC - keycloak',
     uri: {
       scheme: process.env.SERVICE_PROFIEL_URI_SCHEME || 'https',
       domain: process.env.SERVICE_PROFIEL_URI_DOMAIN || 'api-gw-o.antwerpen.be',
@@ -91,7 +113,7 @@ module.exports = {
     },
   },
   profiel_keycloak_phone: {
-    title: 'Authentication 2.0 - keycloak - phone',
+    title: 'Authentication 2.0 - OIDC - keycloak - phone - for mobile',
     uri: {
       scheme: process.env.SERVICE_PROFIEL_URI_SCHEME || 'https',
       domain: process.env.SERVICE_PROFIEL_URI_DOMAIN || 'api-gw-o.antwerpen.be',
@@ -113,7 +135,7 @@ module.exports = {
     },
   },
   profiel_keycloak_email: {
-    title: 'Authentication 2.0 - keycloak - email',
+    title: 'Authentication 2.0 - OIDC - keycloak - email - for mobile',
     uri: {
       scheme: process.env.SERVICE_PROFIEL_URI_SCHEME || 'https',
       domain: process.env.SERVICE_PROFIEL_URI_DOMAIN || 'api-gw-o.antwerpen.be',
