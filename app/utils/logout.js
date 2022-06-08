@@ -50,9 +50,6 @@ function encrypt(text, password) {
  * @param {string} options.client_secret
  */
 function createLogoutUri(options) {
-  console.log('@@@@@@@@@@@@@@@@@@@@@');
-  console.log('options', options);
-  console.log('@@@@@@@@@@@@@@@@@@@@@');
   const data = JSON.stringify({
     user_id: options.user_id,
     access_token: options.access_token,
