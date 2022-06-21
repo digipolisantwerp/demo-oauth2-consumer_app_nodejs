@@ -82,7 +82,7 @@ module.exports = {
       oidc_issuer: process.env.SERVICE_PROFIEL_KEYCLOAK_ACM_AUTH_ISSUER || "",
       response_type: 'code',
       // consent_required: 'false',
-      minimal_assurance_level: 'high',
+      minimal_assurance_level: 'substantial',
       auth_methods: process.env.SERVICE_PROFIEL_KEYCLOAK_AUTH_METHOD_MOBILE_ITSME_AUTH_METHOD || 'acm-bur-itsme-mobile',
       client_id: process.env.SERVICE_PROFIEL_KEYCLOAK_AUTH_METHOD_MOBILE_ITSME_CLIENT_ID || 'YOUR_CLIENT_ID',
       client_secret: process.env.SERVICE_PROFIEL_KEYCLOAK_AUTH_METHOD_MOBILE_ITSME_CLIENT_SECRET || 'YOUR_CLIENT_SECRET_from keycloak',
