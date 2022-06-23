@@ -125,7 +125,7 @@ module.exports = {
       response_type: 'code',
       // consent_required: 'false',
       minimal_assurance_level: 'low',
-      auth_methods: process.env.SERVICE_PROFIEL_KEYCLOAK_AUTH_METHOD_PHONE || 'a-profiel-mobile',
+      auth_methods: process.env.SERVICE_PROFIEL_KEYCLOAK_AUTH_METHOD_PHONE || 'a-profiel-phone',
       // @TODO: put in env
       client_id: process.env.SERVICE_PROFIEL_KEYCLOAK_AUTH_METHOD_PHONE_CLIENT_ID || 'YOUR_CLIENT_ID',
       client_secret: process.env.SERVICE_PROFIEL_KEYCLOAK_AUTH_METHOD_PHONE_CLIENT_SECRET || 'YOUR_CLIENT_SECRET_from_keycloak',
