@@ -76,6 +76,7 @@ module.exports = {
       scheme: process.env.SERVICE_PROFIEL_URI_SCHEME || 'https',
       domain: process.env.SERVICE_PROFIEL_URI_DOMAIN || 'api-gw-o.antwerpen.be',
       path: '/acpaas/shared-identity-data/v1',
+      correlation: true,
     },
     auth: {
       version: 'v3',
@@ -97,6 +98,7 @@ module.exports = {
       scheme: process.env.SERVICE_PROFIEL_URI_SCHEME || 'https',
       domain: process.env.SERVICE_PROFIEL_URI_DOMAIN || 'api-gw-o.antwerpen.be',
       path: '/acpaas/shared-identity-data/v1',
+      correlation: true,
     },
     auth: {
       version: 'v3',
@@ -118,6 +120,7 @@ module.exports = {
       scheme: process.env.SERVICE_PROFIEL_URI_SCHEME || 'https',
       domain: process.env.SERVICE_PROFIEL_URI_DOMAIN || 'api-gw-o.antwerpen.be',
       path: '/acpaas/shared-identity-data/v1',
+      correlation: true,
     },
     auth: {
       version: 'v3',
@@ -140,6 +143,7 @@ module.exports = {
       scheme: process.env.SERVICE_PROFIEL_URI_SCHEME || 'https',
       domain: process.env.SERVICE_PROFIEL_URI_DOMAIN || 'api-gw-o.antwerpen.be',
       path: '/acpaas/shared-identity-data/v1',
+      correlation: true,
     },
     auth: {
       version: 'v3',
@@ -161,6 +165,7 @@ module.exports = {
       scheme: process.env.SERVICE_PROFIEL_URI_SCHEME || 'https',
       domain: process.env.SERVICE_PROFIEL_URI_DOMAIN || 'api-gw-o.antwerpen.be',
       path: '/acpaas/shared-identity-data/v1',
+      correlation: true,
     },
     auth: {
       version: 'v2',
@@ -198,6 +203,7 @@ module.exports = {
       scheme: process.env.SERVICE_PROFIEL_ENTERPRISE_URI_SCHEME || 'https',
       domain: process.env.SERVICE_PROFIEL_ENTERPRISE_URI_DOMAIN || 'api-gw-o.antwerpen.be',
       path: '/acpaas/shared-identity-data/v1',
+      correlation: true,
     },
     auth: {
       version: 'v2',
@@ -216,6 +222,7 @@ module.exports = {
       scheme: process.env.SERVICE_PROFIEL_HINTED_URI_SCHEME || 'https',
       domain: process.env.SERVICE_PROFIEL_HINTED_URI_DOMAIN || 'api-gw-o.antwerpen.be',
       path: '/acpaas/shared-identity-data/v1',
+      correlation: true,
     },
     auth: {
       version: 'v2',
@@ -234,6 +241,7 @@ module.exports = {
       scheme: process.env.SERVICE_PROFIEL_HINTED_URI_SCHEME || 'https',
       domain: process.env.SERVICE_PROFIEL_HINTED_URI_DOMAIN || 'api-gw-o.antwerpen.be',
       path: '/acpaas/shared-identity-data/v1',
+      correlation: true,
     },
     auth: {
       version: 'v2',
