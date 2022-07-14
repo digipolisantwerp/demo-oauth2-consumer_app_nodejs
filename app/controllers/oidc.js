@@ -5,6 +5,7 @@ const { getSessions, getSession } = require('../services/session.service');
 const { createLogoutUrl } = require('../helpers/authUrl.helper');
 const tokenHelper = require('../helpers/token.helper');
 const { stringifyObject } = require('../helpers/json.helper');
+const dgpCorrelationService = require('../services/dgpCorrelation.service');
 const servicesConfig = require('../../config/services.conf');
 
 const envConfig = JSON.parse(JSON.stringify(servicesConfig));
@@ -35,10 +36,21 @@ async function callback(req, res, next) {
       req.cookies.code_verifier,
       req.cookies.nonce,
     );
-
     const configApi = profileConfig.uri;
     const profileUrl = `${configApi.scheme}://${configApi.domain}${configApi.path}/me`;
-    const response = await axios.get(profileUrl, { headers: { authorization: `Bearer ${token}` }, validateStatus: false });
+    const headers = {
+      authorization: `Bearer ${token}`,
+    };
+    if (configApi.correlation) {
+      headers['Dgp-Correlation'] = dgpCorrelationService.getDgpCorrelation();
+    }
+    const response = await axios.get(
+      profileUrl,
+      {
+        headers,
+        validateStatus: false,
+      },
+    );
 
     const body = response.data;
     if (!body) {
