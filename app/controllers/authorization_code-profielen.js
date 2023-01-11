@@ -2,7 +2,7 @@ const jwtDecode = require('jwt-decode');
 const axios = require('axios');
 const crypto = require('crypto');
 
-const pkceChallenge = require('pkce-challenge');
+const pkceChallenge = require('pkce-challenge').default;
 
 const { getSessions, getSession } = require('../services/session.service');
 const tokenHelper = require('../helpers/token.helper');

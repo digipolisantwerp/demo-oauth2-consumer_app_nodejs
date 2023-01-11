@@ -1,10 +1,9 @@
-const { cloneDeep } = require('lodash');
 const querystring = require('querystring');
 const servicesConfig = require('../../config/services.conf');
 const logoutUtil = require('../utils/logout');
 
 function createAuthorizeUrl(type, code_challenge, nonce) {
-  const envConfig = cloneDeep(servicesConfig);
+  const envConfig = structuredClone(servicesConfig);
   const configOauth = { ...envConfig[type].auth };
   let url = `${envConfig.consent.uri.scheme}://${envConfig.consent.uri.domain}/${configOauth.version}${envConfig.consent.uri.path}`;
   configOauth.lng = 'nl';
