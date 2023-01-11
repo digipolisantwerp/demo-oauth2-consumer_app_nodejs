@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node app.js",
     "dev": "env-cmd -f .env.dev nodemon app.js",
-    "lint": "eslint  .",
+    "lint": "eslint .",
     "test": "echo \"no tests\""
   },
   "author": "Frank Desmettre",
