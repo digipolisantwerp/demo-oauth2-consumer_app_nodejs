@@ -1,6 +1,5 @@
 const axios = require('axios');
 const { OAuth2 } = require('oauth');
-const FormData = require('form-data');
 const jwt_decode = require('jwt-decode');
 
 const config = require('../../config/services.conf');

@@ -11,27 +11,9 @@
         <input type="checkbox" id="saveConsent" name="consent" value="save" />
         <label for="saveConsent">Save consent</label>
     </div>
-    <h6 class="u-margin-top u-margin-bottom-xs ">Consent versie</h6>
-    <div class="a-input__radio">
-      <input type="radio" id="consent" name="consent-version" value="consent">
-      <label for="consent">Send current to consent</label>
-    </div>
-    <div class="a-input__radio">
-      <input type="radio" id="consent1" name="consent-version" value="consent1">
-      <label for="consent1">Send to consent 1.0</label>
-    </div>
-    <div class="a-input__radio">
-      <input type="radio" id="consent2" name="consent-version" value="consent2">
-      <label for="consent2">Send to consent 2.0</label>
-    </div>
 </div>
 
 <script nonce='EDNnf03nceIOfn39fn3e9h3sdfa'>
-    const consent_base_url = {
-      consent: '<%- baseurl_consent %>',
-      consent1: '<%- baseurl_consent1 %>',
-      consent2: '<%- baseurl_consent2 %>'
-    }
     function setCookie(name, value, expire) {
         var expireDate = new Date();
         expireDate.setDate(expireDate.getDate() + expire);
@@ -57,33 +39,6 @@
           document.getElementById(linkElementId).setAttribute('href', `${url}&save_consent=true`);
       }
     }
-    function setDomain(linkElementId, newConsentUrl) {
-      const url = document.getElementById(linkElementId).getAttribute('href');
-      let from = url.match(/^https?:\/\/[^#?\/]+/)[0];
-      document.getElementById(linkElementId).setAttribute('href', url.replace(from, newConsentUrl))
-    }
-    if(readCookie("consent_version")){
-      Array.from(document.getElementsByName("consent-version")).find((element) => {
-        if(element.value === readCookie("consent_version")) {
-          document.getElementById('consent2').checked = true;
-        }
-      });
-        document.getElementById(readCookie("consent_version")).checked = true;
-        <% loginTypes.forEach(function (loginType) { %>
-           setDomain('link<%- loginType.key %>', consent_base_url[readCookie("consent_version")]);
-        <% }); %>
-    } else {
-      document.getElementById('consent').checked = true;
-    }
-    Array.from(document.getElementsByName("consent-version")).forEach((target) => {
-      target.addEventListener('change', (event) => {
-        var consent_version = Array.from(document.getElementsByName("consent-version")).find(r => r.checked).value;
-        setCookie("consent_version", consent_version, new Date(Date.now() + 8*3600*1000));
-        <% loginTypes.forEach(function (loginType) { %>
-           setDomain('link<%- loginType.key %>', consent_base_url[readCookie("consent_version")]);
-        <% }); %>
-      });
-    });
     document.getElementById('saveConsent').addEventListener('change', function(event) {
       const checked = document.getElementById('saveConsent').checked;
       <% loginTypes.forEach(function (loginType) { %>

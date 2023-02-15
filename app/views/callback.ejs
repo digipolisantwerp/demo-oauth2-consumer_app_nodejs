@@ -20,7 +20,7 @@
 <h6 class="u-margin-top-xs u-margin-bottom-xs">Token otp data:</h6>
 <pre class="a-pre a-pre--scrollable"><code contenteditable spellcheck="false"><%- decoded %></code></pre>
 <h6 class="u-margin-top-xs u-margin-bottom-xs">Profile response:</h6>
-<pre class="a-pre a-pre--scrollable"><code contenteditable spellcheck="false"><%- user.profile.response %></code></pre>
+<pre class="a-pre a-pre--scrollable u-margin-bottom-xs"><code contenteditable spellcheck="false"><%- user.profile.response %></code></pre>
 
 <h5 class="u-margin-top-lg u-margin-bottom-xs">Active sessions:</h5>
 <div>
@@ -32,7 +32,7 @@
   </dl>
 </div>
 <h6 class="u-margin-top-xs u-margin-bottom-xs">ActiveSessions response:</h6>
-<pre class="a-pre a-pre--scrollable"><code contenteditable spellcheck="false"><%- sessions %></code></pre>
+<pre class="a-pre a-pre--scrollable u-margin-bottom-xs"><code contenteditable spellcheck="false"><%- sessions %></code></pre>
 
 <h5 class="u-margin-top-lg u-margin-bottom-xs">Current session:</h5>
 <div>
@@ -49,50 +49,7 @@
 <pre class="a-pre a-pre--scrollable"><code contenteditable spellcheck="false"><%- session %></code></pre>
 
 <p class="u-margin-top-lg">
-  <div class="a-input__checkbox">
-    <input type="checkbox" id="consent2" name="consent2" value="save" />
-    <label for="consent2">Send to consent2.0</label>
-  </div>
   <a class="a-button a-button--secondary u-margin-top" id="logout" href="<%- user.logoutUrl %>">Logout</a>
 </p>
 
-<script>
-    const consent_base_url = {
-      consent: '<%- baseurl_consent %>',
-      consent1: '<%- baseurl_consent1 %>',
-      consent2: '<%- baseurl_consent2 %>'
-    }
-    function setCookie(name, value, expire) {
-        var expireDate = new Date();
-        expireDate.setDate(expireDate.getDate() + expire);
-        document.cookie = name + "=" + escape(value) + "; expires=" + expireDate.toGMTString() + "; path=/";
-    }
-
-    function readCookie(name) {
-        var nameEQ = name + "=";
-        var ca = document.cookie.split(';');
-        for (var i = 0; i < ca.length; i++) {
-            var c = ca[i];
-            while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-        }
-        return null;
-    }
-    function setDomain(linkElementId, newConsentUrl) {
-      const url = document.getElementById(linkElementId).getAttribute('href');
-      let from = url.match(/^https?:\/\/[^#?\/]+/)[0];
-      document.getElementById(linkElementId).setAttribute('href', url.replace(from, newConsentUrl))
-    }
-
-    if(readCookie("consent_version")){
-      Array.from(document.getElementsByName("consent-version")).find((element) => {
-        if(element.value === readCookie("consent_version")) {
-          document.getElementById('consent2').checked = true;
-        }
-      });
-      setDomain('logout', consent_base_url[readCookie("consent_version")]);
-    } else {
-      document.getElementById('consent').checked = true;
-    }
-</script>
 <%- include('_footer') -%>

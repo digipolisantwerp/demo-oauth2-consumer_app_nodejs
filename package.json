@@ -1,37 +1,35 @@
 {
   "name": "demo-oauth2-consumer_app_nodejs",
   "version": "2.0.0",
-  "description": "Astad skeleton",
+  "description": "oauth demo app",
   "private": true,
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
     "dev": "env-cmd -f .env.dev nodemon app.js",
-    "lint": "node_modules/eslint/bin/eslint.js  .",
+    "lint": "eslint .",
     "test": "echo \"no tests\""
   },
   "author": "Frank Desmettre",
   "dependencies": {
-    "axios": "^0.25.0",
-    "base64url": "^3.0.1",
-    "body-parser": "^1.19.0",
+    "axios": "^1.2.2",
+    "body-parser": "^1.20.0",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.6",
-    "ejs": "3.1.6",
-    "express": "^4.17.1",
-    "form-data": "^4.0.0",
-    "helmet": "^4.6.0",
+    "ejs": "3.1.8",
+    "express": "^4.18.2",
+    "helmet": "^6.0.1",
     "jwt-decode": "^3.1.2",
-    "lodash": "^4.17.19",
-    "oauth": "0.9.15",
-    "openid-client": "^5.1.2",
-    "pkce-challenge": "^2.2.0",
-    "uuid": "^8.3.2"
+    "oauth": "0.10.0",
+    "openid-client": "^5.3.1",
+    "pkce-challenge": "^3.0.0",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "env-cmd": "^10.1.0",
-    "eslint": "^8.3.0",
-    "eslint-config-airbnb": "^19.0.1",
+    "eslint": "^8.31.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
     "nodemon": "^2.0.20"
   }
 }
