@@ -80,7 +80,7 @@ module.exports = {
     },
     auth: {
       version: 'v3',
-      oidc_issuer: process.env.SERVICE_PROFIEL_KEYCLOAK_ACM_AUTH_ISSUER || "",
+      oidc_issuer: process.env.SERVICE_PROFIEL_KEYCLOAK_ACM_AUTH_ISSUER || '',
       response_type: 'code',
       // consent_required: 'false',
       minimal_assurance_level: 'substantial',
@@ -102,7 +102,7 @@ module.exports = {
     },
     auth: {
       version: 'v3',
-      oidc_issuer: process.env.SERVICE_PROFIEL_KEYCLOAK_ACM_AUTH_ISSUER || "",
+      oidc_issuer: process.env.SERVICE_PROFIEL_KEYCLOAK_ACM_AUTH_ISSUER || '',
       response_type: 'code',
       // consent_required: 'false',
       minimal_assurance_level: 'low',
@@ -124,7 +124,7 @@ module.exports = {
     },
     auth: {
       version: 'v3',
-      oidc_issuer: process.env.SERVICE_PROFIEL_KEYCLOAK_AUTH_METHOD_PHONE_ISSUER || "",
+      oidc_issuer: process.env.SERVICE_PROFIEL_KEYCLOAK_AUTH_METHOD_PHONE_ISSUER || '',
       response_type: 'code',
       // consent_required: 'false',
       minimal_assurance_level: 'low',
@@ -147,7 +147,7 @@ module.exports = {
     },
     auth: {
       version: 'v3',
-      oidc_issuer: process.env.SERVICE_PROFIEL_KEYCLOAK_AUTH_METHOD_EMAIL_ISSUER || "",
+      oidc_issuer: process.env.SERVICE_PROFIEL_KEYCLOAK_AUTH_METHOD_EMAIL_ISSUER || '',
       response_type: 'code',
       // consent_required: 'false',
       minimal_assurance_level: 'low',

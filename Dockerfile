@@ -1,12 +1,12 @@
-FROM node:18
+FROM node:20
 
 RUN mkdir /app
 WORKDIR /app
 
-COPY package*.json  /app/
+COPY package*.json /app/
 
 RUN npm ci
 
 COPY . /app
 
-CMD ["npm", "start"]
+CMD ["npm", "run", "startapp"]

@@ -1,10 +1,9 @@
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
 const compression = require('compression');
 const helmet = require('helmet');
-const { v4: uuidv4 } = require('uuid');
+const crypto = require('crypto');
 const config = require('./config/app.conf');
 const router = require('./app/routes/main');
 
@@ -17,9 +16,10 @@ app.set('views', path.join('./app/', 'views'));
 app.set('view engine', 'ejs');
 
 app.use((req, res, next) => {
-  req.id = uuidv4();
+  req.id = crypto.randomUUID();
   return next();
 });
+
 app.use(helmet({
   // add to load styleguide
   crossOriginEmbedderPolicy: false,
@@ -30,8 +30,8 @@ if (process.env.NODE_ENV && process.env.NODE_ENV !== 'test') {
 }
 
 app.use(cookieParser());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
+app.use(express.json());
+app.use(express.urlencoded({
   extended: true,
 }));
 

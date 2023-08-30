@@ -1,4 +1,3 @@
-const axios = require('axios');
 const { OAuth2 } = require('oauth');
 const jwt_decode = require('jwt-decode');
 
@@ -7,13 +6,19 @@ const config = require('../../config/services.conf');
 async function getTokenConsent() {
   try {
     if (config.consent.api.url.includes('localhost')) return '';
-
-    const { data } = await axios.post(`${config.consent.api.url}/oauth2/token`, {
-      client_id: config.consent.api.client_id,
-      client_secret: config.consent.api.client_secret,
-      grant_type: 'client_credentials',
+    const response = await fetch(`${config.consent.api.url}/oauth2/token`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        client_id: config.consent.api.client_id,
+        client_secret: config.consent.api.client_secret,
+        grant_type: 'client_credentials',
+      }),
     });
 
+    const data = await response.json();
     return data.access_token;
   } catch (e) {
     console.log('Something went wrong in getTokenConsent', e);
@@ -53,11 +58,15 @@ async function getKeycloakAccessToken(code, configOauth, code_verifier, nonce) {
   params.append('code', code);
   params.append('redirect_uri', configOauth.redirect_uri);
 
-  const { data } = await axios.post(
-    `${configOauth.tokenurl}/protocol/openid-connect/token`,
-    params,
-    { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } },
-  );
+  const response = await fetch(`${configOauth.tokenurl}/protocol/openid-connect/token`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: params,
+  });
+
+  const data = await response.json();
 
   const decoded = jwt_decode(data.access_token);
   if (decoded.nonce !== nonce) throw new Error('Nonce mismatch');

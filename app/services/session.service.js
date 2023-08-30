@@ -1,17 +1,16 @@
-const axios = require('axios');
 const config = require('../../config/services.conf');
 const tokenHelper = require('../helpers/token.helper');
 
 async function getSession(ssokey, clientId) {
   try {
     const token = await tokenHelper.getTokenConsent();
-    const { data } = await axios.get(`${config.consent.api.url}/sessions/${ssokey}/${clientId}`, {
+    const response = await fetch(`${config.consent.api.url}/sessions/${ssokey}/${clientId}`, {
       headers: {
         authorization: `Bearer ${token}`,
         [config.consent.api.extra_header]: config.consent.api.extra_header_value,
       },
-      validateStatus: (status) => (status >= 200 && status < 300) || status === 404,
     });
+    const data = await response.json();
     return data;
   } catch (e) {
     console.log('Something went wrong in getSession', e);
@@ -22,12 +21,13 @@ async function getSession(ssokey, clientId) {
 async function getSessions(ssokey) {
   try {
     const token = await tokenHelper.getTokenConsent();
-    const { data } = await axios.get(`${config.consent.api.url}/sessions/${ssokey}`, {
+    const response = await fetch(`${config.consent.api.url}/sessions/${ssokey}`, {
       headers: {
         authorization: `Bearer ${token}`,
         [config.consent.api.extra_header]: config.consent.api.extra_header_value,
       },
     });
+    const data = await response.json();
     return data;
   } catch (e) {
     console.log('Something went wrong in getSessions', e);

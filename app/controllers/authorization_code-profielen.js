@@ -1,9 +1,5 @@
 const jwtDecode = require('jwt-decode');
-const axios = require('axios');
 const crypto = require('crypto');
-
-const pkceChallenge = require('pkce-challenge').default;
-
 const { getSessions, getSession } = require('../services/session.service');
 const tokenHelper = require('../helpers/token.helper');
 const { stringifyObject } = require('../helpers/json.helper');
@@ -67,14 +63,15 @@ async function callback(req, res, next) {
     if (configApi.correlation) {
       headers['Dgp-Correlation'] = dgpCorrelationService.getDgpCorrelation();
     }
-    const response = await axios.get(profileUrl, {
+    const response = await fetch(profileUrl, {
       headers,
-      validateStatus: false,
     });
+    const data = await response.json();
 
-    const body = response.data;
+    console.log('data', data);
+    const body = data;
     if (!body) {
-      return res.json({ error: `Missing profile body (status code ${response.statusCode})` });
+      return res.json({ error: `Missing profile body (status code ${response.status})` });
     }
 
     const userResponse = body.data ? body.data : body;
@@ -118,8 +115,9 @@ async function callback(req, res, next) {
   }
 }
 
-function index(req, res) {
-  const { code_verifier, code_challenge } = pkceChallenge(128);
+async function index(req, res) {
+  const pkceChallenge = await import('pkce-challenge');
+  const { code_verifier, code_challenge } = pkceChallenge.default(128);
   const nonce = crypto.randomBytes(128).toString('hex');
   res.cookie('code_verifier', code_verifier, { maxAge: 900000, httpOnly: true });
   res.cookie('nonce', nonce, { maxAge: 900000, httpOnly: true });

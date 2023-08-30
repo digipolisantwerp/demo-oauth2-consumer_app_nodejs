@@ -2,7 +2,6 @@ const { Issuer, generators } = require('openid-client');
 
 const servicesConfig = require('../../config/services.conf');
 
-
 async function index(req, res) {
   const {
     client_id,
