@@ -1,0 +1,26 @@
+<%- include('_header') -%>
+<h5 class="u-margin-top u-margin-bottom-xs">request:</h5>
+<pre class="a-pre a-pre--scrollable u-margin-bottom-xs">
+    <code contenteditable="" spellcheck="false">
+    curl -X "POST" "<%- url %>" \
+         -H 'authorization: Bearer [access_token]'
+    </code>
+</pre>
+
+<h5 class="u-margin-bottom-xs">Result:</h5>
+<pre class="a-pre a-pre--scrollable u-margin-bottom-xs">
+    <code contenteditable="" spellcheck="false" id="result">
+    </code>
+</pre>
+
+<input id="url" type="hidden" name="url" value="<%- url %>" /><br/>
+<p>
+  <label for="access_token" ><strong>access_token:</strong> </label>
+  <input id="access_token" type="text" name="access_token" value="" /><br/>
+</p>
+<p  class="u-margin-top">
+  <button class="a-button a-button--success" type="submit" id="submit">Submit</button>
+</p>
+
+<script src="/script/get-login.js"></script>
+<%- include('_footer') -%>

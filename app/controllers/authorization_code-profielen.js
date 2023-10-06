@@ -66,7 +66,13 @@ async function callback(req, res, next) {
     const response = await fetch(profileUrl, {
       headers,
     });
-    const data = await response.json();
+    let data;
+    // fallback to be able to show non-json errors (gateway)
+    if (response.headers.get('content-type').includes('application/json')) {
+      data = await response.json();
+    } else {
+      data = await response.text();
+    }
 
     console.log('data', data);
     const body = data;
@@ -110,6 +116,12 @@ async function callback(req, res, next) {
       baseurl_consent2: `${envConfig.consent.uri.scheme}://${envConfig.consent.uri.domain_consent2}`,
     });
   } catch (e) {
+    if (e.response) {
+      console.log("🔥", e.response.headers); // => the response payload
+    }
+    // console.log('@@@@@@@@@@@@@@@@@@@@@');
+    // console.log('e.response', JSON.stringify(e.response, null, 2));
+    // console.log('@@@@@@@@@@@@@@@@@@@@@');
     console.log('Something went wrong', e);
     return next(e);
   }

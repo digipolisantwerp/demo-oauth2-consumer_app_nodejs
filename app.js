@@ -21,8 +21,13 @@ app.use((req, res, next) => {
 });
 
 app.use(helmet({
-  // add to load styleguide
+  // Add to load styleguide && post redirect to consent
   crossOriginEmbedderPolicy: false,
+  contentSecurityPolicy: {
+    directives: {
+      'form-action': ["'self'", 'localhost:4000', '*.antwerpen.be'],
+    },
+  },
 }));
 
 if (process.env.NODE_ENV && process.env.NODE_ENV !== 'test') {

@@ -1,0 +1,27 @@
+<%- include('_header') -%>
+    <form action="<%- url %>" method="POST">
+        <p  class="u-margin-top-xs">
+        <label for="client_id" >client_id: </label>
+        <input type="text" name="client_id" value="<%- client_id %>" /><br/>
+    </p>
+    <p  class="u-margin-top-xs">
+        <label for="redirect_uri" >redirect_uri: </label>
+        <input type="text" name="redirect_uri" value="<%- redirect_uri %>" /><br/>
+    </p>
+    <p  class="u-margin-top-xs">
+        <label for="login_token" >nonce: </label>
+        <input type="text" name="nonce" value="<%- nonce %>" /><br/>
+    </p>
+    <p  class="u-margin-top-xs">
+        <label for="login_token" >login_token: </label>
+        <input type="text" name="login_token" value="" /><br/>
+    </p>
+    <p  class="u-margin-top-xs">
+        <label for="login_token_userid" >login_token_userid: </label>
+        <input type="text" name="login_token_userid" value="" /><br/>
+    </p>
+    <p  class="u-margin-top-xs">
+        <input class="a-button" type="submit" value="Login" />
+    </p>
+    </form>
+<%- include('_footer') -%>
