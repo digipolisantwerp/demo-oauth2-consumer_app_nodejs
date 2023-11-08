@@ -1,4 +1,3 @@
-const axios = require('axios');
 const { Issuer, generators } = require('openid-client');
 
 const { getSessions, getSession } = require('../services/session.service');
@@ -44,17 +43,17 @@ async function callback(req, res, next) {
     if (configApi.correlation) {
       headers['Dgp-Correlation'] = dgpCorrelationService.getDgpCorrelation();
     }
-    const response = await axios.get(
+    const response = await fetch(
       profileUrl,
       {
         headers,
-        validateStatus: false,
       },
     );
+    const data = await response.json();
 
-    const body = response.data;
+    const body = data;
     if (!body) {
-      return res.json({ error: `Missing profile body (status code ${response.statusCode})` });
+      return res.json({ error: `Missing profile body (status code ${response.status})` });
     }
 
     const userResponse = body.data ? body.data : body;

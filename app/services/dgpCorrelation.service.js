@@ -1,7 +1,7 @@
-const { v4: uuidv4 } = require('uuid');
+const crypto = require('crypto');
 
 function getDgpCorrelation() {
-  const id = uuidv4();
+  const id = crypto.randomUUID();
   const dgpCorrelation = {
     id,
     sourceId: process.env.SOURCEID_CORRELATION,
