@@ -19,12 +19,12 @@
     "helmet": "^7.0.0",
     "jwt-decode": "^3.1.2",
     "oauth": "0.10.0",
-    "openid-client": "^5.4.3",
+    "openid-client": "^5.6.1",
     "pkce-challenge": "^4.0.1"
   },
   "devDependencies": {
     "env-cmd": "^10.1.0",
-    "eslint": "^8.48.0",
+    "eslint": "^8.52.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.28.1"
   }

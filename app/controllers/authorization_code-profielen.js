@@ -117,11 +117,8 @@ async function callback(req, res, next) {
     });
   } catch (e) {
     if (e.response) {
-      console.log("🔥", e.response.headers); // => the response payload
+      console.log('error callback', e.response.headers); // => the response payload
     }
-    // console.log('@@@@@@@@@@@@@@@@@@@@@');
-    // console.log('e.response', JSON.stringify(e.response, null, 2));
-    // console.log('@@@@@@@@@@@@@@@@@@@@@');
     console.log('Something went wrong', e);
     return next(e);
   }
