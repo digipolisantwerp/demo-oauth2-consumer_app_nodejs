@@ -45,7 +45,7 @@ async function index(req, res) {
 
   res.render('get-login-token.ejs', {
     title: url,
-    url: 'http://localhost:4000/v3/get-login-token',
+    url: `${config.consent.api.url}/get-login-token`,
     client_id,
     nonce,
     state: '32042809',
