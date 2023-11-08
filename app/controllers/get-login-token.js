@@ -5,7 +5,7 @@ const servicesConfig = require('../../config/services.conf');
 
 async function post(req, res, next) {
   try {
-    const response = await fetch(`${config.consent.api.url}/get-login-token`, {
+    const response = await fetch(`${config.consent.uri.scheme}://${config.consent.uri.domain}/v1/api/get-login-token`, {
       method: 'POST',
       headers: {
         authorization: req.headers.authorization,
@@ -45,7 +45,7 @@ async function index(req, res) {
 
   res.render('get-login-token.ejs', {
     title: url,
-    url: `${config.consent.api.url}/get-login-token`,
+    url: `${config.consent.uri.scheme}://${config.consent.uri.domain}/v1/api/get-login-token`,
     client_id,
     nonce,
     state: '32042809',
