@@ -1,5 +1,6 @@
 const { Issuer, generators } = require('openid-client');
 
+const config = require('../../config/services.conf');
 const servicesConfig = require('../../config/services.conf');
 
 async function index(req, res) {
@@ -29,7 +30,7 @@ async function index(req, res) {
 
   res.render('login-token.ejs', {
     title: url,
-    url: 'http://localhost:4000/v3/login-token',
+    url: `${config.consent.uri.scheme}://${config.consent.uri.domain}/v3/login-token`,
     client_id,
     nonce,
     state: '32042809',
