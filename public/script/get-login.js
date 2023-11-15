@@ -31,6 +31,7 @@ document.addEventListener("DOMContentLoaded", function(){
   }
   access_token_field.addEventListener("keyup", (event) => {
     if (event.key === 'Enter' || event.keyCode === 13) {
+      access_token = event.target.value
       submitForm();
     } else {
       access_token = event.target.value
