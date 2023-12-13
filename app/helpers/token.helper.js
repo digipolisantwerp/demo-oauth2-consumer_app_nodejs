@@ -1,5 +1,5 @@
 const { OAuth2 } = require('oauth');
-const jwt_decode = require('jwt-decode');
+const { jwtDecode } = require('jwt-decode');
 
 const config = require('../../config/services.conf');
 
@@ -68,7 +68,7 @@ async function getKeycloakAccessToken(code, configOauth, code_verifier, nonce) {
 
   const data = await response.json();
 
-  const decoded = jwt_decode(data.access_token);
+  const decoded = jwtDecode(data.access_token);
   if (decoded.nonce !== nonce) throw new Error('Nonce mismatch');
 
   return data.access_token;
