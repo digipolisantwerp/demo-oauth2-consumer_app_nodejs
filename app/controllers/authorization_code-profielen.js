@@ -112,8 +112,6 @@ async function callback(req, res, next) {
       decoded,
       sessions,
       baseurl_consent: `${envConfig.consent.uri.scheme}://${envConfig.consent.uri.domain}`,
-      baseurl_consent1: `${envConfig.consent.uri.scheme}://${envConfig.consent.uri.domain_consent1}`,
-      baseurl_consent2: `${envConfig.consent.uri.scheme}://${envConfig.consent.uri.domain_consent2}`,
     });
   } catch (e) {
     if (e.response) {
@@ -136,8 +134,6 @@ async function index(req, res) {
     index: true,
     loginTypes: getLoginTypes(code_challenge, nonce),
     baseurl_consent: `${envConfig.consent.uri.scheme}://${envConfig.consent.uri.domain}`,
-    baseurl_consent1: `${envConfig.consent.uri.scheme}://${envConfig.consent.uri.domain_consent1}`,
-    baseurl_consent2: `${envConfig.consent.uri.scheme}://${envConfig.consent.uri.domain_consent2}`,
   });
 }
 

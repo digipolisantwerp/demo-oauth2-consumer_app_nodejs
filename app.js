@@ -1,11 +1,19 @@
+const apm = require('elastic-apm-node');
+// eslint-disable-next-line
+const config = require('./config/app.conf');
+
+if (config.apm.enabled) {
+  console.log(`enabled APM serviceName: '${config.apm.serviceName}'`);
+  apm.start(config.apm);
+}
+
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const compression = require('compression');
 const helmet = require('helmet');
 const crypto = require('crypto');
-const config = require('./config/app.conf');
-const router = require('./app/routes/main');
+const router = require('./app/routes');
 
 const app = express();
 
