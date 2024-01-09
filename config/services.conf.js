@@ -234,20 +234,20 @@ module.exports = {
   cloudid: {
     title: 'M-Profiel cloud-id',
     uri: {
-      scheme: process.env.SERVICE_MPROFIEL_URI_SCHEME || 'https',
-      domain: process.env.SERVICE_MPROFIEL_URI_DOMAIN || 'api-gw-o.antwerpen.be',
+      scheme: process.env.SERVICE_MPROFIEL_CLOUD_URI_SCHEME || 'https',
+      domain: process.env.SERVICE_MPROFIEL_CLOUD_URI_DOMAIN || 'api-gw-o.antwerpen.be',
       path: '/astad/mprofiel/v1/v1',
     },
     auth: {
       version: 'v1',
       response_type: 'code',
       auth_type: 'cloud',
-      service: process.env.SERVICE_MPROFIEL_AUTH_SERVICE || 'astad.mprofiel.v1',
+      service: process.env.SERVICE_MPROFIEL_CLOUD_AUTH_SERVICE || 'astad.mprofiel.v1',
       logout_service: 'astad.cloud.v1',
-      client_id: process.env.SERVICE_MPROFIEL_AUTH_CLIENT_ID || 'YOUR_CLIENT_ID',
-      client_secret: process.env.SERVICE_MPROFIEL_AUTH_CLIENT_SECRET || 'YOUR_CLIENT_SECRET',
+      client_id: process.env.SERVICE_MPROFIEL_CLOUD_AUTH_CLIENT_ID || 'YOUR_CLIENT_ID',
+      client_secret: process.env.SERVICE_MPROFIEL_CLOUD_AUTH_CLIENT_SECRET || 'YOUR_CLIENT_SECRET',
       scope: 'all',
-      redirect_uri: process.env.SERVICE_MPROFIEL_AUTH_REDIRECT_URI || 'http://localhost:3000/callback/cloudid',
+      redirect_uri: process.env.SERVICE_MPROFIEL_CLOUD_AUTH_REDIRECT_URI || 'http://localhost:3000/callback/cloudid',
     },
   },
   mprofiel: {
