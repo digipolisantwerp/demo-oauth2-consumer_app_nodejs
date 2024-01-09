@@ -25,7 +25,7 @@ function createLogoutUrl(consentConfig, profileConfig, redirectUri, id, accessTo
     method: profileConfig.auth.method,
     access_token: accessToken,
     redirect_uri: redirectUri,
-    service: profileConfig.auth.service,
+    service: profileConfig.auth.logout_service || profileConfig.auth.service,
     client_id: profileConfig.auth.client_id,
     client_secret: profileConfig.auth.client_secret,
   };
