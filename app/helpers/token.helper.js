@@ -57,7 +57,6 @@ async function getKeycloakAccessToken(code, configOauth, code_verifier, nonce) {
   params.append('code_verifier', code_verifier);
   params.append('code', code);
   params.append('redirect_uri', configOauth.redirect_uri);
-
   const response = await fetch(`${configOauth.tokenurl}/protocol/openid-connect/token`, {
     method: 'POST',
     headers: {
@@ -65,7 +64,6 @@ async function getKeycloakAccessToken(code, configOauth, code_verifier, nonce) {
     },
     body: params,
   });
-
   const data = await response.json();
 
   const decoded = jwtDecode(data.access_token);
