@@ -50,4 +50,23 @@
   <a class="a-button a-button--secondary u-margin-top" id="logout" href="<%- user.logoutUrl %>">Logout</a>
 </p>
 
+<script nonce='EDNnf03nceIOfn39fn3e9h3sdfa'>
+    function readCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+        }
+        return null;
+    }
+    let beta_url = readCookie("beta");
+    if(beta_url == true) {
+      const url = document.getElementById("logout").getAttribute('href');
+      const newUrl = new URL(url);
+      newUrl.hostname = "<%- beta_domain_consent %>";
+      document.getElementById("logout").setAttribute('href', newUrl.toString());
+    }
+</script>
 <%- include('_footer') -%>
