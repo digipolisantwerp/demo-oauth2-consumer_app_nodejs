@@ -48,15 +48,21 @@
       }
     }
 
-    function setBaseUrl(linkElementId, saveConsent) {
+    function setBaseUrl(linkElementId, checked) {
       const url = document.getElementById(linkElementId).getAttribute('href');
       const newUrl = new URL(url);
-      const checked = document.getElementById('betaConsent').checked;
       const newHost = checked ? "<%- beta_domain_consent %>" : "<%- domain_consent %>";
       newUrl.hostname = newHost;
       document.getElementById(linkElementId).setAttribute('href', newUrl.toString());
     }
-
+    let beta_url = readCookie("beta");
+    if(beta_url == true) {
+      document.getElementById('betaConsent').checked = true;
+      const checked = document.getElementById('betaConsent').checked;
+      <% loginTypes.forEach(function (loginType) { %>
+         setBaseUrl('link<%- loginType.key %>', checked);
+      <% }); %>
+    }
     document.getElementById('saveConsent').addEventListener('change', function(event) {
       const checked = document.getElementById('saveConsent').checked;
       <% loginTypes.forEach(function (loginType) { %>
@@ -65,7 +71,9 @@
     })
 
     document.getElementById('betaConsent').addEventListener('change', function(event) {
-      const checked = document.getElementById('saveConsent').checked;
+      const checked = document.getElementById('betaConsent').checked;
+      setCookie("beta", checked);
+      console.log(checked)
       <% loginTypes.forEach(function (loginType) { %>
          setBaseUrl('link<%- loginType.key %>', checked);
       <% }); %>
