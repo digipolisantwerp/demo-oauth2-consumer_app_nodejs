@@ -134,6 +134,9 @@ async function index(req, res) {
     index: true,
     loginTypes: getLoginTypes(code_challenge, nonce),
     baseurl_consent: `${envConfig.consent.uri.scheme}://${envConfig.consent.uri.domain}`,
+    domain_consent: `${envConfig.consent.uri.domain}`,
+    beta_baseurl_consent: `${envConfig.betaConsent.uri.scheme}://${envConfig.betaConsent.uri.domain}`,
+    beta_domain_consent: `${envConfig.betaConsent.uri.domain}`,
   });
 }
 

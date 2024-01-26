@@ -13,6 +13,13 @@
     </div>
 </div>
 
+<div class="a-input u-margin-top" title="Adds &quot;save_consent=true&quot; to the authorize URL">
+    <div class="a-input__checkbox">
+        <input type="checkbox" id="betaConsent" name="betaconsent" value="save" />
+        <label for="betaConsent">Beta</label>
+    </div>
+</div>
+
 <script nonce='EDNnf03nceIOfn39fn3e9h3sdfa'>
     function setCookie(name, value, expire) {
         var expireDate = new Date();
@@ -30,6 +37,7 @@
         }
         return null;
     }
+
     function setConsent(linkElementId, saveConsent) {
       const url = document.getElementById(linkElementId).getAttribute('href');
       if (url.includes('&save_consent=true') && !saveConsent ) {
@@ -39,10 +47,27 @@
           document.getElementById(linkElementId).setAttribute('href', `${url}&save_consent=true`);
       }
     }
+
+    function setBaseUrl(linkElementId, saveConsent) {
+      const url = document.getElementById(linkElementId).getAttribute('href');
+      const newUrl = new URL(url);
+      const checked = document.getElementById('betaConsent').checked;
+      const newHost = checked ? "<%- beta_domain_consent %>" : "<%- domain_consent %>";
+      newUrl.hostname = newHost;
+      document.getElementById(linkElementId).setAttribute('href', newUrl.toString());
+    }
+
     document.getElementById('saveConsent').addEventListener('change', function(event) {
       const checked = document.getElementById('saveConsent').checked;
       <% loginTypes.forEach(function (loginType) { %>
          setConsent('link<%- loginType.key %>', checked);
+      <% }); %>
+    })
+
+    document.getElementById('betaConsent').addEventListener('change', function(event) {
+      const checked = document.getElementById('saveConsent').checked;
+      <% loginTypes.forEach(function (loginType) { %>
+         setBaseUrl('link<%- loginType.key %>', checked);
       <% }); %>
     })
 </script>

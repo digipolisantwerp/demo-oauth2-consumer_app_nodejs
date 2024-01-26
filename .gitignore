@@ -2,6 +2,7 @@
 .env
 .env.dev
 .env.dev*
+.env.*
 
 # Logs
 logs

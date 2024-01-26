@@ -16,6 +16,13 @@ module.exports = {
     'profiel_hintedlogin',
     'profiel_mandate',
   ],
+  betaConsent: {
+    uri: {
+      scheme: process.env.SERVICE_BETA_CONSENT_URI_SCHEME || 'http',
+      domain: process.env.SERVICE_BETA_CONSENT_URI_DOMAIN || 'localhost:4000',
+      path: '/authorize?',
+    },
+  },
   consent: {
     uri: {
       scheme: process.env.SERVICE_CONSENT_URI_SCHEME || 'http',
