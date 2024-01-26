@@ -62,7 +62,7 @@
         return null;
     }
     let beta_url = readCookie("beta");
-    if(beta_url == true) {
+    if(beta_url == 'true') {
       const url = document.getElementById("logout").getAttribute('href');
       const newUrl = new URL(url);
       newUrl.hostname = "<%- beta_domain_consent %>";

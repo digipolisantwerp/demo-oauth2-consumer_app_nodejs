@@ -56,7 +56,7 @@
       document.getElementById(linkElementId).setAttribute('href', newUrl.toString());
     }
     let beta_url = readCookie("beta");
-    if(beta_url == true) {
+    if(beta_url == 'true') {
       document.getElementById('betaConsent').checked = true;
       const checked = document.getElementById('betaConsent').checked;
       <% loginTypes.forEach(function (loginType) { %>
