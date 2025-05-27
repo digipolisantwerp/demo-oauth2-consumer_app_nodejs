@@ -74,7 +74,6 @@ async function callback(req, res, next) {
       data = await response.text();
     }
 
-    console.log('data', data);
     const body = data;
     if (!body) {
       return res.json({ error: `Missing profile body (status code ${response.status})` });

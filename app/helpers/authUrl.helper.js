@@ -1,14 +1,16 @@
-const querystring = require('querystring');
+const querystring = require('node:querystring');
 const servicesConfig = require('../../config/services.conf');
 const logoutUtil = require('../utils/logout');
 
 function createAuthorizeUrl(type, code_challenge, nonce) {
   const envConfig = structuredClone(servicesConfig);
-  const configOauth = { ...envConfig[type].auth };
+  const configOauth = {
+    ...envConfig[type].auth,
+    lng: 'nl',
+    state: '32042809',
+    code_challenge,
+  };
   let url = `${envConfig.consent.uri.scheme}://${envConfig.consent.uri.domain}/${configOauth.version}${envConfig.consent.uri.path}`;
-  configOauth.lng = 'nl';
-  configOauth.state = '32042809';
-  configOauth.code_challenge = code_challenge;
   if (nonce) configOauth.nonce = nonce;
   delete configOauth.client_secret;
   delete configOauth.version;

@@ -6,7 +6,7 @@ const config = require('../../config/services.conf');
 async function getTokenConsent() {
   try {
     if (config.consent.api.url.includes('localhost')) return '';
-    const response = await fetch(`${config.consent.api.url}/oauth2/token`, {
+    const response = await global.fetch(`${config.consent.api.url}/oauth2/token`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ async function getKeycloakAccessToken(code, configOauth, code_verifier, nonce) {
   params.append('code_verifier', code_verifier);
   params.append('code', code);
   params.append('redirect_uri', configOauth.redirect_uri);
-  const response = await fetch(`${configOauth.tokenurl}/protocol/openid-connect/token`, {
+  const response = await global.fetch(`${configOauth.tokenurl}/protocol/openid-connect/token`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',

@@ -1,69 +1,37 @@
-const apm = require('elastic-apm-node');
-// eslint-disable-next-line
-const config = require('./config/app.conf');
-
-if (config.apm.enabled) {
-  console.log(`enabled APM serviceName: '${config.apm.serviceName}'`);
-  apm.start(config.apm);
-}
-
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
-const compression = require('compression');
 const helmet = require('helmet');
-const crypto = require('crypto');
 const router = require('./app/routes');
+const addRequestId = require('./app/middleware/id.middleware');
+const errorMiddleware = require('./app/middleware/error.middleware');
 
-const app = express();
+let app;
 
-process.env.NODE_ENV = config.environment.toLowerCase();
+function startApp() {
+  app = express();
 
-app.set('port', config.port);
-app.set('views', path.join('./app/', 'views'));
-app.set('view engine', 'ejs');
+  app.use(addRequestId);
+  app.set('view engine', 'ejs');
+  app.set('views', path.join('./app/', 'views'));
 
-app.use((req, res, next) => {
-  req.id = crypto.randomUUID();
-  return next();
-});
-
-app.use(helmet({
-  // Add to load styleguide && post redirect to consent
-  crossOriginEmbedderPolicy: false,
-  contentSecurityPolicy: {
-    directives: {
-      'form-action': ["'self'", 'localhost:4000', '*.antwerpen.be'],
+  app.use(helmet({
+    // Add to load styleguide && post redirect to consent
+    crossOriginEmbedderPolicy: false,
+    contentSecurityPolicy: {
+      directives: {
+        'form-action': ["'self'", 'localhost:4000', '*.antwerpen.be'],
+      },
     },
-  },
-}));
+  }));
 
-if (process.env.NODE_ENV && process.env.NODE_ENV !== 'test') {
-  app.use(compression());
+  app.use(cookieParser());
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
+
+  app.use(router);
+  app.use(errorMiddleware);
+  return app;
 }
 
-app.use(cookieParser());
-app.use(express.json());
-app.use(express.urlencoded({
-  extended: true,
-}));
-
-app.use(router);
-app.use('/', express.static('./public'));
-app.use((err, req, res, next) => {
-  try {
-    console.log(req.id, err);
-    return res.status(500).render('error', {
-      ref: req.id,
-      title: err.message,
-    });
-  } catch (e) {
-    return next(e);
-  }
-});
-
-app.listen(app.get('port'), () => {
-  console.log(`Express server listening on port ${app.get('port')}`);
-});
-
-module.exports = app;
+module.exports = startApp;
