@@ -6,6 +6,7 @@ function pick(object, keys) {
   return keys.reduce((obj, key) => {
     // eslint-disable-next-line
     if (o && o.hasOwnProperty(key)) {
+    // eslint-disable-next-line
       obj[key] = o[key];
     }
     return obj;

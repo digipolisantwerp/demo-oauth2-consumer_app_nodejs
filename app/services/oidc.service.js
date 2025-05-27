@@ -31,11 +31,6 @@ async function getAuthorizationParams() {
   }
 }
 
-async function getAccessToken() {
-
-}
-
 module.exports = {
   getAuthorizationParams,
-  getAccessToken,
 };

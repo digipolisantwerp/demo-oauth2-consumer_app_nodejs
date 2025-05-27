@@ -1,4 +1,4 @@
-import { pick } from '../helpers/helperfunctions.helper.js';
+import { pick } from '../helpers/helperfunctions.helper';
 
 const HttpStatus = {
   BAD_REQUEST: 400,

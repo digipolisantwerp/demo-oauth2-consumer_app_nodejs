@@ -1,3 +1,6 @@
+const config = require('../../config/app.conf');
+const tokenHelper = require('../helpers/token.helper');
+
 async function getSession(ssokey, clientId) {
   try {
     const token = await tokenHelper.getTokenConsent();
@@ -16,6 +19,5 @@ async function getSession(ssokey, clientId) {
 }
 
 module.exports = {
-  getSessions,
   getSession,
 };
