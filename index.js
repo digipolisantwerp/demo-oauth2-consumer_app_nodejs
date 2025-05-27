@@ -11,7 +11,6 @@ const app = startapp();
 const server = http.createServer(app);
 server.keepAliveTimeout = 61000;
 server.headersTimeout = 62000;
-
 server.listen(config.port);
 logger.info(`Listening on port ${config.port}`);
 
