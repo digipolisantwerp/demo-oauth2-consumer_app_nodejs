@@ -1,4 +1,4 @@
-import { pick } from '../helpers/helperfunctions.helper';
+const { pick } = require('../helpers/helperfunctions.helper');
 
 const HttpStatus = {
   BAD_REQUEST: 400,
@@ -14,28 +14,28 @@ const form = (errorDefault) => (customException) => ({
   ...pick(customException, ['identifier', 'code', 'type', 'meta', 'title', 'detail']),
 });
 
-export const notFound = form({
+const notFound = form({
   status: HttpStatus.NOT_FOUND,
   title: 'Not Found',
   detail: '',
 });
-export const unauthorized = form({
+const unauthorized = form({
   status: HttpStatus.UNAUTHORIZED,
   title: 'Unauthorized',
   detail: '',
 });
-export const badRequest = form({
+const badRequest = form({
   status: HttpStatus.BAD_REQUEST,
   title: 'Bad Request',
   detail: '',
 });
-export const internalServerError = form({
+const internalServerError = form({
   status: HttpStatus.INTERNAL_SERVER_ERROR,
   title: 'Internal Server Error',
   detail: '',
 });
 
-export default {
+module.exports = {
   notFound,
   unauthorized,
   badRequest,

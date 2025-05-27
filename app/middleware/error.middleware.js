@@ -3,7 +3,6 @@ const errors = require('../errors/index');
 // eslint-disable-next-line no-unused-vars
 function errorHandler(err, req, res, next) {
   let returnError = err;
-  // eslint-disable-next-line
   let meta = undefined;
   if (process.env.NODE_ENV === 'development') {
     meta = {

@@ -17,9 +17,7 @@ async function postData(token) {
 
 document.addEventListener("DOMContentLoaded", function(){
   const access_token_field = document.getElementById("access_token")
-  const url_field = document.getElementById("url")
   const result = document.getElementById("result")
-  const url = url_field.value
   let access_token;
   const submit = document.getElementById("submit")
   const submitForm = () => {
@@ -37,5 +35,5 @@ document.addEventListener("DOMContentLoaded", function(){
       access_token = event.target.value
     }
   });
-  submit.addEventListener("click", (event) => submitForm());
+  submit.addEventListener("click", () => submitForm());
 });

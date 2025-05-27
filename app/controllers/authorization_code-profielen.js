@@ -16,7 +16,7 @@ function decode(token) {
       any_auth_code_otp,
       preferred_username,
     });
-  } catch (e) {
+  } catch {
     return false;
   }
 }
