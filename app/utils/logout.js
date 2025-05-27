@@ -1,16 +1,7 @@
 const crypto = require('crypto');
+const querystring = require('node:querystring');
 
 const algorithm = 'aes-128-ctr';
-
-function serialize(obj) {
-  const str = [];
-  Object.keys(obj).forEach((key) => {
-    if (obj[key]) {
-      str.push(`${encodeURIComponent(key)}=${encodeURIComponent(obj[key])}`);
-    }
-  });
-  return str.join('&');
-}
 
 function encrypt(text, password) {
   const hash = crypto.createHash('sha1');
@@ -23,25 +14,10 @@ function encrypt(text, password) {
   return crypted;
 }
 
-/*
-  Create a logout uri
-
-  options properties:
-  - host
-  - path
-  - user_id
-  - access_token
-  - redirect_uri
-  - service
-  - client_id
-  - client_secret
-*/
 /**
  * Create a logout uri
  *
  * @param {Object} options
- * @param {string} options.host
- * @param {string} options.path
  * @param {string} options.user_id
  * @param {string} options.access_token
  * @param {string} options.redirect_uri
@@ -64,10 +40,8 @@ function createLogoutUri(options) {
     delete queryObject.service;
     queryObject.authenticationMethod = options.method;
   }
-  if (options.auth_type) {
-    queryObject.auth_type = options.auth_type;
-  }
-  return `${options.host}${options.path}?${serialize(queryObject)}`;
+  if (options.auth_type) queryObject.auth_type = options.auth_type;
+  return `${options.host}${options.path}?${querystring.stringify(queryObject)}`;
 }
 
 module.exports = {

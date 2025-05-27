@@ -16,7 +16,7 @@ function decode(token) {
       any_auth_code_otp,
       preferred_username,
     });
-  } catch (e) {
+  } catch {
     return false;
   }
 }
@@ -74,7 +74,6 @@ async function callback(req, res, next) {
       data = await response.text();
     }
 
-    console.log('data', data);
     const body = data;
     if (!body) {
       return res.json({ error: `Missing profile body (status code ${response.status})` });
