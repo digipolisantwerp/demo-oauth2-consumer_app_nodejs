@@ -65,7 +65,7 @@ async function getKeycloakAccessToken(code, configOauth, code_verifier, nonce) {
     body: params,
   });
   const data = await response.json();
-
+  console.log('getKeycloakAccessToken', data);
   const decoded = jwtDecode(data.access_token);
   if (decoded.nonce !== nonce) throw new Error('Nonce mismatch');
 

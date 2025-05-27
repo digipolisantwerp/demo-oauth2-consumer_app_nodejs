@@ -103,7 +103,7 @@ async function callback(req, res, next) {
       ),
     };
     const decoded = decode(token);
-    return res.render('callback.ejs', {
+    return res.setHeader('Content-Security-Policy', "script-src 'nonce-EDNnf03nceIOfn39fn3e9h3sdfa'").render('callback.ejs', {
       title: (response.status === 200) ? 'Login successful' : 'Login failed',
       status: (response.status === 200) ? 'success' : 'warning',
       user,
@@ -111,6 +111,7 @@ async function callback(req, res, next) {
       decoded,
       sessions,
       baseurl_consent: `${envConfig.consent.uri.scheme}://${envConfig.consent.uri.domain}`,
+      beta_domain_consent: `${envConfig.betaConsent.uri.domain}`,
     });
   } catch (e) {
     if (e.response) {
@@ -133,6 +134,9 @@ async function index(req, res) {
     index: true,
     loginTypes: getLoginTypes(code_challenge, nonce),
     baseurl_consent: `${envConfig.consent.uri.scheme}://${envConfig.consent.uri.domain}`,
+    domain_consent: `${envConfig.consent.uri.domain}`,
+    beta_baseurl_consent: `${envConfig.betaConsent.uri.scheme}://${envConfig.betaConsent.uri.domain}`,
+    beta_domain_consent: `${envConfig.betaConsent.uri.domain}`,
   });
 }
 
