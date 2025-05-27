@@ -20,7 +20,9 @@ function startApp() {
     crossOriginEmbedderPolicy: false,
     contentSecurityPolicy: {
       directives: {
-        'form-action': ["'self'", 'localhost:4000', '*.antwerpen.be'],
+        'script-src': ["'self'", "'unsafe-inline'"],
+        'img-src': ["'self'", 'cdn.antwerpen.be'],
+        'form-action': ["'self'", 'localhost:3000', '*.antwerpen.be'],
       },
     },
   }));

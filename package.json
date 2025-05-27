@@ -5,10 +5,10 @@
   "private": true,
   "main": "app.js",
   "scripts": {
-    "startapp": "node app.js",
-    "start": "env-cmd -f .env.dev node --watch app.js",
-    "startprd": "env-cmd -f .env.prd node --watch app.js",
-    "startacc": "env-cmd -f .env.acc node --watch app.js",
+    "startapp": "node index.js",
+    "start": "env-cmd -f .env.dev node --watch index.js",
+    "startprd": "env-cmd -f .env.prd node --watch index.js",
+    "startacc": "env-cmd -f .env.acc node --watch index.js",
     "lint": "eslint .",
     "test": "echo \"no tests\" && npm run lint"
   },
