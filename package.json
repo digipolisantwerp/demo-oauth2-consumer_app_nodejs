@@ -14,6 +14,7 @@
   },
   "author": "Digipolis",
   "dependencies": {
+    "@azure/msal-node": "^3.6.0",
     "@digipolis/log": "^1.1.0",
     "compression": "^1.8.0",
     "cookie-parser": "^1.4.7",

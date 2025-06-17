@@ -40,6 +40,13 @@ function createLogoutUrl(consentConfig, profileConfig, redirectUri, id, accessTo
 function getLoginTypes(code_challenge, nonce) {
   return servicesConfig.loginTypeKeys.map((key) => {
     const setnonce = key.startsWith('profiel_keycloak') ? nonce : false;
+    if(servicesConfig[key].auth && servicesConfig[key].auth.url) {
+      return ({
+        key,
+        title: servicesConfig[key].title,
+        url: '/login',
+      });
+    }
     return ({
       key,
       title: servicesConfig[key].title,

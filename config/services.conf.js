@@ -1,3 +1,43 @@
+const { createPrivateKey } = require('node:crypto');
+
+function isBase64(str) {
+  if (!str || str.trim() === '') return false;
+  try {
+    return btoa(atob(str)) === str;
+  } catch {
+    return false;
+  }
+}
+
+function parseBase64(variable) {
+  let parsedVariable = variable;
+  if (isBase64(parsedVariable)) {
+    parsedVariable = atob(parsedVariable);
+  }
+  return parsedVariable;
+}
+
+const oauthConfig = {
+  scope: 'openid profile email roles',
+  clientId: process.env.MICROSOFT_CLIENT_ID,
+  commonBaseUrl: 'https://login.windows.net/common',
+  x5t: process.env.MICROSOFT_X5T || 'test',
+  tenant: process.env.MICROSOFT_TENANT_ID,
+  thumbprint: process.env.MICROSOFT_THUMBPRINT,
+  privateKey: parseBase64(process.env.MICROSOFT_PRIVATEKEY),
+};
+
+const privateKeyObject = createPrivateKey({
+  key: oauthConfig.privateKey,
+  format: 'pem',
+});
+
+const privateKey = privateKeyObject.export({
+  format: 'pem',
+  type: 'pkcs8',
+});
+
+
 module.exports = {
   loginTypeKeys: [
     'profiel_keycloak',
@@ -15,7 +55,18 @@ module.exports = {
     'profiel_enterprise',
     'profiel_hintedlogin',
     'profiel_mandate',
+    'entra',
   ],
+  msalConfig: {
+    auth: {
+      clientId: oauthConfig.clientId,
+      authority: `https://login.microsoftonline.com/${oauthConfig.tenant}`,
+      clientCertificate: {
+        thumbprint: oauthConfig.thumbprint,
+        privateKey,
+      },
+    },
+  },
   betaConsent: {
     uri: {
       scheme: process.env.SERVICE_BETA_CONSENT_URI_SCHEME || 'http',
@@ -200,6 +251,12 @@ module.exports = {
       client_secret: process.env.SERVICE_PROFIEL_HINTED_ACM_AUTH_CLIENT_SECRET || 'YOUR_CLIENT_SECRET',
       scope: 'astad.aprofiel.v1.username astad.aprofiel.v1.name astad.aprofiel.v1.avatar astad.aprofiel.v1.email astad.aprofiel.v1.phone',
       redirect_uri: process.env.SERVICE_PROFIEL_HINTED_ACM_AUTH_REDIRECT_URI || 'http://localhost:3000/callback/profiel',
+    },
+  },
+  entra: {
+    title: 'Entra - Microsoft',
+    auth: {
+      url: '/login'
     },
   },
   profiel_mandate: {
