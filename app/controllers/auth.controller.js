@@ -29,8 +29,8 @@ async function callback(req, res, next) {
 
     // render in demo app
     return res.setHeader('Content-Security-Policy', "script-src 'nonce-EDNnf03nceIOfn39fn3e9h3sdfa'").render('callback.ejs', {
-      title: (response.status === 200) ? 'Login successful' : 'Login failed',
-      status: (response.status === 200) ? 'success' : 'warning',
+      title: 'Login successful',
+      status: 'success',
       user: {
         accessToken: response.accessToken,
         profile: {
