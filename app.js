@@ -14,7 +14,7 @@ function startApp() {
   app.use(addRequestId);
   app.set('view engine', 'ejs');
   app.set('views', path.join('./app/', 'views'));
-
+  app.enable('trust proxy');
   app.use(helmet({
     // Add to load styleguide && post redirect to consent
     crossOriginEmbedderPolicy: false,
