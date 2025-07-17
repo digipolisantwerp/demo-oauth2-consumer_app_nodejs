@@ -1,6 +1,5 @@
 const jwtDecode = require('jwt-decode');
 const client = require('openid-client');
-const crypto = require('crypto');
 const { getSessions, getSession } = require('../services/session.service');
 const tokenHelper = require('../helpers/token.helper');
 const { stringifyObject } = require('../helpers/json.helper');

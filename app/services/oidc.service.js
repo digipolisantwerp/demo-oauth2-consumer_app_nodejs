@@ -1,4 +1,4 @@
-const client = require('openid-client');
+const oidcclient = require('openid-client');
 const servicesConfig = require('../../config/services.conf');
 
 async function getAuthorizationParams() {
@@ -9,10 +9,10 @@ async function getAuthorizationParams() {
       redirect_uri,
       oidc_issuer,
     } = servicesConfig.profiel_keycloak.auth;
-    const issuer = await client.discovery(`${oidc_issuer}/.well-known/openid-configuration`);
+    const issuer = await oidcclient.discovery(`${oidc_issuer}/.well-known/openid-configuration`);
     console.log('Discovered issuer %s %O', issuer.issuer, issuer.metadata);
-    const code_verifier = client.randomPKCECodeVerifier();
-    const nonce = client.randomNonce();
+    const code_verifier = oidcclient.randomPKCECodeVerifier();
+    const nonce = oidcclient.randomNonce();
     const client = new issuer.Client({
       client_id,
       client_secret,
