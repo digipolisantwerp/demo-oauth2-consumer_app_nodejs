@@ -51,9 +51,9 @@ async function getKongAccessToken(code, configOauth, profileConfig) {
 
 async function getKeycloakAccessToken(code, configOauth, code_verifier, nonce) {
   const params = new URLSearchParams();
+  params.append('grant_type', 'authorization_code');
   params.append('client_id', configOauth.client_id);
   params.append('client_secret', configOauth.client_secret);
-  params.append('grant_type', 'authorization_code');
   params.append('code_verifier', code_verifier);
   params.append('code', code);
   params.append('redirect_uri', configOauth.redirect_uri);
@@ -66,8 +66,8 @@ async function getKeycloakAccessToken(code, configOauth, code_verifier, nonce) {
   });
   const data = await response.json();
   console.log('getKeycloakAccessToken', data);
-  const decoded = jwtDecode(data.access_token);
-  if (decoded.nonce !== nonce) throw new Error('Nonce mismatch');
+  const decoded_id_token = jwtDecode(data.id_token);
+  if (decoded_id_token.nonce !== nonce) throw new Error('Nonce mismatch');
 
   return data.access_token;
 }

@@ -9,6 +9,7 @@ function createAuthorizeUrl(type, code_challenge, nonce) {
     lng: 'nl',
     state: '32042809',
     code_challenge,
+    code_challenge_method: "S256"
   };
   let url = `${envConfig.consent.uri.scheme}://${envConfig.consent.uri.domain}/${configOauth.version}${envConfig.consent.uri.path}`;
   if (nonce) configOauth.nonce = nonce;
