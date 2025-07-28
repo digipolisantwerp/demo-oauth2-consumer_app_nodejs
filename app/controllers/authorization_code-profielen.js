@@ -47,14 +47,15 @@ async function callback(req, res, next) {
         profileConfig,
       );
     } else {
-      token = await tokenHelper.getKeycloakAccessToken(
+      const tokenResponse = await tokenHelper.getKeycloakAccessToken(
         req.query.code,
         configOauth,
         req.cookies.code_verifier,
         req.cookies.nonce,
       );
+      token = tokenResponse.access_token;
+      profileConfig.auth.method = tokenResponse.method;
     }
-
     const configApi = profileConfig.uri;
     const profileUrl = `${configApi.scheme}://${configApi.domain}${configApi.path}/me`;
     const headers = {

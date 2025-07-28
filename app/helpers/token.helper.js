@@ -68,8 +68,10 @@ async function getKeycloakAccessToken(code, configOauth, code_verifier, nonce) {
   console.log('getKeycloakAccessToken', data);
   const decoded_id_token = jwtDecode(data.id_token);
   if (decoded_id_token.nonce !== nonce) throw new Error('Nonce mismatch');
-
-  return data.access_token;
+  return {
+    access_token: data.access_token,
+    method: decoded_id_token.amr?.[0],
+  };
 }
 
 module.exports = {
