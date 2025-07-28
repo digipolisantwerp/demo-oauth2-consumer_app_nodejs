@@ -22,7 +22,7 @@ function startApp() {
       directives: {
         'script-src': ["'self'", "'unsafe-inline'"],
         'img-src': ["'self'", 'cdn.antwerpen.be'],
-        'form-action': ["'self'", 'localhost:3000', '*.antwerpen.be'],
+        'form-action': ["'self'", 'localhost:4000', 'localhost:3000', '*.antwerpen.be'],
       },
     },
   }));
