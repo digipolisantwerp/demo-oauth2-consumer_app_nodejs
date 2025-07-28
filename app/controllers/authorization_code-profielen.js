@@ -1,5 +1,5 @@
 const jwtDecode = require('jwt-decode');
-const crypto = require('crypto');
+const client = require('openid-client');
 const { getSessions, getSession } = require('../services/session.service');
 const tokenHelper = require('../helpers/token.helper');
 const { stringifyObject } = require('../helpers/json.helper');
@@ -47,14 +47,15 @@ async function callback(req, res, next) {
         profileConfig,
       );
     } else {
-      token = await tokenHelper.getKeycloakAccessToken(
+      const tokenResponse = await tokenHelper.getKeycloakAccessToken(
         req.query.code,
         configOauth,
         req.cookies.code_verifier,
         req.cookies.nonce,
       );
+      token = tokenResponse.access_token;
+      profileConfig.auth.method = tokenResponse.method;
     }
-
     const configApi = profileConfig.uri;
     const profileUrl = `${configApi.scheme}://${configApi.domain}${configApi.path}/me`;
     const headers = {
@@ -123,9 +124,12 @@ async function callback(req, res, next) {
 }
 
 async function index(req, res) {
-  const pkceChallenge = await import('pkce-challenge');
-  const { code_verifier, code_challenge } = pkceChallenge.default(128);
-  const nonce = crypto.randomBytes(128).toString('hex');
+  // const pkceChallenge = await import('pkce-challenge');
+  // const { code_verifier, code_challenge } = pkceChallenge.default(128);
+  // const nonce = crypto.randomBytes(128).toString('hex');
+  const code_verifier = client.randomPKCECodeVerifier();
+  const code_challenge = await client.calculatePKCECodeChallenge(code_verifier)
+  const nonce = client.randomNonce();
   res.cookie('code_verifier', code_verifier, { maxAge: 900000, httpOnly: true });
   res.cookie('nonce', nonce, { maxAge: 900000, httpOnly: true });
 

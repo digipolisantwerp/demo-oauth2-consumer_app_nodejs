@@ -11,7 +11,6 @@ async function callback(req, res, next) {
   try {
     const profileConfig = envConfig[req.params.profileType];
     if (!profileConfig) return res.send('Invalid profile type');
-
     // set service provider & method
     if (req.query.sp) profileConfig.auth.service = req.query.sp;
     if (req.query.method) profileConfig.auth.method = req.query.method;
@@ -24,7 +23,7 @@ async function callback(req, res, next) {
     ])).map((result) => stringifyObject(result));
 
     const configOauth = profileConfig.auth;
-    const token = await tokenHelper.getKeycloakAccessToken(
+    const { access_token } = await tokenHelper.getKeycloakAccessToken(
       req.query.code,
       {
         ...configOauth,
@@ -36,7 +35,7 @@ async function callback(req, res, next) {
     const configApi = profileConfig.uri;
     const profileUrl = `${configApi.scheme}://${configApi.domain}${configApi.path}/me`;
     const headers = {
-      authorization: `Bearer ${token}`,
+      authorization: `Bearer ${access_token}`,
     };
     if (configApi.correlation) {
       headers['Dgp-Correlation'] = dgpCorrelationService.getDgpCorrelation();
@@ -57,7 +56,7 @@ async function callback(req, res, next) {
     const userResponse = body.data ? body.data : body;
     const userId = userResponse.profile ? userResponse.profile.id : userResponse.id;
     const user = {
-      accessToken: token,
+      accessToken: access_token,
       ssoKey: req.cookies['dgp.auth.ssokey'],
       client_id: profileConfig.auth.client_id,
       sessionsUrl: `${envConfig.consent.api.url}/sessions/${req.cookies['dgp.auth.ssokey']}`,
@@ -73,7 +72,7 @@ async function callback(req, res, next) {
         profileConfig,
         envConfig.logout_redirect_uri,
         userId,
-        token,
+        access_token,
         authType,
       ),
     };
