@@ -57,6 +57,7 @@ async function callback(req, res, next) {
     const userId = userResponse.profile ? userResponse.profile.id : userResponse.id;
     const user = {
       accessToken: access_token,
+      idToken: null,
       ssoKey: req.cookies['dgp.auth.ssokey'],
       client_id: profileConfig.auth.client_id,
       sessionsUrl: `${envConfig.consent.api.url}/sessions/${req.cookies['dgp.auth.ssokey']}`,
