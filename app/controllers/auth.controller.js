@@ -33,6 +33,7 @@ async function callback(req, res, next) {
       status: 'success',
       user: {
         accessToken: response.accessToken,
+        idToken: response.idToken,
         profile: {
           url: '< user from idToken > graph also exposes /me',
           id: response.idTokenClaims.sub,
