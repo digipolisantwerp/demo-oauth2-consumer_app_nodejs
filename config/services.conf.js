@@ -55,7 +55,7 @@ module.exports = {
     'profiel_enterprise',
     'profiel_hintedlogin',
     'profiel_mandate',
-    'entra',
+    // 'entra',
   ],
   msalConfig: {
     auth: {
